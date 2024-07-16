@@ -55,7 +55,7 @@ public class businessStocks {
             WebElement path7 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[C2.C172][6]")));
             path7.sendKeys("2024-07-10");
 
-            WebElement path6 = driver.findElement(By.name("mvParam[C2.C173][7]"));
+            WebElement path6 = driver.findElement(By.name("mvParam[C2.C173][6]"));
             js.executeScript("arguments[0].value='100000';", path6);
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));

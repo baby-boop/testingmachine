@@ -9,6 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import selenium.testingmachine.finance.financeRequest.requestMain;
 import selenium.testingmachine.hr.mainHr;
 import selenium.testingmachine.hr_salary.main_salary;
+import selenium.testingmachine.office.officeContract;
+import selenium.testingmachine.office.officeTask;
+import selenium.testingmachine.supply.mainSupply;
 
 @SpringBootApplication
 public class SeleniumTestApplication implements CommandLineRunner {
@@ -21,7 +24,7 @@ public class SeleniumTestApplication implements CommandLineRunner {
     public void run(String... args) {
         Scanner scanner = new Scanner(System.in);
         String choice = "";
-        String promptMessage = "Тест хийх модулиа сонгоно уу? (salary/hr/request): ";
+        String promptMessage = "Тест хийх модулиа сонгоно уу? (salary/hr/request/contract/task/supply): ";
 
         while (true) {
             System.out.println(promptMessage);
@@ -39,9 +42,21 @@ public class SeleniumTestApplication implements CommandLineRunner {
                     requestMain main = new requestMain();
                     main.mainSystem();
                     break;
+                case "mytask":
+                    createTask task1 = new createTask();
+                    task1.login();
+                    break;
+                case "contract":
+                    officeContract contract = new officeContract();
+                    contract.mainSystem();
+                    break;
                 case "task":
-                    createTask task = new createTask();
-                    task.login();
+                    officeTask task = new officeTask();
+                    task.mainSystem();
+                    break;
+                case "supply":
+                    mainSupply supply = new mainSupply();
+                    supply.mainSystem();
                     break;
                 default:
                     System.out.println("Тухайн модуль олдсонгүй '" + choice + "'");

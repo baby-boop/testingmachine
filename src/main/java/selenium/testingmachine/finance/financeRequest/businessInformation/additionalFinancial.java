@@ -8,40 +8,26 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class businessStandart {
+public class additionalFinancial {
+
     public static String message;
 
     private WebDriver driver;
 
-    public businessStandart(WebDriver driver) {
+    public additionalFinancial(WebDriver driver) {
         this.driver = driver;
     }
-    public void business(){
+    public void finance(){
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
             Thread.sleep(500);
 
-            WebElement subMain = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Бизнесийн стандарт')]")));
+            WebElement subMain = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Санхүүгийн нэмэлт мэдээлэл')]")));
             subMain.click();
 
             Thread.sleep(500);
-
-            WebElement addRow = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[data-action-path='C2']")));
-            addRow.click();
-
-            WebElement path1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[C2.C1][2]")));
-            path1.sendKeys("test1");
-
-            WebElement path2 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[C2.C2][2]")));
-            path2.sendKeys("2024-07-02");
-
-            WebElement path4 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[C2.C3][2]")));
-            path4.sendKeys("test1");
-
-            WebElement path3 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[C2.C4][2]")));
-            path3.sendKeys("2025-07-02");
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));
             saveBtn.click();
@@ -50,8 +36,8 @@ public class businessStandart {
                 System.out.println("Error message found after saving. Exiting...");
                 Thread.sleep(3500);
                 
-                WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-                cnclBtn.click();
+                // WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
+                // cnclBtn.click();
                 return;
             }
 
@@ -59,10 +45,10 @@ public class businessStandart {
             
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-businessStandart : " + e.getMessage());
+            System.out.println("Error class-additionalFinancial : " + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished businessStandart");
+            System.out.println("finished additionalFinancial");
         }
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
@@ -71,9 +57,9 @@ public class businessStandart {
             wait.withTimeout(Duration.ofSeconds(2));
             WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme-error .ui-pnotify-text")));
             String errorText = errorMessage.getText();
-            WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
-            String processName = mainProccess.getText();
-            message = ("class-businessStandart: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
+            WebElement mainProcess = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='main-process-text']/div[contains(text(), 'Санхүүгийн тайлангийн мэдээлэл')]")));
+            String processName = mainProcess.getText();
+            message = ("class-additionalFinancial: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
             System.out.println(message);
             return errorMessage.isDisplayed();
         } catch (Exception e) {
@@ -81,5 +67,5 @@ public class businessStandart {
         } finally {
             wait.withTimeout(Duration.ofSeconds(10));
         }
-    }   
+    }      
 }

@@ -1,51 +1,48 @@
-package selenium.testingmachine.finance.financeRequest.businessInformation;
+package selenium.testingmachine.supply.masterdata;
 
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class supplier {
-    public static String message;
+public class goodsToBuy {
+   public static String message;
 
     private WebDriver driver;
 
-    public supplier(WebDriver driver) {
+    public goodsToBuy(WebDriver driver) {
         this.driver = driver;
     }
-    public void business(){
+    public void data(){
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            Thread.sleep(1000);
+
+            WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Худалдан авалтын удирдлага']")));
+            menuTileElement.click();
 
             Thread.sleep(500);
 
-            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Гол бэлтгэн нийлүүлэгчдийн мэдээ')]")));
-            main.click();
+            WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Мастер дата')]")));
+            openField.click();
+
+            Thread.sleep(500);
+            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
+            add.click();
 
             Thread.sleep(1000);
 
-            WebElement add = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'add_btn')]")));
-            add.click();
-
-            WebElement name = wait.until(ExpectedConditions.elementToBeClickable(By.name("mvParam[C2]")));
+            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='itemName']")));
             name.sendKeys("test1");
 
-            WebElement date = wait.until(ExpectedConditions.elementToBeClickable(By.name("mvParam[C3]")));
-            date.sendKeys("2024-07-14");
-            
-            WebElement per = driver.findElement(By.name("mvParam[C7]"));
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].value='25';", per);
+            WebElement price = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='unitCost']")));
+            price.sendKeys("10000");
 
-            WebElement country = wait.until(ExpectedConditions.elementToBeClickable(By.name("mvParam[C10]")));
-            country.sendKeys("test");
-
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
+            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn green-meadow btn-sm bp-run-btn main-run-btn bp-btn-save')]")));
             saveBtn.click();
 
             if (isErrorMessagePresent(wait)) {
@@ -57,14 +54,12 @@ public class supplier {
                 return;
             }
 
-            Thread.sleep(1000);
-            
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-supplier : " + e.getMessage());
+            System.out.println("Error class-goodsToBuy : " + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished supplier");
+            System.out.println("finished goodsToBuy");
         }
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
@@ -75,7 +70,7 @@ public class supplier {
             String errorText = errorMessage.getText();
             WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
             String processName = mainProccess.getText();
-            message = ("class-supplier: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
+            message = ("class-goodsToBuy: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
             System.out.println(message);
             return errorMessage.isDisplayed();
         } catch (Exception e) {
@@ -83,5 +78,5 @@ public class supplier {
         } finally {
             wait.withTimeout(Duration.ofSeconds(10));
         }
-    }      
+    }    
 }

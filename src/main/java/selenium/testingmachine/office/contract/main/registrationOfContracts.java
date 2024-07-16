@@ -1,53 +1,50 @@
-package selenium.testingmachine.finance.financeRequest.businessInformation;
+package selenium.testingmachine.office.contract.main;
 
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class businessLicense {
+public class registrationOfContracts {
+
     public static String message;
 
     private WebDriver driver;
 
-    public businessLicense(WebDriver driver) {
+    public registrationOfContracts(WebDriver driver) {
         this.driver = driver;
     }
-    public void business(){
+    public void main(){
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
             Thread.sleep(500);
 
-            WebElement subMain = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Тусгай зөвшөөрөл')]")));
-            subMain.click();
+            WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Бүртгэл')]")));
+            openField.click();
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
-            WebElement addRow = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[data-action-path='C2']")));
-            addRow.click();
+            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='CONTRACT_NAME']")));
+            name.sendKeys("test1");
 
-            Thread.sleep(500);
+            WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='CONTRACT_CODE']")));
+            code.sendKeys("test1");
 
-            WebElement type = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='C2.C2']")));
-            type.click();
-            Thread.sleep(500);
-            WebElement typeOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Тийм']")));
-            typeOption.click();
+            WebElement CLASSIFICATION = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[CLASSIFICATION_ID_DESCNAME]")));
+            CLASSIFICATION.sendKeys("test1");
+            CLASSIFICATION.sendKeys(Keys.ENTER);
 
-            WebElement path1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[C2.C3][5]")));
-            path1.sendKeys("test1");
+            WebElement customer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[CUSTOMER_ID_DESCNAME]")));
+            customer.sendKeys("testgul");
+            customer.sendKeys(Keys.ENTER);
 
-            WebElement path2 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[C2.C4][5]")));
-            path2.sendKeys("2024-07-02");
-
-            WebElement path3 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[C2.C5][5]")));
-            path3.sendKeys("testDesc");
-            
+            WebElement desc = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[DESCRIPTION]")));
+            desc.sendKeys("testshuu");
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));
             saveBtn.click();
@@ -61,14 +58,12 @@ public class businessLicense {
                 return;
             }
 
-            Thread.sleep(1000);
-            
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-businessLicense : " + e.getMessage());
+            System.out.println("Error class-registrationOfContracts : " + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished businessLicense");
+            System.out.println("finished registrationOfContracts");
         }
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
@@ -79,7 +74,7 @@ public class businessLicense {
             String errorText = errorMessage.getText();
             WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
             String processName = mainProccess.getText();
-            message = ("class-businessLicense: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
+            message = ("class-registrationOfContracts: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
             System.out.println(message);
             return errorMessage.isDisplayed();
         } catch (Exception e) {
@@ -87,5 +82,5 @@ public class businessLicense {
         } finally {
             wait.withTimeout(Duration.ofSeconds(10));
         }
-    }   
+    }    
 }

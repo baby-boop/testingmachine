@@ -36,15 +36,15 @@ public class requestMain {
             
             login.login();
             request.requestProcess();
-            // associated.company();
-            // shareHolders.holders();
-            // contractor.notice();
-            // loans.notice();
-            // stocks.notice();
-            // contacts.notice();
-            // employee.employee();
-            // history.information();
-            information.mainSystem();
+            associated.company();
+            shareHolders.holders();
+            contractor.notice();
+            loans.notice();
+            stocks.notice();
+            contacts.notice();
+            employee.employee();
+            history.information();
+            // information.mainSystem();
 
 
 

@@ -23,6 +23,20 @@ public class businessInformation {
             otherInformation other = new otherInformation(driver);
             businessLoans loans = new businessLoans(driver);
             businessStocks stocks = new businessStocks(driver);
+            fixedAssets assets = new fixedAssets(driver);
+            movableAssets movable = new movableAssets(driver);
+            financialReporting report = new financialReporting(driver);
+            additionalFinancial additional = new additionalFinancial(driver);
+            receivablesDetails receivable = new receivablesDetails(driver);
+            prepaidExpenses prepaid = new prepaidExpenses(driver);
+            paymentDetails payment = new paymentDetails(driver);
+            prepaidIncome income = new prepaidIncome(driver);
+            bankToReceiveSalesProceeds bank = new bankToReceiveSalesProceeds(driver);
+            salesRevenue sales = new salesRevenue(driver);
+            operationCost cost = new operationCost(driver);
+            debtToIncomerRatio ratio = new debtToIncomerRatio(driver);
+            barterAssets barter = new barterAssets(driver);
+
 
             direction.business();
             director.business();
@@ -35,9 +49,22 @@ public class businessInformation {
             other.business();
             loans.business();
             stocks.business();
+            assets.binance();
+            movable.finance();
+            report.finance();
+            additional.finance();
+            receivable.finance();
+            prepaid.finance();
+            payment.finance();
+            income.finance();
+            bank.finance();
+            sales.finance();
+            cost.finance();
+            ratio.finance();
+            barter.finance();
 
         } finally {
-            // Do not quit the driver here
+            
         }
     }
 }

@@ -8,15 +8,28 @@ import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import selenium.testingmachine.finance.financeRequest.businessInformation.additionalFinancial;
+import selenium.testingmachine.finance.financeRequest.businessInformation.bankToReceiveSalesProceeds;
+import selenium.testingmachine.finance.financeRequest.businessInformation.barterAssets;
 import selenium.testingmachine.finance.financeRequest.businessInformation.businessLicense;
 import selenium.testingmachine.finance.financeRequest.businessInformation.businessLoans;
 import selenium.testingmachine.finance.financeRequest.businessInformation.businessStandart;
 import selenium.testingmachine.finance.financeRequest.businessInformation.businessStocks;
 import selenium.testingmachine.finance.financeRequest.businessInformation.buyer;
+import selenium.testingmachine.finance.financeRequest.businessInformation.debtToIncomerRatio;
 import selenium.testingmachine.finance.financeRequest.businessInformation.directions;
 import selenium.testingmachine.finance.financeRequest.businessInformation.director;
+import selenium.testingmachine.finance.financeRequest.businessInformation.financialReporting;
+import selenium.testingmachine.finance.financeRequest.businessInformation.fixedAssets;
 import selenium.testingmachine.finance.financeRequest.businessInformation.mainEmployees;
+import selenium.testingmachine.finance.financeRequest.businessInformation.movableAssets;
+import selenium.testingmachine.finance.financeRequest.businessInformation.operationCost;
 import selenium.testingmachine.finance.financeRequest.businessInformation.otherInformation;
+import selenium.testingmachine.finance.financeRequest.businessInformation.paymentDetails;
+import selenium.testingmachine.finance.financeRequest.businessInformation.prepaidExpenses;
+import selenium.testingmachine.finance.financeRequest.businessInformation.prepaidIncome;
+import selenium.testingmachine.finance.financeRequest.businessInformation.receivablesDetails;
+import selenium.testingmachine.finance.financeRequest.businessInformation.salesRevenue;
 import selenium.testingmachine.finance.financeRequest.businessInformation.supplier;
 import selenium.testingmachine.finance.financeRequest.firstInformation.associatedCompany;
 import selenium.testingmachine.finance.financeRequest.firstInformation.creditHistory;
@@ -47,6 +60,20 @@ import selenium.testingmachine.hr_salary.salary_system.prlSalaryCalculator;
 import selenium.testingmachine.hr_salary.salary_system.vacationCalculator;
 import selenium.testingmachine.hr_time.notTimeRegistration;
 import selenium.testingmachine.hr_time.planLongtime;
+import selenium.testingmachine.office.contract.main.contractList;
+import selenium.testingmachine.office.contract.main.registrationOfContracts;
+import selenium.testingmachine.office.contract.masterdata.contractDirections;
+import selenium.testingmachine.office.contract.masterdata.contractPaymentType;
+import selenium.testingmachine.office.contract.masterdata.contractPrivacyType;
+import selenium.testingmachine.office.contract.masterdata.contractReasonsForTermination;
+import selenium.testingmachine.office.contract.masterdata.contractReminderDays;
+import selenium.testingmachine.office.contract.masterdata.contractType;
+import selenium.testingmachine.office.contract.masterdata.contractTypeOfLosses;
+import selenium.testingmachine.office.task.main.registrationOfTask;
+import selenium.testingmachine.office.task.masterdata.taskLevel;
+import selenium.testingmachine.office.task.masterdata.taskType;
+import selenium.testingmachine.supply.masterdata.goodsToBuy;
+import selenium.testingmachine.supply.masterdata.productClassification;
 
 @RestController
 public class DashboardController {
@@ -97,7 +124,35 @@ public class DashboardController {
                 businessLicense.message,
                 otherInformation.message,
                 businessLoans.message,
-                businessStocks.message
+                businessStocks.message,
+                fixedAssets.message,
+                movableAssets.message,
+                financialReporting.message,
+                additionalFinancial.message,
+                receivablesDetails.message,
+                prepaidExpenses.message,
+                paymentDetails.message,
+                prepaidIncome.message,
+                bankToReceiveSalesProceeds.message,
+                salesRevenue.message,
+                operationCost.message,
+                debtToIncomerRatio.message,
+                barterAssets.message,
+                contractType.message,
+                contractDirections.message,
+                contractPaymentType.message,
+                contractReminderDays.message,
+                contractPrivacyType.message,
+                contractTypeOfLosses.message,
+                contractReasonsForTermination.message,
+                registrationOfContracts.message,
+                contractList.message,
+                taskLevel.message,
+                taskType.message,
+                registrationOfTask.message,
+                goodsToBuy.message,
+                productClassification.message,
+                supplier.message
                 );
         
         String concatenatedMessages = messages.stream()

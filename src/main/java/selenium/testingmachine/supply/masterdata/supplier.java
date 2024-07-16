@@ -1,49 +1,47 @@
-package selenium.testingmachine.finance.financeRequest.businessInformation;
+package selenium.testingmachine.supply.masterdata;
 
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class supplier {
-    public static String message;
+   public static String message;
 
     private WebDriver driver;
 
     public supplier(WebDriver driver) {
         this.driver = driver;
     }
-    public void business(){
+    public void data(){
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
             Thread.sleep(500);
 
-            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Гол бэлтгэн нийлүүлэгчдийн мэдээ')]")));
+            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Нийлүүлэгчийн бүртгэл')]")));
             main.click();
+
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Нийлүүлэгч')]")));
+            menu.click(); 
+
+            Thread.sleep(500);
+            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
+            add.click();
 
             Thread.sleep(1000);
 
-            WebElement add = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'add_btn')]")));
-            add.click();
+            WebElement customer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("customerGroupId_nameField")));
+            customer.sendKeys("Бусад");
+            customer.sendKeys(Keys.ENTER);
 
-            WebElement name = wait.until(ExpectedConditions.elementToBeClickable(By.name("mvParam[C2]")));
+            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[customerName]")));
             name.sendKeys("test1");
-
-            WebElement date = wait.until(ExpectedConditions.elementToBeClickable(By.name("mvParam[C3]")));
-            date.sendKeys("2024-07-14");
-            
-            WebElement per = driver.findElement(By.name("mvParam[C7]"));
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].value='25';", per);
-
-            WebElement country = wait.until(ExpectedConditions.elementToBeClickable(By.name("mvParam[C10]")));
-            country.sendKeys("test");
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
             saveBtn.click();
@@ -57,8 +55,6 @@ public class supplier {
                 return;
             }
 
-            Thread.sleep(1000);
-            
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Error class-supplier : " + e.getMessage());
@@ -83,5 +79,5 @@ public class supplier {
         } finally {
             wait.withTimeout(Duration.ofSeconds(10));
         }
-    }      
+    }   
 }
