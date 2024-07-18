@@ -1,8 +1,8 @@
 package selenium.testingmachine.hr;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import selenium.testingmachine.hr.command_directory.reasonForAssistance;
 import selenium.testingmachine.hr.command_directory.reasonForDiscipline;
@@ -45,9 +45,9 @@ import selenium.testingmachine.hr.unit_directory.unitType;
 
 public class mainHr {
     public void main_hr_system(){
-        EdgeOptions options = new EdgeOptions();
-        // options.addArguments("--headless=new");
-        WebDriver driver = new EdgeDriver(options);
+        FirefoxOptions options = new FirefoxOptions();
+        // options.addArguments("--headless");
+        WebDriver driver = new FirefoxDriver(options);
         
         try {
 			openHr openHr = new openHr(driver);

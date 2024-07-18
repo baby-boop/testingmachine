@@ -20,14 +20,14 @@ public class supplier {
     public void data(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
 
             Thread.sleep(500);
 
             WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Нийлүүлэгчийн бүртгэл')]")));
             main.click();
 
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Нийлүүлэгч')]")));
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-stepid='1677829299916934']")));
             menu.click(); 
 
             Thread.sleep(500);
@@ -43,7 +43,7 @@ public class supplier {
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[customerName]")));
             name.sendKeys("test1");
 
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
+            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn green-meadow btn-sm bp-run-btn main-run-btn bp-btn-save')]")));
             saveBtn.click();
 
             if (isErrorMessagePresent(wait)) {

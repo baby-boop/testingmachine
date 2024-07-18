@@ -1,32 +1,32 @@
-package selenium.testingmachine.supply.masterdata;
+package selenium.testingmachine.store.masterdata;
 
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class productPort {
-   public static String message;
+public class section {
+     public static String message;
 
     private WebDriver driver;
 
-    public productPort(WebDriver driver) {
+    public section(WebDriver driver) {
         this.driver = driver;
     }
     public void data(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            Thread.sleep(1000);
 
-            Thread.sleep(500);
-
-            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Боомт')]")));
+            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Тасаг')]")));
             main.click();
 
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Гадаад боомт')]")));
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='169327663823710']")));
             menu.click(); 
 
             Thread.sleep(500);
@@ -38,27 +38,19 @@ public class productPort {
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[name]")));
             name.sendKeys("test1");
 
-            WebElement type = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-section-path='portTypeId']")));
-            WebElement radioButton = type.findElement(By.xpath(".//input[@type='radio' and @value='1']"));
-            radioButton.click();
+            WebElement type = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='sectionTypeId']")));
+            type.click();
+            WebElement typeOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Бөөний']")));
+            typeOption.click();
 
-            WebElement mode = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-section-path='portModeId']")));
-            WebElement radioButton1 = mode.findElement(By.xpath(".//input[@type='radio' and @value='1']"));
-            radioButton1.click();
+            WebElement type1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='storeId']")));
+            type1.click();
+            WebElement typeOption1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'test1']")));
+            typeOption1.click();
 
-            WebElement category = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-section-path='portCategoryId']")));
-            WebElement radioButton2 = category.findElement(By.xpath(".//input[@type='radio' and @value='1']"));
-            radioButton2.click();
-
-            Thread.sleep(500);
-
-            WebElement coordinate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-primary mr0')]")));
-            coordinate.click();
-
-            WebElement selectCoordinate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm red-sunglo')]")));
-            selectCoordinate.click();
-
-            Thread.sleep(1000);
+            WebElement path = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("storeKeeperKeyId_nameField")));
+            path.sendKeys("ХМ-ын нярав");
+            path.sendKeys(Keys.ENTER);
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn green-meadow btn-sm bp-run-btn main-run-btn bp-btn-save')]")));
             saveBtn.click();
@@ -74,10 +66,10 @@ public class productPort {
 
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-productPort : " + e.getMessage());
+            System.out.println("Error class-section : " + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished productPort");
+            System.out.println("finished section");
         }
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
@@ -88,7 +80,7 @@ public class productPort {
             String errorText = errorMessage.getText();
             WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
             String processName = mainProccess.getText();
-            message = ("class-productPort: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
+            message = ("class-section: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
             System.out.println(message);
             return errorMessage.isDisplayed();
         } catch (Exception e) {
@@ -96,5 +88,5 @@ public class productPort {
         } finally {
             wait.withTimeout(Duration.ofSeconds(10));
         }
-    }   
+    }       
 }

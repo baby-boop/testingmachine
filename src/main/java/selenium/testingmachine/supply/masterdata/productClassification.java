@@ -19,16 +19,16 @@ public class productClassification {
     public void data(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
 
             Thread.sleep(500);
 
             WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Барааны ангилал')]")));
             menu.click(); 
 
-            Thread.sleep(500);
-            WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("add_btn")));
-            edit.click();
+            Thread.sleep(1000);
+            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
+            add.click();
 
             Thread.sleep(1000);
 

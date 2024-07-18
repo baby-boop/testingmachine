@@ -1,8 +1,8 @@
 package selenium.testingmachine.office;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import selenium.testingmachine.office.contract.main.contractList;
 import selenium.testingmachine.office.contract.main.registrationOfContracts;
@@ -19,9 +19,9 @@ import selenium.testingmachine.office.contract.masterdata.contractTypeOfLosses;
 public class officeContract {
     
  public void mainSystem(){
-        EdgeOptions options = new EdgeOptions();
-        // options.addArguments("--headless=new");
-        WebDriver driver = new EdgeDriver(options);
+        FirefoxOptions options = new FirefoxOptions();
+        // options.addArguments("--headless");
+        WebDriver driver = new FirefoxDriver(options);
         try{
             officeLogin login = new officeLogin(driver);
             contractType type = new contractType(driver);

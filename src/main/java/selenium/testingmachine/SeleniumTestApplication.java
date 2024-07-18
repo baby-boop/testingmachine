@@ -11,6 +11,7 @@ import selenium.testingmachine.hr.mainHr;
 import selenium.testingmachine.hr_salary.main_salary;
 import selenium.testingmachine.office.officeContract;
 import selenium.testingmachine.office.officeTask;
+import selenium.testingmachine.store.storeMain;
 import selenium.testingmachine.supply.mainSupply;
 
 @SpringBootApplication
@@ -22,9 +23,11 @@ public class SeleniumTestApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        // mainSupply supply = new mainSupply();
+        // supply.mainSystem();
         Scanner scanner = new Scanner(System.in);
         String choice = "";
-        String promptMessage = "Тест хийх модулиа сонгоно уу? (salary/hr/request/contract/task/supply): ";
+        String promptMessage = "Тест хийх модулиа сонгоно уу? (salary/hr/request/contract/task/supply/store): ";
 
         while (true) {
             System.out.println(promptMessage);
@@ -57,6 +60,10 @@ public class SeleniumTestApplication implements CommandLineRunner {
                 case "supply":
                     mainSupply supply = new mainSupply();
                     supply.mainSystem();
+                    break;
+                case "store":
+                    storeMain store = new storeMain();
+                    store.mainSystem();
                     break;
                 default:
                     System.out.println("Тухайн модуль олдсонгүй '" + choice + "'");

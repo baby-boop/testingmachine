@@ -1,4 +1,4 @@
-package selenium.testingmachine.supply.masterdata;
+package selenium.testingmachine.store.masterdata;
 
 import java.time.Duration;
 
@@ -8,26 +8,27 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class productPort {
-   public static String message;
+public class store {
+  public static String message;
 
     private WebDriver driver;
 
-    public productPort(WebDriver driver) {
+    public store(WebDriver driver) {
         this.driver = driver;
     }
     public void data(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            Thread.sleep(2000);
 
-            Thread.sleep(500);
+            WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Дэлгүүрийн удирдлага']")));
+            menuTileElement.click();
 
-            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Боомт')]")));
-            main.click();
+            Thread.sleep(1000);
 
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Гадаад боомт')]")));
-            menu.click(); 
+            WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Мастер дата')]")));
+            openField.click();
 
             Thread.sleep(500);
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
@@ -38,27 +39,35 @@ public class productPort {
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[name]")));
             name.sendKeys("test1");
 
-            WebElement type = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-section-path='portTypeId']")));
-            WebElement radioButton = type.findElement(By.xpath(".//input[@type='radio' and @value='1']"));
-            radioButton.click();
+            WebElement type = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='priceLocationId']")));
+            type.click();
+            WebElement typeOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Төвийн бүс']")));
+            typeOption.click();
 
-            WebElement mode = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-section-path='portModeId']")));
-            WebElement radioButton1 = mode.findElement(By.xpath(".//input[@type='radio' and @value='1']"));
-            radioButton1.click();
+            WebElement merchant = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[merchantId]")));
+            merchant.sendKeys("11");    
 
-            WebElement category = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-section-path='portCategoryId']")));
-            WebElement radioButton2 = category.findElement(By.xpath(".//input[@type='radio' and @value='1']"));
-            radioButton2.click();
+            WebElement districtCode = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[posapiDistrictCode]")));
+            districtCode.sendKeys("001");
 
-            Thread.sleep(500);
+            WebElement type1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='SM_STORE_DTL_DATAVIEW.cityId']")));
+            type1.click();
+            WebElement typeOption1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Улаанбаатар']")));
+            typeOption1.click();
+
+            WebElement type2 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='SM_STORE_DTL_DATAVIEW.districtId']")));
+            type2.click();
+            WebElement typeOption2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Баянзүрх']")));
+            typeOption2.click();
+
+            WebElement desc = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[SM_STORE_DTL_DATAVIEW.address][0][]")));
+            desc.sendKeys("testshuu");
 
             WebElement coordinate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-primary mr0')]")));
             coordinate.click();
 
             WebElement selectCoordinate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm red-sunglo')]")));
             selectCoordinate.click();
-
-            Thread.sleep(1000);
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn green-meadow btn-sm bp-run-btn main-run-btn bp-btn-save')]")));
             saveBtn.click();
@@ -74,10 +83,10 @@ public class productPort {
 
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-productPort : " + e.getMessage());
+            System.out.println("Error class-store : " + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished productPort");
+            System.out.println("finished store");
         }
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
@@ -88,7 +97,7 @@ public class productPort {
             String errorText = errorMessage.getText();
             WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
             String processName = mainProccess.getText();
-            message = ("class-productPort: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
+            message = ("class-store: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
             System.out.println(message);
             return errorMessage.isDisplayed();
         } catch (Exception e) {
@@ -96,5 +105,5 @@ public class productPort {
         } finally {
             wait.withTimeout(Duration.ofSeconds(10));
         }
-    }   
+    }       
 }

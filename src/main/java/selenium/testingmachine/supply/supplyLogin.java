@@ -17,23 +17,29 @@ public class supplyLogin {
     public supplyLogin(WebDriver driver) {
         this.driver = driver;
     }
+
     public void login(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get("https://cloud.veritech.mn/login");
-        driver.manage().window().setSize(new Dimension(1500, 800));
-        WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
-        userNameField.sendKeys("testshuu@gmail.com");
-        // userNameField.sendKeys("admin");
+        try {
+            driver.get("https://cloud.veritech.mn/login");
+            driver.manage().window().setSize(new Dimension(1500, 800));
+            
+            WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
+            userNameField.sendKeys("testshuu@gmail.com");
 
-        WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pass_word")));
-        passwordField.sendKeys("VrCloud@123");
-        passwordField.sendKeys(Keys.ENTER);
+            WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pass_word")));
+            passwordField.sendKeys("VrCloud@123");
+            passwordField.sendKeys(Keys.ENTER);
 
-        String url = "https://cloud.veritech.mn/appmenu/indexnew#16745403871623";
-        driver.get(url);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.location.href = arguments[0];", url);
-        driver.navigate().refresh();
+            Thread.sleep(1000);
 
+            String url = "https://cloud.veritech.mn/appmenu/indexnew#16745403871623";
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.location.href = arguments[0];", url);
+            driver.navigate().refresh();
+            
+        } catch (Exception e) {
+            System.out.println("login: " + e.getMessage());
         }
+    }
 }
