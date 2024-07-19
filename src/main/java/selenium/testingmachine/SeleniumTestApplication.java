@@ -1,7 +1,5 @@
 package selenium.testingmachine;
 
-import java.util.Scanner;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,52 +21,57 @@ public class SeleniumTestApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // mainSupply supply = new mainSupply();
-        // supply.mainSystem();
-        Scanner scanner = new Scanner(System.in);
-        String choice = "";
-        String promptMessage = "Тест хийх модулиа сонгоно уу? (salary/hr/request/contract/task/supply/store): ";
-
-        while (true) {
-            System.out.println(promptMessage);
-            choice = scanner.nextLine().trim().toLowerCase();
-            switch (choice) {
-                case "salary":
-                    main_salary salary = new main_salary();
-                    salary.main_salary_system();
-                    break;
-                case "hr":
-                    mainHr hr = new mainHr();
-                    hr.main_hr_system();
-                    break;
-                case "request":
-                    requestMain main = new requestMain();
-                    main.mainSystem();
-                    break;
-                case "mytask":
-                    createTask task1 = new createTask();
-                    task1.login();
-                    break;
-                case "contract":
-                    officeContract contract = new officeContract();
-                    contract.mainSystem();
-                    break;
-                case "task":
-                    officeTask task = new officeTask();
-                    task.mainSystem();
-                    break;
-                case "supply":
-                    mainSupply supply = new mainSupply();
-                    supply.mainSystem();
-                    break;
-                case "store":
-                    storeMain store = new storeMain();
-                    store.mainSystem();
-                    break;
-                default:
-                    System.out.println("Тухайн модуль олдсонгүй '" + choice + "'");
-                    break;
+        if (args.length > 0) {
+            String module = args[0];
+            try {
+                executeModule(module);
+            } catch (Exception e) {
+                System.err.println("Модуль ажиллуулахад алдаа гарлаа: " + e.getMessage());
             }
+        } else {
+            System.out.println("Модуль олдсонгүй.");
+        }
+    }
+
+    public void executeModule(String module) {
+        switch (module) {
+            case "salary":
+                main_salary salary = new main_salary();
+                salary.main_salary_system();
+                System.out.println("Salary running");
+                break;
+            case "hr":
+                mainHr hr = new mainHr();
+                hr.main_hr_system();
+                System.out.println("HR running");
+                break;
+            case "request":
+                requestMain requestMain = new requestMain();
+                requestMain.mainSystem();
+                System.out.println("Request running");
+                break;
+            case "contract":
+                officeContract contract = new officeContract();
+                contract.mainSystem();
+                System.out.println("Contract running");
+                break;
+            case "task":
+                officeTask task = new officeTask();
+                task.mainSystem();
+                System.out.println("Task running");
+                break;
+            case "supply":
+                mainSupply supply = new mainSupply();
+                supply.mainSystem();
+                System.out.println("Supply running");
+                break;
+            case "store":
+                storeMain store = new storeMain();
+                store.mainSystem();
+                System.out.println("Store running");
+                break;
+            default:
+                throw new IllegalArgumentException("Модуль олдсонгүй");
         }
     }
 }

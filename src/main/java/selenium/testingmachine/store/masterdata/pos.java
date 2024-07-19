@@ -3,7 +3,7 @@ package selenium.testingmachine.store.masterdata;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,10 +23,10 @@ public class pos {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             Thread.sleep(1000);
 
-            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Тасаг')]")));
+            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'ПОС')]")));
             main.click();
 
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='169327663823710']")));
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='16842268879899']")));
             menu.click(); 
 
             Thread.sleep(500);
@@ -38,19 +38,22 @@ public class pos {
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[name]")));
             name.sendKeys("test1");
 
-            WebElement type = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='sectionTypeId']")));
+            WebElement type = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='storeId']")));
             type.click();
-            WebElement typeOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Бөөний']")));
+            WebElement typeOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'test1']")));
             typeOption.click();
 
-            WebElement type1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='storeId']")));
+            WebElement type1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='isnotSendVatsp']")));
             type1.click();
-            WebElement typeOption1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'test1']")));
+            WebElement typeOption1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Үгүй']")));
             typeOption1.click();
 
-            WebElement path = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("storeKeeperKeyId_nameField")));
-            path.sendKeys("ХМ-ын нярав");
-            path.sendKeys(Keys.ENTER);
+            WebElement img = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[logo]")));
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].removeAttribute('required')", img);
+
+            WebElement talon = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[billName]")));
+            talon.sendKeys("test1");
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn green-meadow btn-sm bp-run-btn main-run-btn bp-btn-save')]")));
             saveBtn.click();

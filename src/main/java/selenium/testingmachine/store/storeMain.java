@@ -24,6 +24,10 @@ public class storeMain {
             pos pos = new pos(driver);
 
             login.login();
+            store.data();
+            cashier.data();
+            section.data();
+            pos.data();
 
 
         }finally {
