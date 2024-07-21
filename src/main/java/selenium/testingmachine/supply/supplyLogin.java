@@ -11,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.controller.loginController;
+
 public class supplyLogin {
     private WebDriver driver;
 
@@ -21,17 +23,17 @@ public class supplyLogin {
     public void login(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            driver.get("https://cloud.veritech.mn/login");
+            driver.get(loginController.URL);
             driver.manage().window().setSize(new Dimension(1500, 800));
             
             WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
-            userNameField.sendKeys("testshuu@gmail.com");
+            userNameField.sendKeys(loginController.USERNAME);
 
             WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pass_word")));
-            passwordField.sendKeys("VrCloud@123");
+            passwordField.sendKeys(loginController.PASSWORD);
             passwordField.sendKeys(Keys.ENTER);
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             String url = "https://cloud.veritech.mn/appmenu/indexnew#16745403871623";
             JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -39,7 +41,7 @@ public class supplyLogin {
             driver.navigate().refresh();
             
         } catch (Exception e) {
-            System.out.println("login: " + e.getMessage());
-        }
+            System.err.println("error login process: " + e.getMessage());
+        } 
     }
 }

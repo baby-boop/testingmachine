@@ -72,6 +72,13 @@ import selenium.testingmachine.office.contract.masterdata.contractTypeOfLosses;
 import selenium.testingmachine.office.task.main.registrationOfTask;
 import selenium.testingmachine.office.task.masterdata.taskLevel;
 import selenium.testingmachine.office.task.masterdata.taskType;
+import selenium.testingmachine.store.masterdata.cashier;
+import selenium.testingmachine.store.masterdata.pos;
+import selenium.testingmachine.store.masterdata.productBrand;
+import selenium.testingmachine.store.masterdata.productGroup;
+import selenium.testingmachine.store.masterdata.productModel;
+import selenium.testingmachine.store.masterdata.section;
+import selenium.testingmachine.store.masterdata.store;
 import selenium.testingmachine.supply.main.createOrder;
 import selenium.testingmachine.supply.masterdata.goodsToBuy;
 import selenium.testingmachine.supply.masterdata.productClassification;
@@ -154,7 +161,14 @@ public class DashboardController {
                 goodsToBuy.message,
                 productClassification.message,
                 supplier.message,
-                createOrder.message
+                createOrder.message,
+                cashier.message,
+                productGroup.message,
+                pos.message,
+                section.message,
+                store.message,
+                productBrand.message,
+                productModel.message
                 );
         
         String concatenatedMessages = messages.stream()

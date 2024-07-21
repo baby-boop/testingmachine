@@ -20,20 +20,20 @@ public class pos {
     public void data(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            Thread.sleep(1000);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            Thread.sleep(2000);
 
             WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'ПОС')]")));
             main.click();
-
+            Thread.sleep(2000);
             WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='16842268879899']")));
             menu.click(); 
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[name]")));
             name.sendKeys("test1");
@@ -48,11 +48,11 @@ public class pos {
             WebElement typeOption1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Үгүй']")));
             typeOption1.click();
 
-            WebElement img = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[logo]")));
+            WebElement img = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='logo']")));
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].removeAttribute('required')", img);
 
-            WebElement talon = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[billName]")));
+            WebElement talon = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("param[billName]")));
             talon.sendKeys("test1");
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn green-meadow btn-sm bp-run-btn main-run-btn bp-btn-save')]")));
@@ -69,10 +69,10 @@ public class pos {
 
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-cashier : " + e.getMessage());
+            System.out.println("Error class-pos : " + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished cashier");
+            System.out.println("finished pos");
         }
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
@@ -83,7 +83,7 @@ public class pos {
             String errorText = errorMessage.getText();
             WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
             String processName = mainProccess.getText();
-            message = ("class-cashier: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
+            message = ("class-pos: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
             System.out.println(message);
             return errorMessage.isDisplayed();
         } catch (Exception e) {

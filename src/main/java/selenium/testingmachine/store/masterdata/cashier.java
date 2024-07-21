@@ -19,20 +19,20 @@ public class cashier {
     public void data(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            Thread.sleep(1000);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            Thread.sleep(2000);
 
             WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Кассир')]")));
             main.click();
-
+            Thread.sleep(2000);
             WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='16842268919929']")));
             menu.click(); 
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[name]")));
             name.sendKeys("test1");

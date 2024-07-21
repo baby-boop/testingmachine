@@ -5,11 +5,12 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import selenium.testingmachine.controller.loginController;
 
 public class salaryCalculatorMonth {
 
@@ -27,14 +28,14 @@ public class salaryCalculatorMonth {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             
         
-            driver.get("https://testshuu.veritech.mn/login");
+            driver.get(loginController.URL);
             driver.manage().window().setSize(new Dimension(1500, 800));
             WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
-            userNameField.sendKeys("admin");
+            userNameField.sendKeys(loginController.USERNAME);
     
             WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pass_word")));
             passwordField.sendKeys("89");
-            passwordField.sendKeys(Keys.ENTER);
+            passwordField.sendKeys(loginController.PASSWORD);
     
 
             Thread.sleep(1000);

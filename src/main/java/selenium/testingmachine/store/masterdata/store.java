@@ -19,22 +19,22 @@ public class store {
     public void data(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             Thread.sleep(2000);
 
             WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Дэлгүүрийн удирдлага']")));
             menuTileElement.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(3000);
 
             WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Мастер дата')]")));
             openField.click();
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[name]")));
             name.sendKeys("test1");
@@ -63,12 +63,17 @@ public class store {
             WebElement desc = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[SM_STORE_DTL_DATAVIEW.address][0][]")));
             desc.sendKeys("testshuu");
 
+            Thread.sleep(2000);
+
             WebElement coordinate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-primary mr0')]")));
             coordinate.click();
+            
+            Thread.sleep(2000);
 
             WebElement selectCoordinate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm red-sunglo')]")));
             selectCoordinate.click();
 
+            Thread.sleep(2000);
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn green-meadow btn-sm bp-run-btn main-run-btn bp-btn-save')]")));
             saveBtn.click();
 

@@ -12,6 +12,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.controller.loginController;
+
 public class requestLogin {
      private WebDriver driver;
 
@@ -19,23 +21,27 @@ public class requestLogin {
         this.driver = driver;
     }
     public void login(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get("https://cloud.veritech.mn/login");
-        driver.manage().window().setSize(new Dimension(1500, 800));
-        WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
-        userNameField.sendKeys("testshuu@gmail.com");
-        // userNameField.sendKeys("admin");
+        try{
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            driver.get(loginController.URL);
+            driver.manage().window().setSize(new Dimension(1500, 800));
+            WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
+            userNameField.sendKeys(loginController.USERNAME);
+            // userNameField.sendKeys("admin");
 
-        WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pass_word")));
-        passwordField.sendKeys("VrCloud@123");
-        passwordField.sendKeys(Keys.ENTER);
+            WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pass_word")));
+            passwordField.sendKeys(loginController.PASSWORD);
+            passwordField.sendKeys(Keys.ENTER);
+            
+            Thread.sleep(2000);
 
-        String url = "https://cloud.veritech.mn/appmenu/indexnew#16805043926731";
-        driver.get(url);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.location.href = arguments[0];", url);
-        driver.navigate().refresh();
-
-        }
-   
+            String url = "https://cloud.veritech.mn/appmenu/indexnew#16805043926731";
+            driver.get(url);
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.location.href = arguments[0];", url);
+            driver.navigate().refresh();
+        } catch (Exception e) {
+            System.err.println("error login process: " + e.getMessage());
+        } 
+    }
 }

@@ -6,7 +6,10 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 
 import selenium.testingmachine.store.masterdata.cashier;
-import selenium.testingmachine.store.masterdata.pos;
+import selenium.testingmachine.store.masterdata.productBrand;
+import selenium.testingmachine.store.masterdata.productGroup;
+import selenium.testingmachine.store.masterdata.productModel;
+import selenium.testingmachine.store.masterdata.productTreasurer;
 import selenium.testingmachine.store.masterdata.section;
 import selenium.testingmachine.store.masterdata.store;
 
@@ -21,13 +24,21 @@ public class storeMain {
             store store = new store(driver);
             cashier cashier = new cashier(driver);
             section section = new section(driver);
-            pos pos = new pos(driver);
+            // pos pos = new pos(driver);
+            productGroup group = new productGroup(driver);
+            productModel model = new productModel(driver);
+            productBrand brand = new productBrand(driver);
+            productTreasurer treasurer = new productTreasurer(driver);
 
             login.login();
             store.data();
             cashier.data();
             section.data();
-            pos.data();
+            // pos.data();
+            group.data();
+            model.data();
+            brand.data();
+            treasurer.data();
 
 
         }finally {

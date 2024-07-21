@@ -3,18 +3,17 @@ package selenium.testingmachine.store.masterdata;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class section {
+public class productGroup {
      public static String message;
 
     private WebDriver driver;
 
-    public section(WebDriver driver) {
+    public productGroup(WebDriver driver) {
         this.driver = driver;
     }
     public void data(){
@@ -23,38 +22,34 @@ public class section {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             Thread.sleep(2000);
 
-            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Тасаг')]")));
+            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Бараа, материал')]")));
             main.click();
+
             Thread.sleep(2000);
 
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='169327663823710']")));
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='16881003018179']")));
             menu.click(); 
 
             Thread.sleep(2000);
+
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
 
             Thread.sleep(2000);
 
-            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[name]")));
+            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[ITEM_CATEGORY_NAME]")));
             name.sendKeys("test1");
 
-            WebElement type = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='sectionTypeId']")));
-            type.click();
-            WebElement typeOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Бөөний']")));
-            typeOption.click();
+            WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[ITEM_CATEGORY_CODE]")));
+            code.sendKeys("1");
 
-            WebElement type1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='storeId']")));
-            type1.click();
-            WebElement typeOption1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'test1']")));
-            typeOption1.click();
-
-            WebElement path = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("storeKeeperKeyId_nameField")));
-            path.sendKeys("ХМ-ын нярав");
-            path.sendKeys(Keys.ENTER);
-
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn green-meadow btn-sm bp-run-btn main-run-btn bp-btn-save')]")));
+            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ml-1 btn btn-sm btn-circle btn-success bp-btn-save')]")));
             saveBtn.click();
+
+            Thread.sleep(3500);
+
+            WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'far fa-times')]")));
+            closeBtn.click();
 
             if (isErrorMessagePresent(wait)) {
                 System.out.println("Error message found after saving. Exiting...");
@@ -67,10 +62,10 @@ public class section {
 
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-section : " + e.getMessage());
+            System.out.println("Error class-productGroup : " + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished section");
+            System.out.println("finished productGroup");
         }
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
@@ -81,7 +76,7 @@ public class section {
             String errorText = errorMessage.getText();
             WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
             String processName = mainProccess.getText();
-            message = ("class-section: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
+            message = ("class-productGroup: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
             System.out.println(message);
             return errorMessage.isDisplayed();
         } catch (Exception e) {
@@ -89,5 +84,5 @@ public class section {
         } finally {
             wait.withTimeout(Duration.ofSeconds(10));
         }
-    }       
+    }        
 }
