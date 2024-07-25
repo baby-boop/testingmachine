@@ -1,6 +1,5 @@
 package selenium.testingmachine.controller;
 
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,13 +71,24 @@ import selenium.testingmachine.office.contract.masterdata.contractTypeOfLosses;
 import selenium.testingmachine.office.task.main.registrationOfTask;
 import selenium.testingmachine.office.task.masterdata.taskLevel;
 import selenium.testingmachine.office.task.masterdata.taskType;
+import selenium.testingmachine.store.main.createOrderFromStore;
 import selenium.testingmachine.store.masterdata.cashier;
+import selenium.testingmachine.store.masterdata.cozy;
+import selenium.testingmachine.store.masterdata.customer;
+import selenium.testingmachine.store.masterdata.customerGroup;
+import selenium.testingmachine.store.masterdata.location;
 import selenium.testingmachine.store.masterdata.pos;
+import selenium.testingmachine.store.masterdata.product;
 import selenium.testingmachine.store.masterdata.productBrand;
 import selenium.testingmachine.store.masterdata.productGroup;
 import selenium.testingmachine.store.masterdata.productModel;
+import selenium.testingmachine.store.masterdata.productTreasurer;
+import selenium.testingmachine.store.masterdata.salePrice;
 import selenium.testingmachine.store.masterdata.section;
 import selenium.testingmachine.store.masterdata.store;
+import selenium.testingmachine.store.masterdata.warehouse;
+import selenium.testingmachine.strategic.businessDirection;
+import selenium.testingmachine.strategic.businessProfile;
 import selenium.testingmachine.supply.main.createOrder;
 import selenium.testingmachine.supply.masterdata.goodsToBuy;
 import selenium.testingmachine.supply.masterdata.productClassification;
@@ -86,96 +96,138 @@ import selenium.testingmachine.supply.masterdata.productClassification;
 @RestController
 public class DashboardController {
 
+    private static final String HTML_OPEN_TAG = "<html><head><style>" +
+        ".alert {" +
+        "  padding: 20px;" +
+        "  background-color: #f44336;" +
+        "  color: white;" +
+        "  margin-bottom: 15px;" +
+        "}" +
+        ".closebtn {" +
+        "  margin-left: 15px;" +
+        "  color: white;" +
+        "  font-weight: bold;" +
+        "  float: right;" +
+        "  font-size: 22px;" +
+        "  line-height: 20px;" +
+        "  cursor: pointer;" +
+        "  transition: 0.3s;" +
+        "}" +
+        ".closebtn:hover {" +
+        "  color: black;" +
+        "}" +
+        "</style></head><body>";
+    private static final String HTML_CLOSE_TAG = "</body></html>";
 
     @GetMapping("/dashboard")
-
     public String displayClassName() {
-        
-        List<String> messages = Arrays.asList(
-                prizeOfType.message, 
-                jobDismissed.message, 
-                jobLongLeave.message,
-                reasonForDismissal.message,
-                reasonForAssistance.message,
-                reasonForDiscipline.message,
-                // reasonForPrize.message
-                reasonForLeave.message,
-                // reasonForSuppport.message
-                unitType.message,
-                unitCodeType.message,
-                unitSegment.message,
-                unitStructure.message,
-                dutiesForPosition.message,
-                salaryTypeForPosition.message,
-                positionReasonType.message,
-                positionReasonLevel.message,
-                salaryCalculatorMonth.message,
-                vacationCalculator.message,
-                prlSalaryCalculator.message,
-                notTimeRegistration.message,
-                planLongtime.message,
-                request.message,
-                associatedCompany.message,
-                subcontractor.message,
-                securedLoans.message,
-                stocks.message,
-                emergencyContact.message,
-                creditHistory.message,
-                employeeFromKhaan.message,
-                shareHolders.message,
-                directions.message,
-                director.message,
-                supplier.message,
-                buyer.message,
-                mainEmployees.message,
-                businessStandart.message,
-                businessLicense.message,
-                otherInformation.message,
-                businessLoans.message,
-                businessStocks.message,
-                fixedAssets.message,
-                movableAssets.message,
-                financialReporting.message,
-                additionalFinancial.message,
-                receivablesDetails.message,
-                prepaidExpenses.message,
-                paymentDetails.message,
-                prepaidIncome.message,
-                bankToReceiveSalesProceeds.message,
-                salesRevenue.message,
-                operationCost.message,
-                debtToIncomerRatio.message,
-                barterAssets.message,
-                contractType.message,
-                contractDirections.message,
-                contractPaymentType.message,
-                contractReminderDays.message,
-                contractPrivacyType.message,
-                contractTypeOfLosses.message,
-                contractReasonsForTermination.message,
-                registrationOfContracts.message,
-                contractList.message,
-                taskLevel.message,
-                taskType.message,
-                registrationOfTask.message,
-                goodsToBuy.message,
-                productClassification.message,
-                supplier.message,
-                createOrder.message,
-                cashier.message,
-                productGroup.message,
-                pos.message,
-                section.message,
-                store.message,
-                productBrand.message,
-                productModel.message
-                );
-        
-        String concatenatedMessages = messages.stream()
-                .filter(message -> message != null && !message.isEmpty())
-                .collect(Collectors.joining("</p><p>", "<p>", "</p>"));
+        List<String> messages = getMessages();
+        String concatenatedMessages = formatMessagesAsAlerts(messages);
+        return wrapWithHtmlBody(concatenatedMessages);
 
-        return "<html><body>" + concatenatedMessages + "</body></html>";
-    
     }
+    private List<String> getMessages() {
+        return Arrays.asList(
+            prizeOfType.message, 
+            jobDismissed.message, 
+            jobLongLeave.message,
+            reasonForDismissal.message,
+            reasonForAssistance.message,
+            reasonForDiscipline.message,
+            reasonForLeave.message,
+            unitType.message,
+            unitCodeType.message,
+            unitSegment.message,
+            unitStructure.message,
+            dutiesForPosition.message,
+            salaryTypeForPosition.message,
+            positionReasonType.message,
+            positionReasonLevel.message,
+            salaryCalculatorMonth.message,
+            vacationCalculator.message,
+            prlSalaryCalculator.message,
+            notTimeRegistration.message,
+            planLongtime.message,
+            request.message,
+            associatedCompany.message,
+            subcontractor.message,
+            securedLoans.message,
+            stocks.message,
+            emergencyContact.message,
+            creditHistory.message,
+            employeeFromKhaan.message,
+            shareHolders.message,
+            directions.message,
+            director.message,
+            supplier.message,
+            buyer.message,
+            mainEmployees.message,
+            businessStandart.message,
+            businessLicense.message,
+            otherInformation.message,
+            businessLoans.message,
+            businessStocks.message,
+            fixedAssets.message,
+            movableAssets.message,
+            financialReporting.message,
+            additionalFinancial.message,
+            receivablesDetails.message,
+            prepaidExpenses.message,
+            paymentDetails.message,
+            prepaidIncome.message,
+            bankToReceiveSalesProceeds.message,
+            salesRevenue.message,
+            operationCost.message,
+            debtToIncomerRatio.message,
+            barterAssets.message,
+            contractType.message,
+            contractDirections.message,
+            contractPaymentType.message,
+            contractReminderDays.message,
+            contractPrivacyType.message,
+            contractTypeOfLosses.message,
+            contractReasonsForTermination.message,
+            registrationOfContracts.message,
+            contractList.message,
+            taskLevel.message,
+            taskType.message,
+            registrationOfTask.message,
+            goodsToBuy.message,
+            productClassification.message,
+            createOrder.message,
+            cashier.message,
+            productGroup.message,
+            pos.message,
+            section.message,
+            store.message,
+            productBrand.message,
+            productModel.message,
+            productTreasurer.message,
+            businessProfile.message,
+            businessDirection.message,
+            product.message,
+            warehouse.message,
+            cozy.message,
+            warehouse.message,
+            location.message,
+            salePrice.message,
+            customerGroup.message,
+            customer.message,
+            createOrderFromStore.message
+        );
+    }
+
+    private String formatMessagesAsAlerts(List<String> messages) {
+
+        return messages.stream()
+                .filter(message -> message != null && !message.isEmpty())
+                .map(message -> "<div class=\"alert\"><span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>" + message + "</div>")
+                .collect(Collectors.joining());
+    }
+
+    private String wrapWithHtmlBody(String content) {
+        return HTML_OPEN_TAG + content + HTML_CLOSE_TAG;
+    }
+
+
 }

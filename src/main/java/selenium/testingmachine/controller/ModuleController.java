@@ -28,7 +28,8 @@ public class ModuleController {
             application.executeModule(module);
             responseMessage = module + " module executed.";
         } catch (Exception e) {
-            responseMessage = "Модуль ажиллуулахад алдаа гарлаа: " + e.getMessage();
+            responseMessage = "Модуль ажиллуулахад алдаа гарлаа: " ;
+            // + e.getMessage();
         }
 
         return responseMessage;

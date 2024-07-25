@@ -19,7 +19,7 @@ public class employeeManagement {
     public void employee() {
         try {
             
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             Actions actions = new Actions(driver);
 

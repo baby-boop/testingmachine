@@ -3,61 +3,86 @@ package selenium.testingmachine.store.masterdata;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class productModel {
-
+public class salePrice {
     public static String message;
 
     private WebDriver driver;
 
-    public productModel(WebDriver driver) {
+    public salePrice(WebDriver driver) {
         this.driver = driver;
     }
     public void data(){
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
             Thread.sleep(2000);
 
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='16881010099949']")));
+            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Худалдах үнэ')]")));
+            main.click();
+
+            Thread.sleep(2000);
+
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='16921529583669']")));
             menu.click(); 
-
+            
             Thread.sleep(2000);
+
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
 
             Thread.sleep(2000);
 
-            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[MODEL_NAME]")));
-            name.sendKeys("test1");
+            WebElement productField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".middle #itemId_nameField")));
+            productField.sendKeys("test1");
+            productField.sendKeys(Keys.ENTER);
 
-            WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[MODEL_CODE]")));
-            code.sendKeys("1");
+            Thread.sleep(500);
 
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ml-1 btn btn-sm btn-circle btn-success bp-btn-save')]")));
-            saveBtn.click();
+            JavascriptExecutor js = (JavascriptExecutor) driver;
 
-            if (isErrorMessagePresent(wait)) {
-                System.out.println("Error message found after saving. Exiting..."+ this.getClass().getName());
-                Thread.sleep(4000);
-                WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16881010099949 .mb-1 .far")));
-                closeBtn.click();
+            WebElement salePriceField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[data-path='salePrice']")));
+            salePriceField.sendKeys("150000");
 
-                return;
-            }else{
-                Thread.sleep(4000);
-                WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16881010099949 .mb-1 .far")));
-                closeBtn.click();
-            }
+            WebElement salePriceHideField = driver.findElement(By.name("param[salePrice]"));
+            js.executeScript("arguments[0].value='150000';", salePriceHideField);
+
+            Thread.sleep(500);
+
+            WebElement priceLocationField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='whSalePriceKeyDv']")));
+            priceLocationField.sendKeys("001");
+            priceLocationField.sendKeys(Keys.ENTER);
 
             Thread.sleep(1000);
 
-            
-            
+            WebElement DescriptionField = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Худалдах үнийн дэлгэрэнгүй")));
+            DescriptionField.click();
+
+            Thread.sleep(1000);
+
+            WebElement salePriceSaveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn green-meadow btn-sm bp-run-btn main-run-btn bp-btn-save')]")));
+            salePriceSaveBtn.click();
+
+            if (isErrorMessagePresent(wait)) {
+                System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
+                Thread.sleep(4000);
+                WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
+                closeBtn.click();
+                return;
+            }
+
+            Thread.sleep(4000);
+            WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
+            closeBtn.click();
+          
+
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
@@ -84,7 +109,7 @@ public class productModel {
                         System.out.println("Process name element not found: " + this.getClass().getName() + e.getMessage());
                     }
                 
-                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " - Барааны модель" +"<br>Алдаа: " + errorText;
+                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " - Харилцагчийн бүлэг" +"<br>Алдаа: " + errorText;
                             
                     return errorMessage.isDisplayed();
                 } catch (Exception e) {

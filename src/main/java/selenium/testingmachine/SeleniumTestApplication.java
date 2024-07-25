@@ -10,6 +10,7 @@ import selenium.testingmachine.hr_salary.main_salary;
 import selenium.testingmachine.office.officeContract;
 import selenium.testingmachine.office.officeTask;
 import selenium.testingmachine.store.storeMain;
+import selenium.testingmachine.strategic.businessProfileMain;
 import selenium.testingmachine.supply.mainSupply;
 
 @SpringBootApplication
@@ -68,6 +69,11 @@ public class SeleniumTestApplication implements CommandLineRunner {
             case "store":
                 storeMain store = new storeMain();
                 store.mainSystem();
+                System.out.println("Store running");
+                break;
+            case "strategic":
+                businessProfileMain profile = new businessProfileMain();
+                profile.mainSystem();
                 System.out.println("Store running");
                 break;
             default:

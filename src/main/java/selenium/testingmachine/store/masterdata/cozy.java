@@ -8,13 +8,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class productModel {
-
+public class cozy {
     public static String message;
 
     private WebDriver driver;
 
-    public productModel(WebDriver driver) {
+    public cozy(WebDriver driver) {
         this.driver = driver;
     }
     public void data(){
@@ -23,41 +22,39 @@ public class productModel {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             Thread.sleep(2000);
 
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='16881010099949']")));
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='17054780702959']")));
             menu.click(); 
-
+            
             Thread.sleep(2000);
+
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
 
             Thread.sleep(2000);
 
-            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[MODEL_NAME]")));
-            name.sendKeys("test1");
+            WebElement titleField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[TITLE]")));
+            titleField.sendKeys("test1");
 
-            WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[MODEL_CODE]")));
-            code.sendKeys("1");
+            WebElement descriptionField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[DESCRIPTION]")));
+            descriptionField.sendKeys("testshuu");
 
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ml-1 btn btn-sm btn-circle btn-success bp-btn-save')]")));
+            Thread.sleep(500);
+
+            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
             saveBtn.click();
-
-            if (isErrorMessagePresent(wait)) {
-                System.out.println("Error message found after saving. Exiting..."+ this.getClass().getName());
-                Thread.sleep(4000);
-                WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16881010099949 .mb-1 .far")));
-                closeBtn.click();
-
-                return;
-            }else{
-                Thread.sleep(4000);
-                WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16881010099949 .mb-1 .far")));
-                closeBtn.click();
-            }
-
             Thread.sleep(1000);
 
-            
-            
+            if (isErrorMessagePresent(wait)) {
+                System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
+                Thread.sleep(4000);
+                
+                WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm blue-hoki bp-btn-close')]")));
+                closeBtn.click();
+                return;
+            }
+
+
+
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
@@ -84,7 +81,7 @@ public class productModel {
                         System.out.println("Process name element not found: " + this.getClass().getName() + e.getMessage());
                     }
                 
-                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " - Барааны модель" +"<br>Алдаа: " + errorText;
+                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " - Cozy ангилал" +"<br>Алдаа: " + errorText;
                             
                     return errorMessage.isDisplayed();
                 } catch (Exception e) {

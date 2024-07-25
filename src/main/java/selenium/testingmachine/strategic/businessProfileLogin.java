@@ -1,4 +1,4 @@
-package selenium.testingmachine.hr.main;
+package selenium.testingmachine.strategic;
 
 import java.time.Duration;
 
@@ -13,19 +13,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import selenium.testingmachine.controller.loginController;
 
-public class openHr {
+public class businessProfileLogin {
     private WebDriver driver;
 
-    public openHr(WebDriver driver) {
+    public businessProfileLogin(WebDriver driver) {
         this.driver = driver;
     }
-    public void loginHr(){
+    public void login(){
         try{
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             driver.get(loginController.URL);
             driver.manage().window().setSize(new Dimension(1500, 800));
             WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
             userNameField.sendKeys(loginController.USERNAME);
+            // userNameField.sendKeys("admin");
 
             WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pass_word")));
             passwordField.sendKeys(loginController.PASSWORD);
@@ -33,18 +34,14 @@ public class openHr {
 
             Thread.sleep(3000);
 
-            String url = "https://cloud.veritech.mn/appmenu/indexnew#16745416107063";
+            String url = "https://cloud.veritech.mn/appmenu/indexnew#17140796233272";
             driver.get(url);
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("window.location.href = arguments[0];", url);
             driver.navigate().refresh();
-
-            WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//a[contains(@href, 'javascript:;')])[9]")));
-            menuTileElement.click();
         } catch (Exception e) {
             System.err.println("error login process: " + e.getMessage());
         } 
-        
-    }
 
+        }
 }
