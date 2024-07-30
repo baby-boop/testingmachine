@@ -4,13 +4,19 @@ import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.MessageField;
+
 public class employeeManagement {
+    
+    public static @MessageField String message;
+
     private WebDriver driver;
 
     public employeeManagement(WebDriver driver) {
@@ -24,6 +30,13 @@ public class employeeManagement {
             Actions actions = new Actions(driver);
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+            Thread.sleep(2000);
+
+            WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Core HR']")));
+            menuTileElement.click();
+
+            Thread.sleep(3500);
             
             WebElement uragField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[urag]")));
             uragField.sendKeys("Халх");
@@ -34,11 +47,13 @@ public class employeeManagement {
             WebElement firstNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[firstName]")));
             firstNameField.sendKeys("Бат-оргил");
 
-            WebElement genderField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.select2-choice")));
+            WebElement genderField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='gender']")));
             genderField.click();
-            WebElement selectGender = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div#select2-result-label-14")));
+            WebElement selectGender = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Бусад']")));
             selectGender.click();
-
+            
+            Thread.sleep(500);
+            
             // WebElement dateField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("span.input-group-btn > button")));
             // dateField.click();
             // WebElement selectDate = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("th.today")));
@@ -54,44 +69,85 @@ public class employeeManagement {
             WebElement regNumber = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("stateRegNumber_numbers")));
             regNumber.sendKeys("00151018");
 
-            // WebElement departmentField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".form-group:nth-child(1) .far")));
-            // departmentField.click();
-            // WebElement downField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".tree-hit")));
-            // downField.click();
-            // WebElement selectDepartment = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#datagrid-row-r107-2-1718009022401629 .tree-title")));
-            // actions.doubleClick(selectDepartment).perform();
+            WebElement departmentField = wait.until(ExpectedConditions.elementToBeClickable(By.name("departmentId_nameField")));
+            departmentField.sendKeys("Мандал");
+            departmentField.sendKeys(Keys.ENTER);
 
-            WebElement positionField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".form-group:nth-child(2) .far")));
-            positionField.click();
-            WebElement selectPostion = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#datagrid-row-r1-2-1 > td:nth-child(3)")));
-            actions.doubleClick(selectPostion).perform();
+            Thread.sleep(1000);
 
-            WebElement workStartField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".form-group:nth-child(1) .dateElement .btn")));
-            workStartField.click();
-            WebElement startDate = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".datepicker-days tfoot .today")));
-            startDate.click();
+            WebElement positionField = wait.until(ExpectedConditions.elementToBeClickable(By.name("positionKeyId_nameField")));
+            positionField.sendKeys("Хөгжүүлэгч");
+            positionField.sendKeys(Keys.ENTER);
+            
+            Thread.sleep(500);
+            
+            WebElement workStartField = wait.until(ExpectedConditions.elementToBeClickable(By.name("param[workStartDate]")));
+            workStartField.sendKeys("2024-07-26");
+            
 
-            WebElement workEndField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".col-md-12:nth-child(2) .form-group:nth-child(2) .fal:nth-child(1)")));
-            workEndField.click();
-            WebElement endDate = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".datepicker-days tfoot .today")));
-            endDate.click();
+            WebElement startDateField = wait.until(ExpectedConditions.elementToBeClickable(By.name("param[startdate]")));
+            startDateField.sendKeys("2024-07-26");
+
 
             WebElement checkbox = driver.findElement(By.id("param[isTalent]"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkbox);
 
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bpMainSaveButton")));
+            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save ')]")));
             saveBtn.click();
-            Thread.sleep(3000);
-            System.out.println("HR successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("error class-employeeManagement : " + e.getMessage());
-            driver.quit();
-        } finally {
-            // driver.quit();
-            System.out.println("HR finished");
 
+            if (isErrorMessagePresent(wait)) {
+                System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
+                Thread.sleep(4000);
+                
+                // WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16911711539839 .mb-1 .far")));
+                // closeBtn.click();
+                return;
+            }
+            Thread.sleep(4000);
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
+            driver.quit();
+        }finally{
+            System.out.println("finished: "+ this.getClass().getSimpleName());
         }
     }
-
+    private boolean isErrorMessagePresent(WebDriverWait wait) {
+        try {
+            WebElement errorTitle = driver.findElement(By.cssSelector(".ui-pnotify-title"));
+            String errorTitleText = errorTitle.getText();
+            if (errorTitleText.contains("warning") || errorTitleText.contains("error")) {
+                try {
+                    wait.withTimeout(Duration.ofSeconds(2));
+                    WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
+                    String errorText = errorMessage.getText();
+                    
+                    String processName = "";
+                    try {
+                        WebElement mainProcess = driver.findElement(By.cssSelector("div.mb-1.d-flex.justify-content-between > p"));
+                        processName = mainProcess.getText();
+                    } catch (Exception e) {
+                        System.out.println("Process name element not found: " + this.getClass().getName() + e.getMessage());
+                    }
+                
+                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " - Ажилтан бүртгэх" +"<br>Алдаа: " + errorText;
+                            
+                    return errorMessage.isDisplayed();
+                } catch (Exception e) {
+                    System.out.println("Error while checking for error message: " + e.getMessage());
+                    return false;
+                } finally {
+                    wait.withTimeout(Duration.ofSeconds(30));
+                }
+            }else{
+                return false;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error while checking for error title: " + e.getMessage());
+            return false;
+        }
+    }
 }

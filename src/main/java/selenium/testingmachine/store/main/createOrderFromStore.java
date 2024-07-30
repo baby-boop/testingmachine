@@ -14,8 +14,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.MessageField;
+
 public class createOrderFromStore {
-    public static String message;
+    public static @MessageField String message;
 
     private WebDriver driver;
     

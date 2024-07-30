@@ -10,8 +10,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.MessageField;
+
 public class salePrice {
-    public static String message;
+    public static @MessageField String message;
 
     private WebDriver driver;
 
@@ -77,11 +79,6 @@ public class salePrice {
                 closeBtn.click();
                 return;
             }
-
-            Thread.sleep(4000);
-            WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-            closeBtn.click();
-          
 
         }catch(Exception e){
             e.printStackTrace();

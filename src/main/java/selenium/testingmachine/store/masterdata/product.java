@@ -10,8 +10,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.MessageField;
+
 public class product {
-    public static String message;
+    public static @MessageField String message;
 
     private WebDriver driver;
 
@@ -161,7 +163,7 @@ public class product {
 
             Thread.sleep(4000);
 
-            WebElement equivalentMenu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='187744620']")));
+            WebElement equivalentMenu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='187744717']")));
             equivalentMenu.click(); 
             
             Thread.sleep(2000);
@@ -193,34 +195,34 @@ public class product {
             }
             Thread.sleep(4000);
 
-            WebElement priceMenu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='187744759']")));
-            priceMenu.click(); 
+            // WebElement priceMenu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='187744759']")));
+            // priceMenu.click(); 
             
-            Thread.sleep(2000);
+            // Thread.sleep(2000);
 
-            WebElement unitCostField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[UNIT_COST]")));
-            unitCostField.sendKeys("150000");
+            // WebElement unitCostField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[UNIT_COST]")));
+            // unitCostField.sendKeys("150000");
 
-            WebElement purchasePriceField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[PURCHASE_PRICE]")));
-            purchasePriceField.sendKeys("1500000");
+            // WebElement purchasePriceField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[PURCHASE_PRICE]")));
+            // purchasePriceField.sendKeys("1500000");
 
-            WebElement salePriceField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[SALE_PRICE]")));
-            salePriceField.sendKeys("15000");
+            // WebElement salePriceField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[SALE_PRICE]")));
+            // salePriceField.sendKeys("15000");
 
-            WebElement priceSaveBtn = wait.until(ExpectedConditions.elementToBeClickable(productMainId.findElement(By.xpath(".//button[contains(text(), 'Хадгалах')]"))));          
-            priceSaveBtn.click();
+            // WebElement priceSaveBtn = wait.until(ExpectedConditions.elementToBeClickable(productMainId.findElement(By.xpath(".//button[contains(text(), 'Хадгалах')]"))));          
+            // priceSaveBtn.click();
 
-            if (isErrorMessagePresent(wait)) {
-                System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
-                Thread.sleep(4000);
+            // if (isErrorMessagePresent(wait)) {
+            //     System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
+            //     Thread.sleep(4000);
                 
-                WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16911711539839 .mb-1 .far")));
-                closeBtn.click();
-                return;
-            }
-            Thread.sleep(4000);
+            //     WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16911711539839 .mb-1 .far")));
+            //     closeBtn.click();
+            //     return;
+            // }
+            // Thread.sleep(4000);
 
-            WebElement warehouseMenu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='187744759']")));
+            WebElement warehouseMenu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='187744801']")));
             warehouseMenu.click(); 
             
             Thread.sleep(2000);

@@ -4,14 +4,17 @@ package selenium.testingmachine.hr.main;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.MessageField;
+
 public class jobDismissed {
-    public static String message;
+    public static @MessageField String message;
     private WebDriver driver;
 
     public jobDismissed(WebDriver driver) {
@@ -19,73 +22,112 @@ public class jobDismissed {
     }
 
     public void dismissed() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        
         try {
-            // Thread.sleep(1000);
-            // WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Тушаал')]")));
-            // openField.click();
-            Thread.sleep(500);
 
-            WebElement labour = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Ажлаас чөлөөлөх')]")));
-            labour.click();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            WebElement probation = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("li:nth-child(1) > .item-icon-selection")));
-            probation.click();
+            Thread.sleep(2000);
 
-            WebElement startDate = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='bookDate']")));
-            startDate.sendKeys("2024-06-07");
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='17149684951853']")));
+            menu.click();
 
-            WebElement description = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-section-path='description'] textarea[name='param[description]']")));
-            description.sendKeys("Ажлаас чөлөөлөх");
+            Thread.sleep(2000);
 
-            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("oldEmployeeKeyId_nameField")));
+            WebElement subMenu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@title='Хөдөлмөрийн гэрээ дуусгавар болгох']")));
+            subMenu.click();
+
+            Thread.sleep(2000);
+
+            WebElement startDateField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='bookDate']")));
+            startDateField.sendKeys("2024-06-07");
+
+            WebElement descriptionField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-section-path='description'] textarea[name='param[description]']")));
+            descriptionField.sendKeys("Ажлаас чөлөөлөх");
+
+            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("oldEmployeeKeyId_nameField")));
             name.sendKeys("Бат-оргил");
             name.sendKeys(Keys.ENTER);
+
             Thread.sleep(500);
 
-            WebElement date = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='HCM_LABOUR_BOOK_DTL.startDate']")));
-            date.sendKeys("2024-06-07");
+            WebElement dateField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='HCM_LABOUR_BOOK_DTL.startDate']")));
+            dateField.sendKeys("2024-06-07");
 
-            WebElement employeeStatus = wait.until(ExpectedConditions.elementToBeClickable(By.id("s2id_param[HCM_LABOUR_BOOK_DTL.quitjobTypeId][0][]")));
+            Thread.sleep(500);
+
+            WebElement employeeStatus = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='HCM_LABOUR_BOOK_DTL.quitjobTypeId']")));
             employeeStatus.click();
             WebElement employeeStatusOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Суралцах']")));
             employeeStatusOption.click();
 
-            WebElement descriptionDtl = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-section-path='HCM_LABOUR_BOOK_DTL.description'] textarea[name='param[HCM_LABOUR_BOOK_DTL.description][0][]']")));
-            descriptionDtl.sendKeys("Ажлаас чөлөөлөх");
+            Thread.sleep(1000);
 
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));
+            WebElement descriptionDtlField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-section-path='HCM_LABOUR_BOOK_DTL.description'] textarea[name='param[HCM_LABOUR_BOOK_DTL.description][0][]']")));
+            descriptionDtlField.sendKeys("Ажлаас чөлөөлөх");
+
+            Thread.sleep(1000);
+
+            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save ')]")));
             saveBtn.click();
 
             if (isErrorMessagePresent(wait)) {
-                System.out.println("Error message found after saving. Exiting...");
+                System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
+                
+                WebElement closeMessageBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".brighttheme-icon-closer")));
+                ((JavascriptExecutor) driver).executeScript("arguments[0].style.visibility='visible';", closeMessageBtn);
+                closeMessageBtn.click();
+
+                Thread.sleep(2000);
                 return;
             }
 
-        } catch (Exception e) {
+            Thread.sleep(2000);
+
+
+        }catch(Exception e){
             e.printStackTrace();
- 
-            System.out.println("Error-jobDismissed: " + e.getMessage());
+            System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
             driver.quit();
-        } finally {
-            System.out.println("jobDismissed finished");
+        }finally{
+            System.out.println("finished: "+ this.getClass().getSimpleName());
         }
     }
-
     private boolean isErrorMessagePresent(WebDriverWait wait) {
         try {
-            wait.withTimeout(Duration.ofSeconds(2));
-            WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme-error .ui-pnotify-text")));
-            String errorText = errorMessage.getText();
-            WebElement mainProccess = driver.findElement(By.xpath("//div[@class='main-process-text']/span"));
-            String processName = mainProccess.getText();
-            message = ("class-jobDismissed: "+ this.getClass().getName() + "   processName="+processName + "   Алдаа: " + errorText);
-            System.out.println(message);
-            return errorMessage.isDisplayed();
-        } catch (Exception e) {
+            WebElement errorContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme.ui-pnotify-container")));
+            WebElement errorTitle = errorContainer.findElement(By.cssSelector(".ui-pnotify-title"));
+            String errorTitleText = errorTitle.getText();
+            if (errorTitleText.contains("warning") || errorTitleText.contains("error")) {
+                try {
+                    wait.withTimeout(Duration.ofSeconds(2));
+                    WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
+                    String errorText = errorMessage.getText();
+                    
+                    String processName = "";
+                    try {
+                        WebElement mainProcess = driver.findElement(By.cssSelector("div.mb-1.d-flex.justify-content-between > p"));
+                        processName = mainProcess.getText();
+                    } catch (Exception e) {
+                        System.out.println("Process name element not found: " + this.getClass().getName() + e.getMessage());
+                    }
+                
+                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " - Ажлаас чөлөөлөх" +"<br>Алдаа: " + errorText;
+                            
+                    return errorMessage.isDisplayed();
+                } catch (Exception e) {
+                    System.out.println("Error while checking for error message: " + e.getMessage());
+                    return false;
+                } finally {
+                    wait.withTimeout(Duration.ofSeconds(30));
+                }
+            }else{
+                return false;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error while checking for error title: " + e.getMessage());
             return false;
-        } finally {
-            wait.withTimeout(Duration.ofSeconds(10));
         }
     }
 }

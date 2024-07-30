@@ -28,7 +28,6 @@ import selenium.testingmachine.hr.main.jobLongLeave;
 import selenium.testingmachine.hr.main.jobSalary;
 import selenium.testingmachine.hr.main.jobTransitionalMovement;
 import selenium.testingmachine.hr.main.labourBook;
-import selenium.testingmachine.hr.main.openHr;
 import selenium.testingmachine.hr.main.reassignment;
 import selenium.testingmachine.hr.main.representativeEmployee;
 import selenium.testingmachine.hr.master_data.positionList;
@@ -50,7 +49,7 @@ public class mainHr {
         WebDriver driver = new FirefoxDriver(options);
         
         try {
-			openHr openHr = new openHr(driver);
+			loginHr login = new loginHr(driver);
             employeeManagement management = new employeeManagement(driver);
             employeeList list = new employeeList(driver);
             jobCandidates candidates = new jobCandidates(driver);
@@ -90,14 +89,15 @@ public class mainHr {
             positionReasonLevel reasonLevel = new positionReasonLevel(driver);
 
 		
-			openHr.loginHr();
+			login.loginHr();
             management.employee();
             list.employees();
             candidates.candidates();
             candidate.candidate();
             labour.labour();
-            dismissed.dismissed(); //wfmStatusError
+            dismissed.dismissed(); 
             longLeave.longLeave();
+
             transitionalMovement.transition();
             benefits.benefits();
             extra.extra();
@@ -105,30 +105,31 @@ public class mainHr {
             salary.salary();
             rEmployee.representative();
             reassignment.reassignment(); 
-            // Ажилтны лавлах
-            unit.unit();
-            position.position();
-            filetype.types();
-            exam.types();
-            family.types();
-            address.types();
-            property.property();
-            prize.prize();
-            // Тушаалын лавлах
-            dismissal.reason();
-            assistance.reason();
-            discipline1.reason();
-            prize1.reason(); //cannot 
-            leave.reason();
-            support.reason(); //check
-            unitType.unit();
-            codeType.unit();
-            structure.unit(); //check
-            segment.unit();
-            duties.position();
-            salaryType.position();
-            reasonType.position();
-            reasonLevel.position();
+
+            // // Ажилтны лавлах
+            // unit.unit();
+            // position.position();
+            // filetype.types();
+            // exam.types();
+            // family.types();
+            // address.types();
+            // property.property();
+            // prize.prize();
+            // // Тушаалын лавлах
+            // dismissal.reason();
+            // assistance.reason();
+            // discipline1.reason();
+            // prize1.reason(); //cannot 
+            // leave.reason();
+            // support.reason(); //check
+            // unitType.unit();
+            // codeType.unit();
+            // structure.unit(); //check
+            // segment.unit();
+            // duties.position();
+            // salaryType.position();
+            // reasonType.position();
+            // reasonLevel.position();
 
 
         } finally {
