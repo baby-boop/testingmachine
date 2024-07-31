@@ -24,12 +24,12 @@ public class registrationOfContracts {
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Бүртгэл')]")));
             openField.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='CONTRACT_NAME']")));
             name.sendKeys("test1");
@@ -41,22 +41,31 @@ public class registrationOfContracts {
             CLASSIFICATION.sendKeys("test1");
             CLASSIFICATION.sendKeys(Keys.ENTER);
 
+            Thread.sleep(500);
+
             WebElement customer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[CUSTOMER_ID_DESCNAME]")));
             customer.sendKeys("testgul");
             customer.sendKeys(Keys.ENTER);
 
+            Thread.sleep(1000);
+
             WebElement desc = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[DESCRIPTION]")));
             desc.sendKeys("testshuu");
+
+            Thread.sleep(1000);
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));
             saveBtn.click();
 
+            Thread.sleep(1000);
+
             if (isErrorMessagePresent(wait)) {
                 System.out.println("Error message found after saving. Exiting...");
-                Thread.sleep(3500);
+
+                Thread.sleep(2500);
                 
-                WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-                cnclBtn.click();
+                // WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
+                // cnclBtn.click();
                 return;
             }
 
@@ -70,7 +79,9 @@ public class registrationOfContracts {
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
         try {
-            WebElement errorTitle = driver.findElement(By.cssSelector(".ui-pnotify-title"));
+            WebElement errorContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme.ui-pnotify-container")));
+
+            WebElement errorTitle = errorContainer.findElement(By.cssSelector(".ui-pnotify-title"));
             String errorTitleText = errorTitle.getText();
             if (errorTitleText.contains("warning") || errorTitleText.contains("error")) {
                 try {

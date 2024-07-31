@@ -24,14 +24,15 @@ public class contractPrivacyType {
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement list = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Гэрээний нууцын зэрэглэл')]")));
             list.click(); 
 
-            Thread.sleep(500);
-            WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
-            edit.click();
+            Thread.sleep(2000);
+
+            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
+            add.click();
 
             Thread.sleep(1000);
 
@@ -65,7 +66,9 @@ public class contractPrivacyType {
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
         try {
-            WebElement errorTitle = driver.findElement(By.cssSelector(".ui-pnotify-title"));
+            WebElement errorContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme.ui-pnotify-container")));
+
+            WebElement errorTitle = errorContainer.findElement(By.cssSelector(".ui-pnotify-title"));
             String errorTitleText = errorTitle.getText();
             if (errorTitleText.contains("warning") || errorTitleText.contains("error")) {
                 try {

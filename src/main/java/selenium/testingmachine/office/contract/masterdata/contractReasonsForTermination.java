@@ -24,16 +24,16 @@ public class contractReasonsForTermination {
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement list = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Гэрээг цуцлах шалтгаан')]")));
             list.click(); 
 
-            Thread.sleep(500);
-            WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
-            edit.click();
+            Thread.sleep(2000);
+            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
+            add.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[CODE]")));
             JavascriptExecutor js = (JavascriptExecutor) driver;

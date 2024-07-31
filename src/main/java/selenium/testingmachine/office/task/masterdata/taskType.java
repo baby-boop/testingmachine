@@ -23,21 +23,21 @@ public class taskType {
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Ажил үүргийн систем']")));
             menuTileElement.click();
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Мастер дата')]")));
             openField.click();
 
-            Thread.sleep(500);
-            WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("add_btn")));
-            edit.click();
+            Thread.sleep(2000);
+            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
+            add.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='CODE']")));
             code.sendKeys("20");

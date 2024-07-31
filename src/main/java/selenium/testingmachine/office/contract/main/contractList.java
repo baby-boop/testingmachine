@@ -25,15 +25,17 @@ public class contractList {
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
-            WebElement list = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Гэрээний жагсаалт')]")));
-            list.click(); 
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='17138559061971']")));
+            menu.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
+            
+            Thread.sleep(2000);
 
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='CONTRACT_NAME']")));
             name.sendKeys("test1");
@@ -56,6 +58,8 @@ public class contractList {
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ml-1 btn btn-sm btn-circle btn-success bp-btn-save')]")));
             saveBtn.click();
 
+            Thread.sleep(1000);
+
 
             // WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Дэлгэрэнгүй')]")));
             // openField.click();
@@ -69,10 +73,14 @@ public class contractList {
 
             if (isErrorMessagePresent(wait)) {
                 System.out.println("Error message found after saving. Exiting...");
-                Thread.sleep(3500);
                 
-                WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-                cnclBtn.click();
+                WebElement errorCloseBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
+                errorCloseBtn.click();
+
+                Thread.sleep(1000);
+
+                WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-17138559061971 .mb-1 .far")));
+                closeBtn.click();
                 return;
             }
 
@@ -86,7 +94,9 @@ public class contractList {
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
         try {
-            WebElement errorTitle = driver.findElement(By.cssSelector(".ui-pnotify-title"));
+            WebElement errorContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme.ui-pnotify-container")));
+
+            WebElement errorTitle = errorContainer.findElement(By.cssSelector(".ui-pnotify-title"));
             String errorTitleText = errorTitle.getText();
             if (errorTitleText.contains("warning") || errorTitleText.contains("error")) {
                 try {

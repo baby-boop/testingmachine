@@ -23,16 +23,17 @@ public class contractReminderDays {
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement list = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Сануулах хоног')]")));
             list.click(); 
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
+
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement days = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[NO_OF_DAY]")));
             days.sendKeys("1");

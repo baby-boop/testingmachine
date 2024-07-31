@@ -24,16 +24,17 @@ public class taskLevel {
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement list = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Ажил үүргийн зэрэглэл')]")));
             list.click(); 
 
-            Thread.sleep(500);
-            WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("add_btn")));
-            edit.click();
+            Thread.sleep(2000);
 
-            Thread.sleep(1000);
+            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
+            add.click();
+
+            Thread.sleep(2000);
 
             WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='PRIORITY_NAME']")));
             code.sendKeys("test1");

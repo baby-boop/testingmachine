@@ -23,12 +23,12 @@ public class registrationOfTask {
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Бүртгэл')]")));
             openField.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[TASK_NAME]")));
             name.sendKeys("test1");
@@ -38,9 +38,13 @@ public class registrationOfTask {
             WebElement typeOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'select2-result-label') and text() = 'Төлөвлөгөөт']")));
             typeOption.click();
 
+            Thread.sleep(500);
+
             WebElement customer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[ASSIGN_USER_ID_DESCNAME]")));
             customer.sendKeys("Н.Мөнхөө-000111");
             customer.sendKeys(Keys.ENTER);
+
+            Thread.sleep(1000);
 
             WebElement desc = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[DESCRIPTION]")));
             desc.sendKeys("testshuu");

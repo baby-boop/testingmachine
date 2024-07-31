@@ -23,16 +23,16 @@ public class contractDirections {
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement list = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Гэрээний чиглэл')]")));
             list.click(); 
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='NAME']")));
             name.sendKeys("test1");

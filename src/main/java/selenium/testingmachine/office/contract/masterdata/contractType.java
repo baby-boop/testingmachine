@@ -23,24 +23,21 @@ public class contractType {
         try{
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Гэрээний удирдлага']")));
             menuTileElement.click();
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Мастер дата')]")));
             openField.click();
 
-            Thread.sleep(500);
 
-            WebElement list = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Гэрээний ангилал')]")));
-            list.click(); 
+            Thread.sleep(2000);
 
-            Thread.sleep(500);
-            WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
-            edit.click();
+            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
+            add.click();
 
             Thread.sleep(1000);
 
