@@ -2,11 +2,11 @@ package selenium.testingmachine.finance.financeRequest.businessInformation;
 
 import org.openqa.selenium.WebDriver;
 
-public class businessInformation {
+public class businessInformationMain {
 
     private WebDriver driver;
 
-    public businessInformation(WebDriver driver) {
+    public businessInformationMain(WebDriver driver) {
         this.driver = driver;
     }
 

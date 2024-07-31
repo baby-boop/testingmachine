@@ -11,44 +11,35 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.MessageField;
+
 public class employeeAttendanceLog {
-    public static String message;
+    public static @MessageField String message;
 
     private WebDriver driver;
 
     public employeeAttendanceLog(WebDriver driver) {
         this.driver = driver;
     }
-    public void mData() {
+    public void data() {
         try {
-            
-            Thread.sleep(500);
-
+ 
             Actions actions = new Actions(driver);
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-
-                    
-            driver.get("https://testshuu.veritech.mn/login");
-            driver.manage().window().setSize(new Dimension(1500, 800));
-            WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
-            userNameField.sendKeys("admin");
-    
-            WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pass_word")));
-            passwordField.sendKeys("89");
-            passwordField.sendKeys(Keys.ENTER);
-
-            String url = "https://testshuu.veritech.mn/appmenu/mvmodule/16745414748303";
-            driver.get(url);
-
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Мастер дата']")));
             main.click();
 
+            Thread.sleep(2000);
+
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Ирц нэмэх")));
             add.click();
+
+            Thread.sleep(2000);
+
             Thread.sleep(500);
             WebElement selectDepartment = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".middle #employeeId_nameField")));
             selectDepartment.sendKeys("Г.Бат-оргил");
@@ -73,31 +64,49 @@ public class employeeAttendanceLog {
             }
             
     
-        } catch(Exception e){
+        }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-requestTime : " + e.getMessage());
+            System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished requestTime");
+            System.out.println("finished: "+ this.getClass().getSimpleName());
         }
-
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
         try {
-            
-            wait.withTimeout(Duration.ofSeconds(2));
-            WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme-error .ui-pnotify-text")));
-            String errorText = errorMessage.getText();
-            WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
-            String processName = mainProccess.getText();
-            message = ("class-requestTime: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
-            System.out.println(message);
-            return errorMessage.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        } finally {
-            wait.withTimeout(Duration.ofSeconds(10));
+            WebElement errorTitle = driver.findElement(By.cssSelector(".ui-pnotify-title"));
+            String errorTitleText = errorTitle.getText();
+            if (errorTitleText.contains("warning") || errorTitleText.contains("error")) {
+                try {
+                    wait.withTimeout(Duration.ofSeconds(2));
+                    WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
+                    String errorText = errorMessage.getText();
+                    
+                    String processName = "";
+                    try {
+                        WebElement mainProcess = driver.findElement(By.cssSelector("div.mb-1.d-flex.justify-content-between > p"));
+                        processName = mainProcess.getText();
+                    } catch (Exception e) {
+                        System.out.println("Process name element not found: " + this.getClass().getName() + e.getMessage());
+                    }
+                
+                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " -" +"<br>Алдаа: " + errorText;
+                            
+                    return errorMessage.isDisplayed();
+                } catch (Exception e) {
+                    System.out.println("Error while checking for error message: " + e.getMessage());
+                    return false;
+                } finally {
+                    wait.withTimeout(Duration.ofSeconds(30));
+                }
+            }else{
+                return false;
+            }
         }
-    }        
-   
+        catch (Exception e) {
+            System.out.println("Error while checking for error title: " + e.getMessage());
+            return false;
+        }
+    }
+    
 }

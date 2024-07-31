@@ -9,8 +9,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.MessageField;
+
 public class contractPaymentType {
-    public static String message;
+    public static @MessageField String message;
 
     private WebDriver driver;
 
@@ -55,27 +57,48 @@ public class contractPaymentType {
 
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-contractPaymentType : " + e.getMessage());
+            System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished contractPaymentType");
+            System.out.println("finished: "+ this.getClass().getSimpleName());
         }
     }
     private boolean isErrorMessagePresent(WebDriverWait wait) {
         try {
-            
-            wait.withTimeout(Duration.ofSeconds(2));
-            WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme-error .ui-pnotify-text")));
-            String errorText = errorMessage.getText();
-            WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
-            String processName = mainProccess.getText();
-            message = ("class-contractPaymentType: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
-            System.out.println(message);
-            return errorMessage.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        } finally {
-            wait.withTimeout(Duration.ofSeconds(10));
+            WebElement errorTitle = driver.findElement(By.cssSelector(".ui-pnotify-title"));
+            String errorTitleText = errorTitle.getText();
+            if (errorTitleText.contains("warning") || errorTitleText.contains("error")) {
+                try {
+                    wait.withTimeout(Duration.ofSeconds(2));
+                    WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
+                    String errorText = errorMessage.getText();
+                    
+                    String processName = "";
+                    try {
+                        WebElement mainProcess = driver.findElement(By.cssSelector("div.mb-1.d-flex.justify-content-between > p"));
+                        processName = mainProcess.getText();
+                    } catch (Exception e) {
+                        System.out.println("Process name element not found: " + this.getClass().getName() + e.getMessage());
+                    }
+                
+                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " -" +"<br>Алдаа: " + errorText;
+                            
+                    return errorMessage.isDisplayed();
+                } catch (Exception e) {
+                    System.out.println("Error while checking for error message: " + e.getMessage());
+                    return false;
+                } finally {
+                    wait.withTimeout(Duration.ofSeconds(30));
+                }
+            }else{
+                return false;
+            }
         }
-    }    
+        catch (Exception e) {
+            System.out.println("Error while checking for error title: " + e.getMessage());
+            return false;
+        }
+    }
+    
 }
+

@@ -1,78 +1,48 @@
-package selenium.testingmachine.hr.position_directory;
+package selenium.testingmachine.hr_time.main;
 
 import java.time.Duration;
-import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import selenium.testingmachine.config.MessageField;
 
-public class positionReasonLevel {
+public class timeBalance {
 
     public static @MessageField String message;
 
     private WebDriver driver;
 
-    public positionReasonLevel(WebDriver driver) {
+    public timeBalance(WebDriver driver) {
         this.driver = driver;
     }
-    public void position(){
-        try{
+    public void time() {
+        try {
+            
+            Thread.sleep(500);
+
+            Actions actions = new Actions(driver);
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-
-
-            Thread.sleep(1500);
-            WebElement link = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Албан тушаалын зэрэглэл')]")));
-            link.click();
-
-            Thread.sleep(2000);
-            
-            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
-            add.click();
-
-            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[PROF_LEVEL_NAME]")));
-            name.sendKeys("112211");
-
-            WebElement checkbox = driver.findElement(By.id("mvParam[IS_ACTIVE]"));
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkbox);
-
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
-            saveBtn.click();
-            if (isErrorMessagePresent(wait)) {
-                System.out.println("Error message found after saving. Exiting...");
-                Thread.sleep(3500);
-                
-                WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-                cnclBtn.click();
-                return;
-            }
-            
-            
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[contains(@id,'datagrid-row')]")));
-            List<WebElement> rows = driver.findElements(By.xpath("//tr[contains(@id,'datagrid-row')]"));
-
-            if (!rows.isEmpty()) {
-                WebElement firstRow = rows.get(0);
-                firstRow.click();
-
-                WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Засах")));
-                edit.click();
-
-            } else {
-                System.out.println("No rows found.");
-            }
-
             Thread.sleep(1000);
 
-            WebElement editSave = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
-            editSave.click();
+            WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Цагийн баланс')]")));
+            main.click();
+
+            WebElement link = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("li[data-stepid='16293670316521")));
+            link.click();
+
+            Thread.sleep(500);
+
+            WebElement searchBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-circle btn-sm btn-success float-left search-tms-btn')]")));
+            searchBtn.click();
+
 
             if (isErrorMessagePresent(wait)) {
                 System.out.println("Error message found after saving. Exiting...");
@@ -83,8 +53,7 @@ public class positionReasonLevel {
                 return;
             }
             
-
-
+    
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());

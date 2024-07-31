@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import selenium.testingmachine.finance.financeRequest.requestMain;
 import selenium.testingmachine.hr.mainHr;
-import selenium.testingmachine.hr_salary.main_salary;
+import selenium.testingmachine.hr_salary.mainSalary;
+import selenium.testingmachine.hr_time.timeMain;
 import selenium.testingmachine.office.officeContract;
 import selenium.testingmachine.office.officeTask;
 import selenium.testingmachine.store.storeMain;
@@ -37,9 +38,14 @@ public class SeleniumTestApplication implements CommandLineRunner {
     public void executeModule(String module) {
         switch (module) {
             case "salary":
-                main_salary salary = new main_salary();
+                mainSalary salary = new mainSalary();
                 salary.main_salary_system();
                 System.out.println("Salary running");
+                break;
+            case "time":
+                timeMain time = new timeMain();
+                time.mainSystem();
+                System.out.println("Hr time running");
                 break;
             case "hr":
                 mainHr hr = new mainHr();

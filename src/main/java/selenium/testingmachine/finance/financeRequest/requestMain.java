@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-import selenium.testingmachine.finance.financeRequest.businessInformation.businessInformation;
+import selenium.testingmachine.finance.financeRequest.businessInformation.businessInformationMain;
 import selenium.testingmachine.finance.financeRequest.firstInformation.associatedCompany;
 import selenium.testingmachine.finance.financeRequest.firstInformation.creditHistory;
 import selenium.testingmachine.finance.financeRequest.firstInformation.emergencyContact;
@@ -32,7 +32,7 @@ public class requestMain {
             creditHistory history = new creditHistory(driver);
             employeeFromKhaan employee = new employeeFromKhaan(driver);
             shareHolders shareHolders = new shareHolders(driver);
-            businessInformation information = new businessInformation(driver);
+            businessInformationMain information = new businessInformationMain(driver);
             
             login.login();
             request.requestProcess();
