@@ -19,17 +19,16 @@ public class ModuleController {
         this.application = application;
     }
 
-    @PostMapping("/execute")
+    @PostMapping("/module")
     public String executeModule(@RequestBody Map<String, String> request) {
         String module = request.get("module");
-        String responseMessage = "";
+        String responseMessage;
 
         try {
-            application.executeModule(module);
-            responseMessage = module + " module executed.";
+            responseMessage = application.executeModule(module);
         } catch (Exception e) {
             responseMessage = "Модуль ажиллуулахад алдаа гарлаа: " ;
-            // + e.getMessage();
+            // + e.getMessage()
         }
 
         return responseMessage;

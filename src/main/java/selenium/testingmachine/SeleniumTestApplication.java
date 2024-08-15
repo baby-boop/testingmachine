@@ -4,15 +4,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import selenium.testingmachine.finance.financeRequest.requestMain;
-import selenium.testingmachine.hr.mainHr;
-import selenium.testingmachine.hr_salary.mainSalary;
-import selenium.testingmachine.hr_time.timeMain;
-import selenium.testingmachine.office.officeContract;
-import selenium.testingmachine.office.officeTask;
-import selenium.testingmachine.store.storeMain;
-import selenium.testingmachine.strategic.businessProfileMain;
-import selenium.testingmachine.supply.mainSupply;
+import selenium.testingmachine.config.ClassCounter;
+import selenium.testingmachine.config.ErrorUtils;
+import selenium.testingmachine.config.clearMessage;
+import selenium.testingmachine.projects.finance.financeRequest.requestMain;
+import selenium.testingmachine.projects.finance.financeStandard.standardMain;
+import selenium.testingmachine.projects.hr.mainHr;
+import selenium.testingmachine.projects.hr_salary.mainSalary;
+import selenium.testingmachine.projects.hr_time.timeMain;
+import selenium.testingmachine.projects.office.officeContract;
+import selenium.testingmachine.projects.office.officeTask;
+import selenium.testingmachine.projects.store.storeMain;
+import selenium.testingmachine.projects.strategic.businessProfileMain;
+import selenium.testingmachine.projects.supply.mainSupply;
+import selenium.testingmachine.projects.warehouse.warehouseMain;
 
 @SpringBootApplication
 public class SeleniumTestApplication implements CommandLineRunner {
@@ -26,7 +31,8 @@ public class SeleniumTestApplication implements CommandLineRunner {
         if (args.length > 0) {
             String module = args[0];
             try {
-                executeModule(module);
+                String result = executeModule(module);
+                System.out.println(result);
             } catch (Exception e) {
                 System.err.println("Модуль ажиллуулахад алдаа гарлаа: " + e.getMessage());
             }
@@ -35,55 +41,112 @@ public class SeleniumTestApplication implements CommandLineRunner {
         }
     }
 
-    public void executeModule(String module) {
+    public String executeModule(String module) {
+        String result;
+        clearMessage messageClearer = new clearMessage();
         switch (module) {
             case "salary":
+                System.out.println("Starting salary module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
                 mainSalary salary = new mainSalary();
                 salary.main_salary_system();
-                System.out.println("Salary running");
+                result = "Salary module finished.";
                 break;
             case "time":
+                System.out.println("Starting time module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
                 timeMain time = new timeMain();
                 time.mainSystem();
-                System.out.println("Hr time running");
+                result = "Time module finished.";
                 break;
             case "hr":
+                System.out.println("Starting HR module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
                 mainHr hr = new mainHr();
                 hr.main_hr_system();
-                System.out.println("HR running");
+                result = "HR module finished.";
                 break;
             case "request":
+                System.out.println("Starting request module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
                 requestMain requestMain = new requestMain();
                 requestMain.mainSystem();
-                System.out.println("Request running");
+                result = "Request module finished.";
                 break;
             case "contract":
+                System.out.println("Starting contract module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
                 officeContract contract = new officeContract();
                 contract.mainSystem();
-                System.out.println("Contract running");
+                result = "Contract module finished.";
                 break;
             case "task":
+                System.out.println("Starting task module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
                 officeTask task = new officeTask();
                 task.mainSystem();
-                System.out.println("Task running");
+                result = "Task module finished.";
                 break;
             case "supply":
+                System.out.println("Starting supply module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
                 mainSupply supply = new mainSupply();
                 supply.mainSystem();
-                System.out.println("Supply running");
+                result = "Supply module finished.";
+                break;
+            case "warehouse":
+                System.out.println("Starting warehouse module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
+                warehouseMain warehouseMain = new warehouseMain();
+                warehouseMain.mainSystem();
+                result = "Warehouse module finished.";
                 break;
             case "store":
+                System.out.println("Starting store module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
                 storeMain store = new storeMain();
                 store.mainSystem();
-                System.out.println("Store running");
+                result = "Store module finished.";
+                break;
+            case "standard":
+                System.out.println("Starting standard module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
+                standardMain standard = new standardMain();
+                standard.mainSystem();
+                result = "Standard module finished.";
                 break;
             case "strategic":
+                System.out.println("Starting strategic module...");
+                messageClearer.clearMessages();
+                ClassCounter.clearRegisteredClasses();
+                ErrorUtils.resetCounts();
                 businessProfileMain profile = new businessProfileMain();
                 profile.mainSystem();
-                System.out.println("Store running");
+                result = "Strategic module finished.";
                 break;
             default:
                 throw new IllegalArgumentException("Модуль олдсонгүй");
         }
+        return result;
     }
 }
