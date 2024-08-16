@@ -5,6 +5,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.projects.store.main.createOrderFromStore;
 import selenium.testingmachine.projects.store.masterdata.cashier;
 import selenium.testingmachine.projects.store.masterdata.cozy;
@@ -47,6 +48,23 @@ public class storeMain {
             customerGroup customerGroup = new customerGroup(driver);
             customer customer = new customer(driver);
             createOrderFromStore createOrderFromStore = new createOrderFromStore(driver);
+
+            ClassCounter.registerClass(store.getClass());
+            ClassCounter.registerClass(cashier.getClass());
+            ClassCounter.registerClass(section.getClass());
+            ClassCounter.registerClass(group.getClass());
+            ClassCounter.registerClass(model.getClass());
+            ClassCounter.registerClass(brand.getClass());
+            ClassCounter.registerClass(productTreasurer.getClass());
+            ClassCounter.registerClass(product.getClass());
+            ClassCounter.registerClass(cozy.getClass());
+            ClassCounter.registerClass(warehouse.getClass());
+            ClassCounter.registerClass(location.getClass());
+            ClassCounter.registerClass(treasurer.getClass());
+            ClassCounter.registerClass(salePrice.getClass());
+            ClassCounter.registerClass(customerGroup.getClass());
+            ClassCounter.registerClass(customer.getClass());
+            ClassCounter.registerClass(createOrderFromStore.getClass());
 
             login.login();
             store.data();

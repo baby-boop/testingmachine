@@ -4,6 +4,7 @@ package selenium.testingmachine.projects.hr.main;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -60,12 +61,16 @@ public class jobExtra {
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));
             saveBtn.click();
             
+            Thread.sleep(1000);
+
             if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
-                Thread.sleep(3000);
-                
-                WebElement closeMessageBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".brighttheme-icon-closer")));
-                closeMessageBtn.click();
+
+                WebElement cnclBtn = driver.findElement(By.className("ui-pnotify-closer"));                
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("arguments[0].style.visibility='visible';", cnclBtn);
+                Thread.sleep(1000);
+                cnclBtn.click();
 
                 Thread.sleep(2000);
                 return;

@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 public class locationWarehouse {
@@ -106,6 +107,8 @@ public class locationWarehouse {
 
             WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-17091129291219 .mb-1 .far")));
             closeBtn.click();
+
+            ClassCounter.registerWorkingClass(this.getClass());
 
         }catch(Exception e){
             e.printStackTrace();

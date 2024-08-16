@@ -15,14 +15,13 @@ import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 public class employeeManagement {
-    static {
-            ClassCounter.registerWorkingClass(employeeManagement.class);
-        }
+    
     private WebDriver driver;
 
     public employeeManagement(WebDriver driver) {
         this.driver = driver;
     }
+    
     public void employee() {
         try {
             
@@ -48,7 +47,7 @@ public class employeeManagement {
             WebElement firstNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("param[firstName]")));
             firstNameField.sendKeys("Бат-оргил");
 
-            WebElement genderField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='gender']")));
+            WebElement genderField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='gender']"))); 
             genderField.click();
             WebElement selectGender = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Бусад']")));
             selectGender.click();
@@ -80,7 +79,7 @@ public class employeeManagement {
             positionField.sendKeys("Хөгжүүлэгч");
             positionField.sendKeys(Keys.ENTER);
             
-            Thread.sleep(500);
+            Thread.sleep(1000);
             
             WebElement workStartField = wait.until(ExpectedConditions.elementToBeClickable(By.name("param[workStartDate]")));
             workStartField.sendKeys("2024-07-26");
@@ -107,6 +106,7 @@ public class employeeManagement {
             Thread.sleep(4000);
 
             ClassCounter.registerWorkingClass(this.getClass());
+
             
         }catch(Exception e){
             e.printStackTrace();

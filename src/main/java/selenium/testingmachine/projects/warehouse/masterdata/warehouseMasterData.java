@@ -7,10 +7,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 public class warehouseMasterData {
@@ -278,6 +278,8 @@ public class warehouseMasterData {
 
             WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16883444299539 .mb-1 .far")));
             closeBtn.click();
+
+            ClassCounter.registerWorkingClass(this.getClass());
             
     
         }catch(Exception e){

@@ -26,6 +26,16 @@ public class standardCashier {
 
             Thread.sleep(2000);
 
+            // WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Санхүүгийн стандарт хувилбар']")));
+            // menuTileElement.click();//
+
+            // Thread.sleep(3500);
+
+            // WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Мастер дата']")));
+            // main.click();
+
+            // Thread.sleep(2000);//
+
             WebElement menu =  wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Касс")));
             menu.click(); 
 

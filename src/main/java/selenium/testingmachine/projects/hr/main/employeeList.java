@@ -16,9 +16,7 @@ import selenium.testingmachine.config.ErrorUtils;
 
 public class employeeList {
 
-    static {
-            ClassCounter.registerWorkingClass(employeeList.class);
-        }
+
 
     private WebDriver driver;
 
@@ -74,10 +72,10 @@ public class employeeList {
 
             Thread.sleep(2000);
             
-            WebElement salaryType = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='salaryTypeId']")));
-            salaryType.click();
-            WebElement selectSalary = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Өдрөөр']")));
-            selectSalary.click();
+            // WebElement salaryType = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='salaryTypeId']")));
+            // salaryType.click();
+            // WebElement selectSalary = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Өдрөөр']")));
+            // selectSalary.click(); //data-s-path ni data-label-path bolsn
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bpMainSaveButton")));
             saveBtn.click();
@@ -90,7 +88,10 @@ public class employeeList {
                 WebElement closeMessageBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".brighttheme-icon-closer")));
                 ((JavascriptExecutor) driver).executeScript("arguments[0].style.visibility='visible';", closeMessageBtn);
                 closeMessageBtn.click();
-                // return;
+
+                WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.ui-dialog-titlebar-close")));
+                closeButton.click();
+                return;
             }
             // Thread.sleep(2000);
 

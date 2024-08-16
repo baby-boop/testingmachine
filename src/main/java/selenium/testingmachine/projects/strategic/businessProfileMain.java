@@ -5,6 +5,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 
+import selenium.testingmachine.config.ClassCounter;
+
 public class businessProfileMain {
     public void mainSystem(){
         FirefoxOptions options = new FirefoxOptions();
@@ -17,9 +19,14 @@ public class businessProfileMain {
             businessProfile profile = new businessProfile(driver);
             businessDirection direction = new businessDirection(driver);
 
+            ClassCounter.registerClass(profile.getClass());
+            ClassCounter.registerClass(direction.getClass());
+
             login.login();
             profile.data();
             direction.data();
+            
+
 
 
         }finally {

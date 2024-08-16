@@ -13,6 +13,7 @@ import org.reflections.util.ConfigurationBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import selenium.testingmachine.config.infoMessageField;
 import selenium.testingmachine.config.errorMessageField;
 import selenium.testingmachine.config.warningMessageField;
 
@@ -37,13 +38,13 @@ public class DashboardController {
             ".closed { display: none; }" +
             ".alert__warning { background-color: #F8F3D6; }" + 
             ".alert__error { background-color: #ECC8C5; }" +  
-            ".alert__info { background-color: #FFFFFF; }" +
+            ".alert__info { background-color: #5097ff; }" +
             "@media (max-width: 900px) { .alert__text { font-size: 0.875rem; } }" +
             "</style></head><body><div class='title__container'><h1 class='page__title'>Алдаа гарсан процессуудын жагсаалт</h1></div><div class='alert__container'>";
     private static final String HTML_CLOSE_TAG = "</div><script src='https://code.jquery.com/jquery-3.4.1.js'></script>" +
             "<script>$('.alert__close').click(function() { $(this).parent().addClass('closed'); });</script></body></html>";
 
-    @GetMapping("/dashboard") //get хүсэлтийг харуулах
+    @GetMapping("/dashboard") 
     public String displayAlerts() {
 
         List<String> messages = getMessages();
@@ -59,10 +60,13 @@ public class DashboardController {
 
         Set<Field> warningFields = reflections.getFieldsAnnotatedWith(warningMessageField.class);
         Set<Field> errorFields = reflections.getFieldsAnnotatedWith(errorMessageField.class); 
+        Set<Field> infoFields = reflections.getFieldsAnnotatedWith(infoMessageField.class); 
+
 
         List<Field> allFields = new ArrayList<>();
         allFields.addAll(warningFields);
         allFields.addAll(errorFields);
+        allFields.addAll(infoFields);
 
         List<String> messages = new ArrayList<>();
 
@@ -70,9 +74,10 @@ public class DashboardController {
             if (Modifier.isStatic(field.getModifiers())) {
                 try {
                     field.setAccessible(true);
-                    String message = (String) field.get(null);
-                    if (message != null && !message.isEmpty()) {
-                        messages.add(field.getName() + ":" + message);  
+                    @SuppressWarnings("unchecked")
+                    List<String> messageList = (List<String>) field.get(null);
+                    if (messageList != null && !messageList.isEmpty()) {
+                        messages.addAll(messageList);
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();

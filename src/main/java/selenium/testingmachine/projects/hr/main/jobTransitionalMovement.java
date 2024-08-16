@@ -3,6 +3,7 @@ package selenium.testingmachine.projects.hr.main;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -46,19 +47,19 @@ public class jobTransitionalMovement {
             name.sendKeys("Бат-оргил");
             name.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             WebElement department = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departmentId_nameField")));
             department.sendKeys("Тооцооны төв");
             department.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             WebElement position = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("positionKeyId_nameField")));
             position.sendKeys("Захирал");
             position.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             WebElement startDate = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='HCM_LABOUR_BOOK_DTL.startDate']")));
             startDate.sendKeys("2024-06-07"); 
@@ -69,11 +70,16 @@ public class jobTransitionalMovement {
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));
             saveBtn.click();
 
+            Thread.sleep(1000);
+
             if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
-                
-                WebElement closeMessageBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".brighttheme-icon-closer")));
-                closeMessageBtn.click();
+
+                WebElement cnclBtn = driver.findElement(By.className("ui-pnotify-closer"));                
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("arguments[0].style.visibility='visible';", cnclBtn);
+                Thread.sleep(1000);
+                cnclBtn.click();
 
                 Thread.sleep(2000);
                 return;

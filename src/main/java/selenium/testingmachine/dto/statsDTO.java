@@ -5,12 +5,14 @@ public class statsDTO {
     private int errorCount;
     private int warningCount;
     private int workingCount;
+    private int infoCount;
 
-    public statsDTO(int classCount, int errorCount, int warningCount, int workingCount) {
+    public statsDTO(int classCount, int errorCount, int warningCount, int workingCount, int infoCount) {
         this.classCount = classCount;
         this.errorCount = errorCount;
         this.warningCount = warningCount;
         this.workingCount = workingCount;
+        this.infoCount = infoCount;
     }
 
     public int getWorkingClassCount() {
@@ -43,5 +45,13 @@ public class statsDTO {
 
     public void setWarningCount(int warningCount) {
         this.warningCount = warningCount;
+    }
+
+    public int getInfoCount() {
+        return infoCount;
+    }
+
+    public void setInfoCount(int infoCount) {
+        this.infoCount = infoCount;
     }
 }

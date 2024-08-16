@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.projects.office.task.main.registrationOfTask;
 import selenium.testingmachine.projects.office.task.masterdata.taskLevel;
 import selenium.testingmachine.projects.office.task.masterdata.taskType;
@@ -19,6 +20,10 @@ public class officeTask {
             taskType type = new taskType(driver);
             taskLevel level = new taskLevel(driver);
             registrationOfTask task = new registrationOfTask(driver);
+
+            ClassCounter.registerClass(type.getClass());
+            ClassCounter.registerClass(level.getClass());
+            ClassCounter.registerClass(task.getClass());
 
             login.login();
             type.data();

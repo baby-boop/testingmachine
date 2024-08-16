@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.projects.office.contract.main.contractList;
 import selenium.testingmachine.projects.office.contract.main.registrationOfContracts;
 import selenium.testingmachine.projects.office.contract.masterdata.contractDirections;
@@ -33,6 +34,16 @@ public class officeContract {
             contractTypeOfLosses losses = new contractTypeOfLosses(driver);
             registrationOfContracts reg = new registrationOfContracts(driver);
             contractList list = new contractList(driver);
+
+            ClassCounter.registerClass(type.getClass());
+            ClassCounter.registerClass(directions.getClass());
+            ClassCounter.registerClass(paymentType.getClass());
+            ClassCounter.registerClass(reminder.getClass());
+            ClassCounter.registerClass(privacyType.getClass());
+            ClassCounter.registerClass(termination.getClass());
+            ClassCounter.registerClass(losses.getClass());
+            ClassCounter.registerClass(reg.getClass());
+            ClassCounter.registerClass(list.getClass());
 
             login.login();
             type.data();

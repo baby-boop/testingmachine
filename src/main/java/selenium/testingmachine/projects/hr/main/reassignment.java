@@ -3,6 +3,7 @@ package selenium.testingmachine.projects.hr.main;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -48,18 +49,18 @@ public class reassignment {
             name.sendKeys("Наран");
             name.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
             WebElement department = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departmentId_nameField")));
             department.sendKeys("Гүйцэтгэх цех");
             department.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             WebElement position = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("positionKeyId_nameField")));
             position.sendKeys("Нэвтрүүлэлтийг мэргэжилтэн");
             position.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             WebElement empStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("employeeStatusId_nameField")));
             empStatus.sendKeys("Үндсэн");
@@ -72,11 +73,13 @@ public class reassignment {
             WebElement statusOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Ажиллаж байгаа']")));
             statusOption.click();
 
+            Thread.sleep(500);
+
             WebElement benefitsType = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("insuredTypeId_nameField")));
             benefitsType.sendKeys("Хөдөлмөрийн гэрээний дагуу ажиллаж байгаа үндсэн ажилтан");
             benefitsType.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             WebElement startDate = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='HCM_LABOUR_BOOK_DTL.startDate']")));
             startDate.sendKeys("2024-06-07"); 
@@ -90,12 +93,16 @@ public class reassignment {
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));
             saveBtn.click();
+            Thread.sleep(1000);
+
             if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
-                Thread.sleep(3000);
-                
-                WebElement closeMessageBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".brighttheme-icon-closer")));
-                closeMessageBtn.click();
+
+                WebElement cnclBtn = driver.findElement(By.className("ui-pnotify-closer"));                
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("arguments[0].style.visibility='visible';", cnclBtn);
+                Thread.sleep(1000);
+                cnclBtn.click();
 
                 Thread.sleep(2000);
                 return;

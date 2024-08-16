@@ -1,6 +1,8 @@
 package selenium.testingmachine.config;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,14 +13,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ErrorUtils {
 
     @errorMessageField
-    public static String ErrorMessage;
+    private static List<String> errorMessages = new ArrayList<>();
 
     @warningMessageField
-    public static String WarningMessage;
+    private static List<String> warningMessages = new ArrayList<>();
 
-    public static int errorCount = 0;
-    public static int warningCount = 0;
+    @infoMessageField
+    private static List<String> infoMessages = new ArrayList<>();
 
+    private static int errorCount = 0;
+    private static int warningCount = 0;
+    private static int infoCount = 0;
 
     public static boolean isErrorMessagePresent(WebDriver driver, WebDriverWait wait, Class<?> callingClass) {
         try {
@@ -26,13 +31,15 @@ public class ErrorUtils {
             WebElement messageTitle = messageContainer.findElement(By.cssSelector(".ui-pnotify-title"));
             String messageTitleText = messageTitle.getText().toLowerCase();
 
-            if (messageTitleText.contains("warning") || messageTitleText.contains("Warning")) {
+            if (messageTitleText.contains("warning")) {
                 warningCount++;
-                return extractErrorMessage(driver, wait, true, callingClass);  
-                
-            } else if (messageTitleText.contains("error") || messageTitleText.contains("Error")) {
+                return extractErrorMessage(driver, wait, true, false, callingClass);
+            } else if (messageTitleText.contains("error")) {
                 errorCount++;
-                return extractErrorMessage(driver, wait, false, callingClass);  
+                return extractErrorMessage(driver, wait, false, true, callingClass);
+            } else if (messageTitleText.contains("info")) {
+                infoCount++;
+                return extractErrorMessage(driver, wait, false, false, callingClass);
             }
 
             return false; 
@@ -42,7 +49,7 @@ public class ErrorUtils {
         }
     }
 
-    private static boolean extractErrorMessage(WebDriver driver, WebDriverWait wait, boolean isWarning, Class<?> callingClass) {
+    private static boolean extractErrorMessage(WebDriver driver, WebDriverWait wait, boolean isWarning, boolean isError, Class<?> callingClass) {
         try {
             WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));
             WebElement messageContent = shortWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
@@ -63,10 +70,14 @@ public class ErrorUtils {
             String className = callingClass.getSimpleName();
             String classUrl = callingClass.getName();
 
+            String fullMessage = (isError ? "ErrorMessage: " : (isWarning ? "WarningMessage: " : "InfoMessage: ")) +
+            "&#8226;Класс: " + className + "<br>&#8226;Класс байршил: " + classUrl + "<br>&#8226;Модуль= " + moduleName + " - " + processName + "<br>&#8226;Алдаа: " + messageText;
             if (isWarning) {
-                WarningMessage = "&#8226;Класс: " + className + "<br>&#8226;Класс байршил: " + classUrl + "<br>&#8226;Модуль= " + moduleName + " - " + processName + "<br>&#8226;Алдаа: " + messageText;
+                warningMessages.add(fullMessage);
+            } else if (isError) {
+                errorMessages.add(fullMessage);
             } else {
-                ErrorMessage = "&#8226;Класс: " + className + "<br>&#8226;Класс байршил: " + classUrl + "<br>&#8226;Модуль= " + moduleName + " - " + processName + "<br>&#8226;Алдаа: " + messageText;
+                infoMessages.add(fullMessage);
             }
 
             return messageContent.isDisplayed();
@@ -84,9 +95,27 @@ public class ErrorUtils {
         return warningCount;
     }
 
-    public static void resetCounts(){
+    public static int getInfoCount() {
+        return infoCount;
+    }
+
+    public static void resetCounts() {
         warningCount = 0;
         errorCount = 0;
+        infoCount = 0;
     }
+
+    public static List<String> getErrorMessages() {
+        return new ArrayList<>(errorMessages);
+    }
+
+    public static List<String> getWarningMessages() {
+        return new ArrayList<>(warningMessages);
+    }
+
+    public static List<String> getInfoMessages() {
+        return new ArrayList<>(infoMessages);
+    }
+
 
 }

@@ -22,15 +22,22 @@ public class ModuleController {
     @PostMapping("/module")
     public String executeModule(@RequestBody Map<String, String> request) {
         String module = request.get("module");
-        String responseMessage;
+        String errorMessage = "";
+        String successMessage = "";
 
         try {
-            responseMessage = application.executeModule(module);
+            String moduleMessage = application.executeModule(module);
+
+            if (Finished.hasFinishMessage()) {
+                successMessage = Finished.getFinishMessage() + " " + moduleMessage;
+                return successMessage; 
+                
+            }
         } catch (Exception e) {
-            responseMessage = "Модуль ажиллуулахад алдаа гарлаа: " ;
-            // + e.getMessage()
+            errorMessage = "Модуль ажиллуулахад алдаа гарлаа: ";
+            return errorMessage;
         }
 
-        return responseMessage;
+        return "Модуль ажиллуулахад алдаа гарлаа";
     }
 }

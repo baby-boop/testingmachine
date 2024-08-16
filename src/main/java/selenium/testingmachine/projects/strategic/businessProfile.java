@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 public class businessProfile {
@@ -20,7 +21,7 @@ public class businessProfile {
     public void data(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             Thread.sleep(2000);
 
             WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Бизнес профайл']")));
@@ -61,6 +62,10 @@ public class businessProfile {
                 cnclBtn.click();
                 return;
             }
+
+            Thread.sleep(1000);
+
+            ClassCounter.registerWorkingClass(this.getClass());
 
         }catch(Exception e){
             e.printStackTrace();

@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.projects.warehouse.masterdata.locationWarehouse;
 import selenium.testingmachine.projects.warehouse.masterdata.productBrandWarehouse;
 import selenium.testingmachine.projects.warehouse.masterdata.productCategoryWarehouse;
@@ -31,13 +32,23 @@ public class warehouseMain {
             productCategoryWarehouse productCategoryWarehouse = new productCategoryWarehouse(driver);
             productTypeWarehouse productTypeWarehouse = new productTypeWarehouse(driver);
             productBrandWarehouse productBrandWarehouse = new productBrandWarehouse(driver);
+
+            ClassCounter.registerClass(treasurerWarehouse.getClass());
+            ClassCounter.registerClass(warehouseMasterData.getClass());
+            ClassCounter.registerClass(locationWarehouse.getClass());
+            ClassCounter.registerClass(returnTypeWarehouse.getClass());
+            ClassCounter.registerClass(requestTypeWarehouse.getClass());
+            ClassCounter.registerClass(productMaterialWarehouse.getClass());
+            ClassCounter.registerClass(productCategoryWarehouse.getClass());
+            ClassCounter.registerClass(productTypeWarehouse.getClass());
+            ClassCounter.registerClass(productBrandWarehouse.getClass());
     
             login.login();
-            // treasurerWarehouse.data();
-            // warehouseMasterData.data();
-            // locationWarehouse.data();
-            // returnTypeWarehouse.data();
-            // requestTypeWarehouse.data();
+            treasurerWarehouse.data();
+            warehouseMasterData.data();
+            locationWarehouse.data();
+            returnTypeWarehouse.data();
+            requestTypeWarehouse.data();
             productMaterialWarehouse.data();
             productCategoryWarehouse.data();
             productTypeWarehouse.data();

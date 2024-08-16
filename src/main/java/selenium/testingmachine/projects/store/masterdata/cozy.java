@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 public class cozy {
@@ -53,6 +54,10 @@ public class cozy {
                 closeBtn.click();
                 return;
             }
+
+            Thread.sleep(1000);
+
+            ClassCounter.registerWorkingClass(this.getClass());
 
 
 

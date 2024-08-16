@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 public class warehouse {
@@ -282,6 +283,10 @@ public class warehouse {
 
             WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16883444299539 .mb-1 .far")));
             closeBtn.click();
+
+            Thread.sleep(1000);
+
+            ClassCounter.registerWorkingClass(this.getClass());
 
         } catch (Exception e) {
             e.printStackTrace();

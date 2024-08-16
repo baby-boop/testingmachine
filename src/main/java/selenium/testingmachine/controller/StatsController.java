@@ -19,12 +19,8 @@ public class StatsController {
         int workingCount = ClassCounter.getWorkingAllClassCount();
         int errorCount = ErrorUtils.getErrorCount();
         int warningCount = ErrorUtils.getWarningCount();
+        int infoCount = ErrorUtils.getInfoCount();
 
-        // int classCount = 30;
-        // int workingCount = 25;
-        // int errorCount = 2;
-        // int warningCount = 3;
-
-        return new statsDTO(classCount, errorCount, warningCount, workingCount);
+        return new statsDTO(classCount, errorCount, warningCount, workingCount, infoCount);
     }
 }

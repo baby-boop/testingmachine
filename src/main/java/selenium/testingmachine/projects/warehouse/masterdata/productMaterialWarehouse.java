@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 
@@ -27,15 +28,15 @@ public class productMaterialWarehouse {
 
             Thread.sleep(2000);
             
-            WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Агуулахын удирдлага']")));
-            menuTileElement.click();
+            // WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Агуулахын удирдлага']")));
+            // menuTileElement.click();
 
-            Thread.sleep(3500);
+            // Thread.sleep(3500);
 
-            WebElement mains= wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Мастер дата']")));
-            mains.click();
+            // WebElement mains= wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Мастер дата']")));
+            // mains.click();
 
-            Thread.sleep(2000);
+            // Thread.sleep(2000);
 
             WebElement main = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Барааны бүртгэл")));
             main.click(); 
@@ -258,6 +259,10 @@ public class productMaterialWarehouse {
 
             WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-17089190284399 .mb-1 .far")));
             closeBtn.click();
+
+            Thread.sleep(1000);
+
+            ClassCounter.registerWorkingClass(this.getClass());
             
         }catch(Exception e){
             e.printStackTrace();

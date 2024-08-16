@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 public class contractPrivacyType {
@@ -54,6 +55,9 @@ public class contractPrivacyType {
                 cnclBtn.click();
                 return;
             }
+
+            Thread.sleep(1000);
+            ClassCounter.registerWorkingClass(this.getClass());
 
         }catch(Exception e){
             e.printStackTrace();

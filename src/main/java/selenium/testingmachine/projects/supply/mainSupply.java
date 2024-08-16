@@ -5,6 +5,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.projects.supply.main.createOrder;
 import selenium.testingmachine.projects.supply.masterdata.goodsToBuy;
 import selenium.testingmachine.projects.supply.masterdata.productClassification;
@@ -24,6 +25,12 @@ public class mainSupply {
             supplier supplier = new supplier(driver);
             productPort port = new productPort(driver);
             createOrder order = new createOrder(driver);
+
+            ClassCounter.registerClass(buy.getClass());
+            ClassCounter.registerClass(classification.getClass());
+            ClassCounter.registerClass(supplier.getClass());
+            ClassCounter.registerClass(port.getClass());
+            ClassCounter.registerClass(order.getClass());
 
             login.login();
             buy.data();

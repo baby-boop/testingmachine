@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 public class treasurer {
@@ -78,6 +79,10 @@ public class treasurer {
 
             WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-17089191444929 .mb-1 .far")));
             closeBtn.click();
+
+            Thread.sleep(1000);
+
+            ClassCounter.registerWorkingClass(this.getClass());
 
 
         }catch(Exception e){

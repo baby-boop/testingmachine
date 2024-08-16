@@ -12,6 +12,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 
 public class createOrderFromStore {
@@ -107,6 +108,10 @@ public class createOrderFromStore {
             }
 
             Thread.sleep(2000);
+
+            Thread.sleep(1000);
+
+            ClassCounter.registerWorkingClass(this.getClass());
 
 
         }catch(Exception e){
