@@ -44,7 +44,7 @@ import selenium.testingmachine.projects.hr.unit_directory.unitStructure;
 import selenium.testingmachine.projects.hr.unit_directory.unitType;
 
 public class mainHr {
-    public void main_hr_system(){
+    public void mainSystem(){
         FirefoxOptions options = new FirefoxOptions();
         // options.addArguments("--headless");
         WebDriver driver = new FirefoxDriver(options);

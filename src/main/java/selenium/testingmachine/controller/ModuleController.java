@@ -34,10 +34,10 @@ public class ModuleController {
                 
             }
         } catch (Exception e) {
-            errorMessage = "Модуль ажиллуулахад алдаа гарлаа: ";
+            errorMessage = "Модуль ажиллуулахад алдаа гарлаа! ";
             return errorMessage;
         }
 
-        return "Модуль ажиллуулахад алдаа гарлаа";
+        return "Модуль бүрэн ажиллаж дуусаагүй";
     }
 }
