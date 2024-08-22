@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
-import selenium.testingmachine.controller.Finished;
 
 public class businessDirection {
     
@@ -74,7 +73,6 @@ public class businessDirection {
             Thread.sleep(1000);
 
             ClassCounter.registerWorkingClass(this.getClass());
-            Finished.setFinishMessage("This");
 
         }catch(Exception e){
             e.printStackTrace();

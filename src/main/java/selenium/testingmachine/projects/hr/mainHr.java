@@ -5,6 +5,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import selenium.testingmachine.config.ClassCounter;
+import selenium.testingmachine.controller.configController;
 import selenium.testingmachine.projects.hr.command_directory.reasonForAssistance;
 import selenium.testingmachine.projects.hr.command_directory.reasonForDiscipline;
 import selenium.testingmachine.projects.hr.command_directory.reasonForDismissal;
@@ -67,13 +68,14 @@ public class mainHr {
             reassignment reassignment = new reassignment(driver);
             unitList unit = new unitList(driver);
             positionList position = new positionList(driver);
-            workplaceList workplace = new workplaceList(driver); //department error
+            workplaceList workplace = new workplaceList(driver);
+            //processgu
             fileType filetype = new fileType(driver);
             prizeOfType prize = new prizeOfType(driver); //primary key
             formOfProperty property = new formOfProperty(driver);
+            familyType family = new familyType(driver);
             examType exam = new examType(driver);
             addressType address = new addressType(driver);
-            familyType family = new familyType(driver);
             reasonForDismissal dismissal = new reasonForDismissal(driver);
             reasonForAssistance assistance = new reasonForAssistance(driver);
             reasonForDiscipline discipline1 = new reasonForDiscipline(driver);
@@ -89,47 +91,61 @@ public class mainHr {
             positionReasonType reasonType = new positionReasonType(driver);
             positionReasonLevel reasonLevel = new positionReasonLevel(driver);
 
-            ClassCounter.registerClass(management.getClass());
-            ClassCounter.registerClass(list.getClass());
-            ClassCounter.registerClass(candidates.getClass());
-            ClassCounter.registerClass(candidate.getClass());
-            ClassCounter.registerClass(labour.getClass());
-            ClassCounter.registerClass(dismissed.getClass());
-            ClassCounter.registerClass(longLeave.getClass());
-            ClassCounter.registerClass(transitionalMovement.getClass());
-            ClassCounter.registerClass(benefits.getClass());
-            ClassCounter.registerClass(extra.getClass());
-            ClassCounter.registerClass(discipline.getClass());
-            ClassCounter.registerClass(salary.getClass());
-            ClassCounter.registerClass(rEmployee.getClass());
-            ClassCounter.registerClass(reassignment.getClass());
+            testClass testClass = new testClass(driver);
+
+            // ClassCounter.registerClass(management.getClass());
+            // ClassCounter.registerClass(list.getClass());
+            // ClassCounter.registerClass(candidates.getClass());
+            // ClassCounter.registerClass(candidate.getClass());
+            // ClassCounter.registerClass(labour.getClass());
+            // ClassCounter.registerClass(dismissed.getClass());
+            // ClassCounter.registerClass(longLeave.getClass());
+            // ClassCounter.registerClass(transitionalMovement.getClass());
+            // ClassCounter.registerClass(benefits.getClass());
+            // ClassCounter.registerClass(extra.getClass());
+            // ClassCounter.registerClass(discipline.getClass());
+            // ClassCounter.registerClass(salary.getClass());
+            // ClassCounter.registerClass(rEmployee.getClass());
+            // ClassCounter.registerClass(reassignment.getClass());
+            // // Ажилтны лавлах
+            // ClassCounter.registerClass(unit.getClass());
+            // ClassCounter.registerClass(position.getClass());
+            // ClassCounter.registerClass(workplace.getClass());
+            // ClassCounter.registerClass(filetype.getClass());
+            // ClassCounter.registerClass(prize.getClass());
+            // ClassCounter.registerClass(property.getClass());
+            // ClassCounter.registerClass(family.getClass());
+            // ClassCounter.registerClass(exam.getClass());
+            // ClassCounter.registerClass(address.getClass());
+            ClassCounter.registerClass(testClass.getClass());
 
 			login.loginHr();
-            management.employee();
-            list.employees();
-            candidates.candidates();
-            candidate.candidate();
-            labour.labour();
-            dismissed.dismissed(); 
-            longLeave.longLeave();
+            // management.employee();
+            // list.employees();
+            // candidates.candidates();
+            // candidate.candidate();
+            // labour.labour();
+            // dismissed.dismissed(); 
+            // longLeave.longLeave();
 
-            transitionalMovement.transition();
-            benefits.benefits();
-            extra.extra();
-            discipline.warning();
-            salary.salary();
-            rEmployee.representative();
-            reassignment.reassignment(); 
+            // transitionalMovement.transition();
+            // benefits.benefits();
+            // extra.extra();
+            // discipline.warning();
+            // salary.salary();
+            // rEmployee.representative();
+            // reassignment.reassignment(); 
 
             // // Ажилтны лавлах
             // unit.unit();
             // position.position();
+            // workplace.workplace();
             // filetype.types();
-            // exam.types();
-            // family.types();
-            // address.types();
-            // property.property();
             // prize.prize();
+            // property.property();
+            // family.types();
+            // exam.types();
+            // address.types(); done
             // // Тушаалын лавлах
             // dismissal.reason();
             // assistance.reason();
@@ -145,6 +161,7 @@ public class mainHr {
             // salaryType.position();
             // reasonType.position();
             // reasonLevel.position();
+            testClass.test();
 
 
         } finally {

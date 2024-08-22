@@ -3,19 +3,20 @@ package selenium.testingmachine.projects.hr.master_data;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import selenium.testingmachine.config.MessageField;
+import selenium.testingmachine.config.ClassCounter;
+import selenium.testingmachine.config.ErrorUtils;
+import selenium.testingmachine.controller.configController;
 
 public class unitList {
     
     private WebDriver driver;
-
-    public static @MessageField String message;
 
     public unitList(WebDriver driver) {
         this.driver = driver;
@@ -23,80 +24,121 @@ public class unitList {
     public void unit(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebDriverWait wait = configController.getWebDriverWait(driver);
 
             Thread.sleep(2000);
 
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Мастер дата')]")));
+            WebElement menuTileElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-modulename='Core HR']")));
+            menuTileElement.click();
+
+            Thread.sleep(3500);
+
+            WebElement menu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Мастер дата')]")));
             menu.click();
 
             Thread.sleep(2000);
 
-            WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
-            edit.click();
+            WebElement addBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
+            addBtn.click();
+
+            Thread.sleep(2000);
 
             WebElement nameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='DEPARTMENT_NAME']")));
             nameField.sendKeys("test1");
 
-            WebElement parentField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='PARENT_ID']")));
+            WebElement parentField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='PARENT_ID']")));
             parentField.click();
-            WebElement parentOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Боловсруулах цех']")));
+            WebElement parentOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='select2-result-label' and text()='Боловсруулах цех']")));
             parentOption.click();
 
-            WebElement classificationField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='CLASSIFICATION_ID']")));
+            Thread.sleep(500);
+
+            WebElement classificationField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='CLASSIFICATION_ID']")));
             classificationField.click();
-            WebElement classificationOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Борлуулалт']")));
+            WebElement classificationOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='select2-result-label' and text()='Борлуулалт']")));
             classificationOption.click();
 
-            WebElement typeField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='TYPE_ID']")));
+            Thread.sleep(500);
+
+            WebElement typeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='TYPE_ID']")));
             typeField.click();
-            WebElement typeOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Компани']")));
+            WebElement typeOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='select2-result-label' and text()='Компани']")));
             typeOption.click();
 
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ml-1 btn btn-sm btn-circle btn-success bp-btn-save')]")));
+            Thread.sleep(500);
+
+            WebElement saveBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(@class, 'ml-1 btn btn-sm btn-circle btn-success bp-btn-save')]")));
             saveBtn.click();
 
-            if (isErrorMessagePresent(wait)) {
+            Thread.sleep(1000);
+
+            if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting...");
-                Thread.sleep(3500);
+
+                WebElement cnclAlertBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ui-pnotify-closer")));                
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("arguments[0].style.visibility='visible';", cnclAlertBtn);
+                cnclAlertBtn.click();
+
+                Thread.sleep(1000);
                 
-                WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-                cnclBtn.click();
+                WebElement cancelBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#dialog-valuemap-17074492102739 .mb-1 .far")));
+                cancelBtn.click();
+
+                Thread.sleep(1000);
+
                 return;
             }
 
+            Thread.sleep(2000);
 
-            WebElement city = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='CITY_ID']")));
+
+            WebElement city = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='CITY_ID']")));
             city.click();
-            WebElement cityOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select2-result-label' and text()='Улаанбаатар']")));
+            WebElement cityOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='select2-result-label' and text()='Улаанбаатар']")));
             cityOption.click();
 
             WebElement district = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("mvParam[DISTRICT_ID]_nameField")));
             district.sendKeys("Баянзүрх");
             district.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
             WebElement street = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("mvParam[STREET_ID]_nameField")));
             street.sendKeys("28-р хороо");
             street.sendKeys(Keys.ENTER);
+            Thread.sleep(1000);
 
             WebElement description = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='DESCRIPTION']")));
             description.sendKeys("38р гудамж");
 
-            WebElement nxtSave = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));
-            nxtSave.click();
+            WebElement mainDiv = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("dialog-valuemap-17074492102739")));
+            WebElement nextSave = wait.until(ExpectedConditions.elementToBeClickable(mainDiv.findElement(By.xpath(".//button[contains(text(), 'Хадгалах')]"))));    
+            nextSave.click();
 
-            if (isErrorMessagePresent(wait)) {
+            Thread.sleep(1000);
+
+            if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting...");
-                Thread.sleep(3500);
+                WebElement cnclAlertBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ui-pnotify-closer")));                
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("arguments[0].style.visibility='visible';", cnclAlertBtn);
+                cnclAlertBtn.click();
+
+                Thread.sleep(1000);
                 
-                WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
+                WebElement cnclBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#dialog-valuemap-17074492102739 .mb-1 .far")));
                 cnclBtn.click();
+
+                Thread.sleep(1000);
                 return;
             }
 
-            WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(By.className("ui-dialog-titlebar-close")));
+            Thread.sleep(3500);
+
+            WebElement closeButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#dialog-valuemap-17074492102739 .mb-1 .far")));
             closeButton.click();
+        
+            ClassCounter.registerWorkingClass(this.getClass());
 
         }catch(Exception e){
             e.printStackTrace();
@@ -104,43 +146,6 @@ public class unitList {
             driver.quit();
         }finally{
             System.out.println("finished: "+ this.getClass().getSimpleName());
-        }
-    }
-    private boolean isErrorMessagePresent(WebDriverWait wait) {
-        try {
-            WebElement errorContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme.ui-pnotify-container")));
-            WebElement errorTitle = errorContainer.findElement(By.cssSelector(".ui-pnotify-title"));
-            String errorTitleText = errorTitle.getText();
-            if (errorTitleText.contains("warning") || errorTitleText.contains("error")) {
-                try {
-                    wait.withTimeout(Duration.ofSeconds(2));
-                    WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
-                    String errorText = errorMessage.getText();
-                    
-                    String processName = "";
-                    try {
-                        WebElement mainProcess = driver.findElement(By.cssSelector("div.mb-1.d-flex.justify-content-between > p"));
-                        processName = mainProcess.getText();
-                    } catch (Exception e) {
-                        System.out.println("Process name element not found: " + this.getClass().getName() + e.getMessage());
-                    }
-                
-                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " - " +"<br>Алдаа: " + errorText;
-                            
-                    return errorMessage.isDisplayed();
-                } catch (Exception e) {
-                    System.out.println("Error while checking for error message: " + e.getMessage());
-                    return false;
-                } finally {
-                    wait.withTimeout(Duration.ofSeconds(30));
-                }
-            }else{
-                return false;
-            }
-        }
-        catch (Exception e) {
-            System.out.println("Error while checking for error title: " + e.getMessage());
-            return false;
         }
     }
 }

@@ -49,7 +49,7 @@ public class jobDismissed {
             name.sendKeys("Бат-оргил");
             name.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             WebElement dateField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='HCM_LABOUR_BOOK_DTL.startDate']")));
             dateField.sendKeys("2024-06-07");

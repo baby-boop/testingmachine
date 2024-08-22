@@ -6,13 +6,17 @@ public class statsDTO {
     private int warningCount;
     private int workingCount;
     private int infoCount;
+    private int processCount;
+    private int percent;
 
-    public statsDTO(int classCount, int errorCount, int warningCount, int workingCount, int infoCount) {
+    public statsDTO(int classCount, int errorCount, int warningCount, int workingCount, int infoCount, int processCount, int percent) {
         this.classCount = classCount;
         this.errorCount = errorCount;
         this.warningCount = warningCount;
         this.workingCount = workingCount;
         this.infoCount = infoCount;
+        this.processCount = processCount;
+        this.percent = percent;
     }
 
     public int getWorkingClassCount() {
@@ -53,5 +57,19 @@ public class statsDTO {
 
     public void setInfoCount(int infoCount) {
         this.infoCount = infoCount;
+    }
+
+    public int getProcessCount() { 
+        return processCount; 
+    }
+    public void setProcessCount(int processCount) { 
+        this.processCount = processCount; 
+    }
+
+    public int getPercent() { 
+        return percent; 
+    }
+    public void setPercent(int percent) { 
+        this.percent = percent; 
     }
 }

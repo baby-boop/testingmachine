@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import selenium.testingmachine.SeleniumTestApplication;
+import selenium.testingmachine.config.ClassCounter;
+import selenium.testingmachine.config.ErrorUtils;
 
 @RestController
 @RequestMapping("/api")
@@ -28,11 +30,18 @@ public class ModuleController {
         try {
             String moduleMessage = application.executeModule(module);
 
-            if (Finished.hasFinishMessage()) {
-                successMessage = Finished.getFinishMessage() + " " + moduleMessage;
-                return successMessage; 
-                
+            int classCount = ClassCounter.getAllClassCount();
+            int workingCount = ClassCounter.getWorkingAllClassCount();
+            int errorCount = ErrorUtils.getErrorCount();
+            int warningCount = ErrorUtils.getWarningCount();
+            int infoCount = ErrorUtils.getInfoCount();
+            int processCount = workingCount + errorCount + warningCount + infoCount;
+
+            if (classCount == processCount) {
+                successMessage = moduleMessage;
+                return successMessage;
             }
+            
         } catch (Exception e) {
             errorMessage = "Модуль ажиллуулахад алдаа гарлаа! ";
             return errorMessage;

@@ -20,7 +20,9 @@ public class StatsController {
         int errorCount = ErrorUtils.getErrorCount();
         int warningCount = ErrorUtils.getWarningCount();
         int infoCount = ErrorUtils.getInfoCount();
+        int processCount = workingCount + errorCount + warningCount + infoCount;
+        int percent = (classCount == 0) ? 0 : (processCount * 100) / classCount;
 
-        return new statsDTO(classCount, errorCount, warningCount, workingCount, infoCount);
+        return new statsDTO(classCount, errorCount, warningCount, workingCount, infoCount, processCount, percent);
     }
 }

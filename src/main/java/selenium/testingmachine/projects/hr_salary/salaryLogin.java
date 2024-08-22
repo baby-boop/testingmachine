@@ -10,7 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import selenium.testingmachine.controller.loginController;
+import selenium.testingmachine.controller.configController;
 
 public class salaryLogin {
     private WebDriver driver;
@@ -20,14 +20,14 @@ public class salaryLogin {
     }
     public void login(){
         try{
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            driver.get(loginController.URL);
+            WebDriverWait wait = configController.getWebDriverWait(driver);
+            driver.get(configController.URL);
             driver.manage().window().setSize(new Dimension(1500, 800));
             WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
-            userNameField.sendKeys(loginController.USERNAME);
+            userNameField.sendKeys(configController.USERNAME);
 
             WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pass_word")));
-            passwordField.sendKeys(loginController.PASSWORD);
+            passwordField.sendKeys(configController.PASSWORD);
             passwordField.sendKeys(Keys.ENTER);
 
             Thread.sleep(3000);

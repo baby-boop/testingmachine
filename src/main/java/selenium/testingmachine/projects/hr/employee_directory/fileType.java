@@ -7,8 +7,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import selenium.testingmachine.config.ClassCounter;
+import selenium.testingmachine.config.ErrorUtils;
+import selenium.testingmachine.controller.configController;
 
 public class fileType {
     
@@ -20,57 +25,104 @@ public class fileType {
     public void types(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            Thread.sleep(1000);
+            WebDriverWait wait = configController.getWebDriverWait(driver);
+            Thread.sleep(2000);
 
-            WebElement openDirectory = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Ажилтны лавлах')]")));
+            WebElement openDirectory = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(.,'Ажилтны лавлах')]")));
             openDirectory.click();
             Thread.sleep(2000);
 
-            WebElement list = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Хавсралтын төрөл')]")));
-            list.click(); 
+            WebElement menu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a[data-stepid='16752096836064']"))); //Хавсралтын төрөл
+            menu.click(); 
+            
             Thread.sleep(2500);
 
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
 
+            Thread.sleep(2000);
+
             WebElement type = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[FILE_TYPE_NAME]")));
             type.sendKeys("test2");
 
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
+            WebElement saveBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
             saveBtn.click();
 
             Thread.sleep(1000);
-            
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[contains(@id,'datagrid-row')]")));
-            List<WebElement> rows = driver.findElements(By.xpath("//tr[contains(@id,'datagrid-row')]"));
-            if (!rows.isEmpty()) {
-                WebElement lastRow = rows.get(rows.size() - 1);
-                lastRow.click();
 
-                WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Засах")));
-                edit.click();
+            if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
+                System.out.println("Error message found after saving. Exiting...");
+                
+                Thread.sleep(2000);
+                
+                WebElement cnclBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(@class, 'btn btn-sm blue-hoki bp-btn-close')]")));
+                cnclBtn.click();
 
-            } else {
-                System.out.println("No rows found.");
+                Thread.sleep(1000);
+                return;
             }
 
-            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[CODE]")));
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].removeAttribute('readonly')", name);
-            name.sendKeys("test1");
+            Thread.sleep(3000);
+            
+            // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[contains(@id,'datagrid-row')]")));
+            // List<WebElement> rows = driver.findElements(By.xpath("//tr[contains(@id,'datagrid-row')]"));
+
+            // if (!rows.isEmpty()) {
+            //     Thread.sleep(500);
+            //     WebElement lastRow = rows.get(rows.size() - 1);
+            //     Actions actions = new Actions(driver);
+            //     System.out.println("Last row text: " + lastRow.getText());
+
+            //     Thread.sleep(1000);
+        
+            //     WebElement cell = lastRow.findElement(By.xpath(".//td[1]")); 
+        
+            //     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cell);
+            //      actions.moveToElement(cell).click().perform();
+        
+            //     WebElement rowSelectBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Засах")));
+            //     rowSelectBtn.click();
+            // }else {
+            //     System.out.println("No rows found.");
+            // }
+
+            // Thread.sleep(2000);
+
+            // WebElement codeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[CODE]")));
+            // JavascriptExecutor js = (JavascriptExecutor) driver;
+            // js.executeScript("arguments[0].removeAttribute('readonly')", codeField);
+            // codeField.sendKeys("test1");
+
+            // Thread.sleep(1000);
+
+            // WebElement editSave = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
+            // editSave.click();
+
+            // Thread.sleep(1000);
+
+            // if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
+            //     System.out.println("Error message found after saving. Exiting...");
+                
+            //     Thread.sleep(2000);
+                
+            //     WebElement cnclBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(@class, 'btn btn-sm blue-hoki bp-btn-close')]")));
+            //     cnclBtn.click();
+
+            //     Thread.sleep(1000);
+            //     return;
+            // }
 
             Thread.sleep(1000);
 
-            WebElement editSave = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
-            editSave.click();
+            ClassCounter.registerWorkingClass(this.getClass());
+
 
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-fileType : " + e.getMessage());
+            System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished fileType");
+            System.out.println("finished: "+ this.getClass().getSimpleName());
         }
     }
 }
