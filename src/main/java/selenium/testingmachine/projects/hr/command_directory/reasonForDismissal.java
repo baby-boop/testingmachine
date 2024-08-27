@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
+import selenium.testingmachine.controller.configController;
 
 public class reasonForDismissal {
     public static String message;
@@ -22,7 +23,7 @@ public class reasonForDismissal {
     public void reason(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebDriverWait wait = configController.getWebDriverWait(driver);
 
             Thread.sleep(2000);
 
@@ -31,8 +32,8 @@ public class reasonForDismissal {
 
             Thread.sleep(2000);
 
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='17145598883101']")));
-            menu.click(); 
+            WebElement menuId = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='17145598883101']")));
+            menuId.click(); 
 
             Thread.sleep(2000);
 

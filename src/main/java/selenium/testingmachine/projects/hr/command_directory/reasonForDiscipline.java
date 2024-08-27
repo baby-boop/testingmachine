@@ -28,8 +28,9 @@ public class reasonForDiscipline {
             
             Thread.sleep(2000);
             
-            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='169465764131210']"))); //Сахилга төрөл
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='16735106771604']"))); //Сахилга төрөл
             menu.click();
+
             Thread.sleep(2000);
 
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
@@ -37,8 +38,8 @@ public class reasonForDiscipline {
 
             Thread.sleep(2000);
 
-            WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[CODE]")));
-            code.sendKeys("11");
+            // WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[CODE]")));
+            // code.sendKeys("11");
 
             WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[NAME]")));
             name.sendKeys("test");

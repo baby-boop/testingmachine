@@ -77,17 +77,21 @@ public class mainHr {
             familyType family = new familyType(driver);
             examType exam = new examType(driver);
             addressType address = new addressType(driver);
+
+            //Тушаалын лавлах
             reasonForDismissal dismissal = new reasonForDismissal(driver);
             reasonForAssistance assistance = new reasonForAssistance(driver);
             reasonForDiscipline discipline1 = new reasonForDiscipline(driver);
             reasonForPrize prize1 = new reasonForPrize(driver);
             reasonForLeave leave = new reasonForLeave(driver);
             reasonForSuppport support = new reasonForSuppport(driver);
-            //Тушаалын лавлах
+            //update orsn
+            //Бүтэц, нэгжийн лавлах
             unitType unitType = new unitType(driver);
             unitCodeType codeType = new unitCodeType(driver);
             unitSegment segment = new unitSegment(driver);
             unitStructure structure = new unitStructure(driver);
+            //Албан тушаалын лавлах
             dutiesForPosition duties = new dutiesForPosition(driver);
             salaryTypeForPosition salaryType = new salaryTypeForPosition(driver);
             positionReasonType reasonType = new positionReasonType(driver);
@@ -111,22 +115,29 @@ public class mainHr {
             // ClassCounter.registerClass(rEmployee.getClass());
             // ClassCounter.registerClass(reassignment.getClass());
             // // Ажилтны лавлах
-            ClassCounter.registerClass(unit.getClass());
-            ClassCounter.registerClass(position.getClass());
-            ClassCounter.registerClass(workplace.getClass());
-            ClassCounter.registerClass(filetype.getClass());
-            ClassCounter.registerClass(prize.getClass());
-            ClassCounter.registerClass(property.getClass());
-            ClassCounter.registerClass(family.getClass());
-            ClassCounter.registerClass(exam.getClass());
-            ClassCounter.registerClass(address.getClass());
-            ClassCounter.registerClass(dismissal.getClass());
-            ClassCounter.registerClass(assistance.getClass());
-            ClassCounter.registerClass(discipline1.getClass());
-            ClassCounter.registerClass(prize1.getClass());
-            ClassCounter.registerClass(leave.getClass());
-            ClassCounter.registerClass(support.getClass());
-            //Тушаалын лавлах
+            // ClassCounter.registerClass(unit.getClass());
+            // ClassCounter.registerClass(position.getClass());
+            // ClassCounter.registerClass(workplace.getClass());
+            // ClassCounter.registerClass(filetype.getClass());
+            // ClassCounter.registerClass(prize.getClass());
+            // ClassCounter.registerClass(property.getClass());
+            // ClassCounter.registerClass(family.getClass());
+            // ClassCounter.registerClass(exam.getClass());
+            // ClassCounter.registerClass(address.getClass());
+            // ClassCounter.registerClass(dismissal.getClass());
+            // ClassCounter.registerClass(assistance.getClass());
+            // ClassCounter.registerClass(discipline1.getClass());
+            // ClassCounter.registerClass(prize1.getClass());
+            // ClassCounter.registerClass(leave.getClass());
+            // ClassCounter.registerClass(support.getClass());
+            ClassCounter.registerClass(unitType.getClass());
+            ClassCounter.registerClass(codeType.getClass());
+            ClassCounter.registerClass(segment.getClass());
+            ClassCounter.registerClass(structure.getClass());
+            ClassCounter.registerClass(duties.getClass());
+            ClassCounter.registerClass(salaryType.getClass());
+            ClassCounter.registerClass(reasonType.getClass());
+            ClassCounter.registerClass(reasonLevel.getClass());
 
             // ClassCounter.registerClass(testClass.getClass());
             // ClassCounter.registerClass(testClassTwo.getClass());
@@ -157,18 +168,20 @@ public class mainHr {
             // property.property();
             // family.types();
             // exam.types();
-            // address.types(); done
-            dismissal.reason();
-            assistance.reason();
-            discipline1.reason();
-            prize1.reason(); //cannot 
-            leave.reason();
-            support.reason(); //check
-            // Тушаалын лавлах
+            // address.types(); 
+            //Тушаалын лавлах
+            // dismissal.reason();
+            // assistance.reason();
+            // discipline1.reason();
+            // prize1.reason(); 
+            // leave.reason();
+            // support.reason(); 
+            // Бүтэц, нэгжийн лавлах
             unitType.unit();
             codeType.unit();
             structure.unit(); //check
             segment.unit();
+            //Албан тушаалын лавлах
             duties.position();
             salaryType.position();
             reasonType.position();

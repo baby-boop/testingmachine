@@ -10,11 +10,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import selenium.testingmachine.config.MessageField;
+import selenium.testingmachine.config.ClassCounter;
+import selenium.testingmachine.config.ErrorUtils;
+import selenium.testingmachine.controller.configController;
 
 public class unitType {
  
-    public static @MessageField String message;
 
     private WebDriver driver;
 
@@ -24,74 +25,84 @@ public class unitType {
     public void unit(){
         try{
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-            Thread.sleep(1000);
-            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Бүтэц, нэгжийн лавлах')]")));
-            element.click();
-
-            Thread.sleep(1000);
-            WebElement link = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Нэгжийн төрөл')]")));
-            link.click();
+            WebDriverWait wait = configController.getWebDriverWait(driver);
 
             Thread.sleep(2000);
+
+            WebElement menuTileElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-modulename='Core HR']")));
+            menuTileElement.click();
+
+            Thread.sleep(3500);
+
+            WebElement menu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Мастер дата')]")));
+            menu.click();
+
+            Thread.sleep(2000);
+
+            configController.setMenu(driver, "Бүтэц, нэгжийн лавлах");
+
+            Thread.sleep(2000);
+
+            configController.setMenuStepId(driver, "16878321532639"); //Нэгжийн төрөл
+
+            Thread.sleep(2000);
+
+            configController.clickAddButton(driver);
             
-            WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
-            add.click();
+            Thread.sleep(2000);
 
-            WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[NAME]")));
-            name.sendKeys("112211");
+            configController.inputTextName(driver, "mvParam[NAME]", "112211");
 
-            WebElement code = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[CODE]")));
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].removeAttribute('readonly')", code);
-            code.sendKeys("test1");
+            configController.inputTextFromDisable(driver, "mvParam[CODE]", "test1");
 
-            WebElement order = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[ORDER_NUMBER]")));
-            order.sendKeys("7");
+            configController.inputTextName(driver, "mvParam[ORDER_NUMBER]", "7");
 
-            WebElement checkbox = driver.findElement(By.id("mvParam[IS_ACTIVE]"));
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkbox);
+            configController.clickCheckBoxId(driver, "mvParam[IS_ACTIVE]");
 
-            WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
-            saveBtn.click();
-            if (isErrorMessagePresent(wait)) {
+            configController.saveProcess(driver);
+
+            if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting...");
                 Thread.sleep(3500);
                 
-                WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-                cnclBtn.click();
+                configController.closeProcess(driver);
+
                 return;
             }
             
             
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[contains(@id,'datagrid-row')]")));
-            List<WebElement> rows = driver.findElements(By.xpath("//tr[contains(@id,'datagrid-row')]"));
+            // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[contains(@id,'datagrid-row')]")));
+            // List<WebElement> rows = driver.findElements(By.xpath("//tr[contains(@id,'datagrid-row')]"));
 
-            if (!rows.isEmpty()) {
-                WebElement lastRow = rows.get(rows.size() - 1);
-                lastRow.click();
+            // if (!rows.isEmpty()) {
+            //     WebElement lastRow = rows.get(rows.size() - 1);
+            //     lastRow.click();
 
-                WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Засах")));
-                edit.click();
+            //     WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Засах")));
+            //     edit.click();
 
-            } else {
-                System.out.println("No rows found.");
-            }
+            // } else {
+            //     System.out.println("No rows found.");
+            // }
 
-            Thread.sleep(1000);
+            // Thread.sleep(1000);
 
-            WebElement editSave = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
-            editSave.click();
+            // WebElement editSave = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
+            // editSave.click();
 
-            if (isErrorMessagePresent(wait)) {
-                System.out.println("Error message found after saving. Exiting...");
-                Thread.sleep(3500);
+            // if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
+
+            //     System.out.println("Error message found after saving. Exiting...");
+            //     Thread.sleep(3500);
                 
-                WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-                cnclBtn.click();
-                return;
-            }
+            //     WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
+            //     cnclBtn.click();
+            //     return;
+            // }
+
+            Thread.sleep(2000);
+
+            ClassCounter.registerWorkingClass(this.getClass());
 
         }catch(Exception e){
             e.printStackTrace();
@@ -99,42 +110,6 @@ public class unitType {
             driver.quit();
         }finally{
             System.out.println("finished: "+ this.getClass().getSimpleName());
-        }
-    }
-    private boolean isErrorMessagePresent(WebDriverWait wait) {
-        try {
-            WebElement errorTitle = driver.findElement(By.cssSelector(".ui-pnotify-title"));
-            String errorTitleText = errorTitle.getText();
-            if (errorTitleText.contains("warning") || errorTitleText.contains("error")) {
-                try {
-                    wait.withTimeout(Duration.ofSeconds(2));
-                    WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
-                    String errorText = errorMessage.getText();
-                    
-                    String processName = "";
-                    try {
-                        WebElement mainProcess = driver.findElement(By.cssSelector("div.mb-1.d-flex.justify-content-between > p"));
-                        processName = mainProcess.getText();
-                    } catch (Exception e) {
-                        System.out.println("Process name element not found: " + this.getClass().getName() + e.getMessage());
-                    }
-                
-                        message = "class: " + this.getClass().getName() + "<br>processName= " + processName + " -" +"<br>Алдаа: " + errorText;
-                            
-                    return errorMessage.isDisplayed();
-                } catch (Exception e) {
-                    System.out.println("Error while checking for error message: " + e.getMessage());
-                    return false;
-                } finally {
-                    wait.withTimeout(Duration.ofSeconds(30));
-                }
-            }else{
-                return false;
-            }
-        }
-        catch (Exception e) {
-            System.out.println("Error while checking for error title: " + e.getMessage());
-            return false;
         }
     }
     
