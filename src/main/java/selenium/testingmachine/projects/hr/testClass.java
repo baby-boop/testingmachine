@@ -1,12 +1,8 @@
 package selenium.testingmachine.projects.hr;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import selenium.testingmachine.config.ClassCounter;
@@ -23,37 +19,42 @@ public class testClass {
 
     public void test() {
         try {
-            WebDriverWait wait = configController.getWebDriverWait(driver);
+            configController.setModule(driver, "Core HR");
 
-            configController.setModuleFunction(driver, "Core HR");
-            configController.setMenuFunction(driver, "Мастер дата");
-            configController.clickAddBtnFunction(driver);
-            configController.inputCssFunction(driver, "DEPARTMENT_NAME", "test1");
-            configController.inputOptionFunction(driver, "PARENT_ID", "Боловсруулах цех");
-            configController.inputOptionFunction(driver, "CLASSIFICATION_ID", "Борлуулалт");
-            configController.inputOptionFunction(driver, "TYPE_ID", "Компани");
-            configController.saveXpathFunction(driver, "ml-1 btn btn-sm btn-circle btn-success bp-btn-save");
+            configController.setMenu(driver, "Мастер дата");
 
-            // Error message-ийг шалгах
-            if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
-                System.out.println("Error message found after saving. Exiting...");
+            configController.clickAddButton(driver);
 
-                WebElement cnclAlertBtn = ExpectedConditions.visibilityOfElementLocated(By.className("ui-pnotify-closer")).apply(driver);
-                configController.clickUsingJS(driver, cnclAlertBtn);
+            handleElementInteraction("DEPARTMENT_NAME", "test1", () -> configController.inputTextByCss(driver, "DEPARTMENT_NAME", "test1"));
+            handleElementInteraction("PARENT_ID", "Боловсруулах цех", () -> configController.selectOption(driver, "PARENT_ID", "Боловсруулах цех"));
+            handleElementInteraction("CLASSIFICATION_ID", "Борлуулалт", () -> configController.selectOption(driver, "CLASSIFICATION_ID", "Борлуулалт"));
+            handleElementInteraction("TYPE_ID", "Компани", () -> configController.selectOption(driver, "TYPE_ID", "Компани"));
 
-                configController.closeChecklistIdFunction(driver, "17074492102739");
-                return;
-            }
 
-            configController.closeChecklistIdFunction(driver, "17074492102739");
+            configController.saveByXpath(driver, "ml-1 btn btn-sm btn-circle btn-success bp-btn-save");
+
+            
+
+            configController.closeChecklistById(driver, "17074492102739");
+
             ClassCounter.registerWorkingClass(this.getClass());
 
         } catch (Exception e) {
+            System.out.println("Error in class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
             e.printStackTrace();
-            System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
-            driver.quit();
         } finally {
-            System.out.println("finished: " + this.getClass().getSimpleName());
+            System.out.println("Finished: " + this.getClass().getSimpleName());
+        }
+    }
+    private void handleElementInteraction(String inputPath, String inputData, Runnable interaction) {
+        try {
+            interaction.run();
+        } catch (Exception e) {
+            System.out.println("Error in element with path " + inputPath + ": " + e.getMessage());
+            e.printStackTrace();
+            // Системын бэрхшээлд оруулахгүй
+            // Exit or skip further actions depending on requirement
+            throw new RuntimeException("Aborting further actions due to error");
         }
     }
 }

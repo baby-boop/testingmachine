@@ -1,12 +1,12 @@
 package selenium.testingmachine.controller;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 import java.util.NoSuchElementException;
@@ -17,23 +17,22 @@ public class configController {
     public static final String URL = "https://cloud.veritech.mn/login";
     public static final String USERNAME = "testshuu@gmail.com";
     public static final String PASSWORD = "VrCloud@123";
-    public static final int TIMEOUT = 30;
-    public static final int POLLING_INTERVAL = 1;
+    public static final int TIMEOUT = 10;
 
-    public static WebDriverWait getWebDriverWait(WebDriver driver) {
-        return new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+    private static Wait<WebDriver> createFluentWait(WebDriver driver) {
+        return new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(TIMEOUT))
+            .pollingEvery(Duration.ofSeconds(1))
+            .ignoring(NoSuchElementException.class);
     }
 
     public static WebElement waitForElement(WebDriver driver, By locator) {
-        Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(TIMEOUT))
-                .pollingEvery(Duration.ofSeconds(POLLING_INTERVAL))
-                .ignoring(NoSuchElementException.class);
-
+        Wait<WebDriver> wait = createFluentWait(driver);
         return wait.until(new Function<WebDriver, WebElement>() {
+            @Override
             public WebElement apply(WebDriver driver) {
                 WebElement element = driver.findElement(locator);
-                if (element.isDisplayed() && element.isEnabled()) {
+                if (element.isDisplayed()) {
                     return element;
                 } else {
                     return null;
@@ -42,119 +41,106 @@ public class configController {
         });
     }
 
-    public static boolean clickUsingJS(WebDriver driver, WebElement element) {
-        try {
-            if (element != null) {
-                JavascriptExecutor executor = (JavascriptExecutor) driver;
-                executor.executeScript("arguments[0].click();", element);
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println("Error in clickUsingJS: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
+    public static void waitForUrlContains(WebDriver driver, String expectedUrlPart) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.urlContains(expectedUrlPart));
     }
 
-    public static boolean setModuleFunction(WebDriver driver, String moduleName) {
-        try {
-            WebElement menuTileElement = waitForElement(driver, By.xpath("//a[@data-modulename='" + moduleName + "']"));
-            if (menuTileElement != null) {
-                clickUsingJS(driver, menuTileElement);
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println("Error in setModuleFunction: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
+    public static void waitForTextInElement(WebDriver driver, By locator, String text) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
+    }
+    public static WebDriverWait getWebDriverWait(WebDriver driver) {
+        return new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
     }
 
-    public static boolean setMenuFunction(WebDriver driver, String menuName) {
+    public static void setModule(WebDriver driver, String moduleName) {
         try {
-            WebElement menuTileElement = waitForElement(driver, By.cssSelector("a.nav-link[aria-expanded='false']:contains('" + menuName + "')"));
-            if (menuTileElement != null) {
-                clickUsingJS(driver, menuTileElement);
-                return true;
-            }
+            WebElement moduleTitleElement = waitForElement(driver, By.xpath("//a[@data-modulename='" + moduleName + "']"));
+            moduleTitleElement.click();
+            // Хүлээлт: модуль нээгдэх хүртэл хүлээнэ
+            waitForUrlContains(driver, moduleName);
         } catch (Exception e) {
-            System.out.println("Error in setMenuFunction: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Error in setModule: " + e.getMessage());
+            throw e; // Алдааг дахин өгөх
         }
-        return false;
     }
 
-    public static boolean clickAddBtnFunction(WebDriver driver) {
+    public static void setMenu(WebDriver driver, String menuName) {
         try {
-            WebElement addBtn = waitForElement(driver, By.linkText("Нэмэх"));
-            if (addBtn != null) {
-                clickUsingJS(driver, addBtn);
-                return true;
-            }
+            WebElement menuTitleElement = waitForElement(driver, By.xpath("//a[text()='" + menuName + "']"));
+            menuTitleElement.click();
+            // Хүлээлт: меню нээгдэх хүртэл хүлээнэ
+            waitForElement(driver, By.xpath("//a[text()='" + menuName + "']"));
         } catch (Exception e) {
-            System.out.println("Error in clickAddBtnFunction: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Error in setMenu: " + e.getMessage());
+            throw e; // Алдааг дахин өгөх
         }
-        return false;
     }
 
-    public static boolean inputCssFunction(WebDriver driver, String inputPath, String inputData) {
+    public static void clickAddButton(WebDriver driver) {
         try {
-            WebElement inputField = waitForElement(driver, By.cssSelector(inputPath));
-            if (inputField != null) {
-                inputField.sendKeys(inputData);
-                return true;
-            }
+            WebElement addButton = waitForElement(driver, By.linkText("Нэмэх"));
+            addButton.click();
+            // Хүлээлт: шинэ хуудсанд шилжих хүртэл хүлээнэ
+            waitForElement(driver, By.linkText("Нэмэх"));
         } catch (Exception e) {
-            System.out.println("Error in inputCssFunction: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Error in clickAddButton: " + e.getMessage());
+            throw e; // Алдааг дахин өгөх
         }
-        return false;
     }
 
-    public static boolean inputOptionFunction(WebDriver driver, String inputPath, String inputData) {
+    public static void inputTextByCss(WebDriver driver, String inputPath, String inputData) {
         try {
-            WebElement optionPathField = waitForElement(driver, By.cssSelector("div[data-s-path='" + inputPath + "']"));
-            if (optionPathField != null) {
-                clickUsingJS(driver, optionPathField);
-                WebElement optionDataField = waitForElement(driver, By.xpath("//div[@class='select2-result-label' and text()='" + inputData + "']"));
-                if (optionDataField != null) {
-                    clickUsingJS(driver, optionDataField);
-                    return true;
-                }
-            }
+            WebElement inputDataElement = waitForElement(driver, By.cssSelector("input[data-path='" + inputPath + "']"));
+            inputDataElement.clear(); // Text box-ийг цэвэрлэх
+            inputDataElement.sendKeys(inputData);
+            // Хүлээлт: текст оруулалтын хэсэгт үүсгэх хүртэл хүлээнэ
+            waitForTextInElement(driver, By.cssSelector("input[data-path='" + inputPath + "']"), inputData);
         } catch (Exception e) {
-            System.out.println("Error in inputOptionFunction: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Error in inputTextByCss: " + e.getMessage());
+            throw e; // Алдааг дахин өгөх
         }
-        return false;
     }
 
-    public static boolean saveXpathFunction(WebDriver driver, String inputPath) {
+    public static void selectOption(WebDriver driver, String inputPath, String inputData) {
         try {
-            WebElement saveBtn = waitForElement(driver, By.xpath("//button[contains(@class, '" + inputPath + "')]"));
-            if (saveBtn != null) {
-                clickUsingJS(driver, saveBtn);
-                return true;
-            }
+            WebElement inputDataElement = waitForElement(driver, By.cssSelector("div[data-s-path='" + inputPath + "']"));
+            inputDataElement.click();
+            WebElement optionDataField = waitForElement(driver, By.xpath("//div[@class='select2-result-label' and text()='" + inputData + "']"));
+            optionDataField.click();
+            // Хүлээлт: сонгосон хувилбарын сонголт амжилттай болсон гэдгийг шалгах
+            createFluentWait(driver).until(ExpectedConditions.textToBe(By.cssSelector("div[data-s-path='" + inputPath + "']"), inputData));
         } catch (Exception e) {
-            System.out.println("Error in saveXpathFunction: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Error in selectOption: " + e.getMessage());
+            throw e; // Алдааг дахин өгөх
         }
-        return false;
     }
 
-    public static boolean closeChecklistIdFunction(WebDriver driver, String inputData) {
+    public static void saveByXpath(WebDriver driver, String className) {
         try {
-            WebElement cancelBtn = waitForElement(driver, By.cssSelector("#dialog-valuemap-" + inputData + " .mb-1 .far"));
-            if (cancelBtn != null) {
-                clickUsingJS(driver, cancelBtn);
-                return true;
-            }
+            WebElement saveDataElement = waitForElement(driver, By.xpath("//button[contains(@class, '" + className + "')]"));
+            saveDataElement.click();
+            // Хүлээлт: хадгалах ажиллагаа дууссан гэдгийг шалгах
+            createFluentWait(driver).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//button[contains(@class, '" + className + "')]")));
         } catch (Exception e) {
-            System.out.println("Error in closeChecklistIdFunction: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Error in saveByXpath: " + e.getMessage());
+            throw e; // Алдааг дахин өгөх
         }
-        return false;
     }
+
+    public static void closeChecklistById(WebDriver driver, String checklistId) {
+        try {
+            WebElement closeCheckListElement = waitForElement(driver, By.cssSelector("#dialog-valuemap-" + checklistId + " .mb-1 .far"));
+            closeCheckListElement.click();
+            // Хүлээлт: чирэх цонх хаагдсан гэдгийг шалгах
+            createFluentWait(driver).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("#dialog-valuemap-" + checklistId + " .mb-1 .far")));
+        } catch (Exception e) {
+            System.out.println("Error in closeChecklistById: " + e.getMessage());
+            throw e; // Алдааг дахин өгөх
+        }
+    }
+
+
+    // Бусад функцууд дээр төстэй хүлээлтийг нэмж оруулах хэрэгтэй
 }

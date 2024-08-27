@@ -31,13 +31,13 @@ public class ErrorUtils {
             WebElement messageTitle = messageContainer.findElement(By.cssSelector(".ui-pnotify-title"));
             String messageTitleText = messageTitle.getText().toLowerCase();
 
-            if (messageTitleText.contains("warning")) {
+            if (messageTitleText.contains("warning") || messageTitleText.contains("Warning")) {
                 warningCount++;
                 return extractErrorMessage(driver, wait, true, false, callingClass);
-            } else if (messageTitleText.contains("error")) {
+            } else if (messageTitleText.contains("error") || messageTitleText.contains("Error")) {
                 errorCount++;
                 return extractErrorMessage(driver, wait, false, true, callingClass);
-            } else if (messageTitleText.contains("info")) {
+            } else if (messageTitleText.contains("info") || messageTitleText.contains("Info")) {
                 infoCount++;
                 return extractErrorMessage(driver, wait, false, false, callingClass);
             }
@@ -71,7 +71,7 @@ public class ErrorUtils {
             String classUrl = callingClass.getName();
 
             String fullMessage = (isError ? "ErrorMessage: " : (isWarning ? "WarningMessage: " : "InfoMessage: ")) +
-            "&#8226;Класс: " + className + "<br>&#8226;Класс байршил: " + classUrl + "<br>&#8226;Модуль= " + moduleName + " - " + processName + "<br>&#8226;Алдаа: " + messageText;
+            "&#8226;Класс: " + className + /* "<br>&#8226;Класс байршил: " + classUrl +*/ "<br>&#8226;Модуль= " + moduleName + " - " + processName + "<br>&#8226;Алдаа: " + messageText;
             if (isWarning) {
                 warningMessages.add(fullMessage);
             } else if (isError) {

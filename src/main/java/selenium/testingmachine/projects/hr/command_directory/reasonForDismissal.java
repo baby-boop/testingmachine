@@ -8,6 +8,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import selenium.testingmachine.config.ClassCounter;
+import selenium.testingmachine.config.ErrorUtils;
+
 public class reasonForDismissal {
     public static String message;
 
@@ -21,20 +24,22 @@ public class reasonForDismissal {
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            Thread.sleep(1000);
-            WebElement openField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Мастер дата')]")));
-            openField.click();
+            Thread.sleep(2000);
 
             WebElement openDirectory = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Тушаалын лавлах')]")));
             openDirectory.click();
-            Thread.sleep(500);
 
-            WebElement list = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Ажлаас чөлөөлөх шалтгаан')]")));
-            list.click(); 
+            Thread.sleep(2000);
+
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[data-stepid='17145598883101']")));
+            menu.click(); 
+
             Thread.sleep(2000);
 
             WebElement add = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             add.click();
+
+            Thread.sleep(2000);
 
             WebElement bookType = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("mvParam[BOOK_TYPE_NAME]")));
             bookType.sendKeys("Бусад");
@@ -53,12 +58,15 @@ public class reasonForDismissal {
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
             saveBtn.click();
-            if (isErrorMessagePresent(wait)) {
+
+            if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting...");
+                
                 Thread.sleep(3500);
                 
-                WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-                cnclBtn.click();
+                WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm blue-hoki bp-btn-close')]")));
+                closeBtn.click();
+
                 return;
             }
             
@@ -86,29 +94,16 @@ public class reasonForDismissal {
             //     return;
             // }
 
+            Thread.sleep(2000);
+
+            ClassCounter.registerWorkingClass(this.getClass());
+            
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Error class-reasonForDismissal : " + e.getMessage());
+            System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
             driver.quit();
         }finally{
-            System.out.println("finished reasonForDismissal");
+            System.out.println("finished: "+ this.getClass().getSimpleName());
         }
     }
-    
-    private boolean isErrorMessagePresent(WebDriverWait wait) {
-        try {
-            
-            wait.withTimeout(Duration.ofSeconds(2));
-            WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme-error .ui-pnotify-text")));
-            String errorText = errorMessage.getText();
-            WebElement mainProccess = driver.findElement(By.xpath("//div[@class='ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle']/span"));
-            String processName = mainProccess.getText();
-            message = ("class-reasonForDismissal: "+ this.getClass().getName() + "   processName= "+processName + "   Алдаа: " + errorText);
-            return errorMessage.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        } finally {
-            wait.withTimeout(Duration.ofSeconds(10));
-        }
-    }    
 }

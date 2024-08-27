@@ -66,7 +66,7 @@ public class standardCashier {
                 return;
             }
 
-            Thread.sleep(2500);
+            Thread.sleep(3500);
 
             WebElement closeBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#dialog-valuemap-16880991772429 .mb-1 .far")));
             closeBtn.click();

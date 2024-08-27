@@ -34,7 +34,7 @@ public class SeleniumTestApplication implements CommandLineRunner {
                 String result = executeModule(module);
                 System.out.println(result);
             } catch (Exception e) {
-                System.err.println("Модуль ажиллуулахад алдаа гарлаа: " + e.getMessage());
+                System.err.println("Модуль ажиллуулахад алдаа гарлаа : " + e.getMessage());
             }
         } else {
             System.out.println("Модуль олдсонгүй .");
