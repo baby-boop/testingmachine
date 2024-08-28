@@ -22,7 +22,6 @@ import selenium.testingmachine.config.infoMessageField;
 public class MessageController {
 
     @GetMapping("/messages")
-    
     public List<String> getAlerts() {
         return getMessages();
     }

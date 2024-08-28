@@ -28,10 +28,10 @@ public class unitList {
 
             Thread.sleep(2000);
 
-            WebElement menuTileElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-modulename='Core HR']")));
-            menuTileElement.click();
-
-            Thread.sleep(3500);
+//            WebElement menuTileElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-modulename='Core HR']")));
+//            menuTileElement.click();
+//
+//            Thread.sleep(3500);
 
             WebElement menu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Мастер дата')]")));
             menu.click();

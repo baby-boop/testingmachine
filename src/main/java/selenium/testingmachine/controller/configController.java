@@ -1,5 +1,6 @@
 package selenium.testingmachine.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 
+@Slf4j
 public class configController {
 
     public static final String URL = "https://cloud.veritech.mn/login";
@@ -29,7 +31,7 @@ public class configController {
             WebElement moduleTitleElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-modulename='" + moduleName + "']")));
             moduleTitleElement.click();
         } catch (Exception e) {
-            System.out.println("Error in setModule: " + e.getMessage());
+            log.info("Error in setModule:", e);
         }
     }
 
@@ -40,7 +42,7 @@ public class configController {
             menuTitleElement.click();
 
         } catch (Exception e) {
-            System.out.println("Error in setMenu: " + e.getMessage());
+            System.err.println("Error in setMenu: " + e.getMessage());
         }
     }
 
@@ -51,7 +53,7 @@ public class configController {
             menu.click();
 
         } catch (Exception e) {
-            System.out.println("Error in setMenuStepId: " + e.getMessage());
+            System.err.println("Error in setMenuStepId: " + e.getMessage());
         }
     }
 
@@ -62,7 +64,7 @@ public class configController {
             WebElement addButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Нэмэх")));
             addButton.click();
         } catch (Exception e) {
-            System.out.println("Error in clickAddButton: " + e.getMessage());
+            System.err.println("Error in clickAddButton: " + e.getMessage());
         }
     }
 
@@ -74,7 +76,7 @@ public class configController {
             inputDataElement.sendKeys(inputData);
 
         } catch (Exception e) {
-            System.out.println("Error in inputTextByCss: " + e.getMessage());
+            System.err.println("Error in inputTextByCss: " + e.getMessage());
         }
     }
 
@@ -86,7 +88,7 @@ public class configController {
             inputDataElement.sendKeys(inputData);
 
         } catch (Exception e) {
-            System.out.println("Error in inputTextName: " + e.getMessage());
+            System.err.println("Error in inputTextName: " + e.getMessage());
         }
     }
 
@@ -100,7 +102,7 @@ public class configController {
             codeField.sendKeys(inputData);
 
         } catch (Exception e) {
-            System.out.println("Error in inputTextFromDisable: " + e.getMessage());
+            System.err.println("Error in inputTextFromDisable: " + e.getMessage());
         }
     }
 
@@ -112,7 +114,7 @@ public class configController {
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkbox);
 
         } catch (Exception e) {
-            System.out.println("Error in clickCheckBoxId: " + e.getMessage());
+            System.err.println("Error in clickCheckBoxId: " + e.getMessage());
         }
     }
 
@@ -126,7 +128,7 @@ public class configController {
             optionDataField.click();
 
         } catch (Exception e) {
-            System.out.println("Error in selectOption: " + e.getMessage());
+            System.err.println("Error in selectOption: " + e.getMessage());
         }
     }
 
@@ -140,7 +142,7 @@ public class configController {
             Thread.sleep(1000);
 
         } catch (Exception e) {
-            System.out.println("Error in lookupFieldName: " + e.getMessage());
+            System.err.println("Error in lookupFieldName: " + e.getMessage());
         }
     }
 
@@ -151,7 +153,7 @@ public class configController {
             saveDataElement.click();
 
         } catch (Exception e) {
-            System.out.println("Error in saveByXpath: " + e.getMessage());
+            System.err.println("Error in saveByXpath: " + e.getMessage());
 
         }
     }
@@ -163,7 +165,7 @@ public class configController {
             saveDataElement.click();
 
         } catch (Exception e) {
-            System.out.println("Error in saveByXpath: " + e.getMessage());
+            System.err.println("Error in saveByXpath: " + e.getMessage());
 
         }
     }
@@ -176,7 +178,7 @@ public class configController {
             nextSaveBtn.click();
 
         } catch (Exception e) {
-            System.out.println("Error in saveByXpath: " + e.getMessage());
+            System.err.println("Error in saveByXpath: " + e.getMessage());
 
         }
     }
@@ -188,7 +190,7 @@ public class configController {
             closeCheckListElement.click();
 
         } catch (Exception e) {
-            System.out.println("Error in closeChecklistById: " + e.getMessage());
+            System.err.println("Error in closeChecklistById: " + e.getMessage());
 
         }
     }
@@ -200,7 +202,7 @@ public class configController {
             cnclBtn.click();
 
         } catch (Exception e) {
-            System.out.println("Error in closeProcess: " + e.getMessage());
+            System.err.println("Error in closeProcess: " + e.getMessage());
 
         }
     }
@@ -211,7 +213,7 @@ public class configController {
             saveBtn.click();
 
         } catch (Exception e) {
-            System.out.println("Error in saveProcess: " + e.getMessage());
+            System.err.println("Error in saveProcess: " + e.getMessage());
 
         }
     }

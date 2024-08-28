@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
 import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 import selenium.testingmachine.config.clearMessage;
@@ -19,6 +20,7 @@ import selenium.testingmachine.projects.strategic.businessProfileMain;
 import selenium.testingmachine.projects.supply.mainSupply;
 import selenium.testingmachine.projects.warehouse.warehouseMain;
 
+@EnableScheduling
 @SpringBootApplication
 public class SeleniumTestApplication implements CommandLineRunner {
 
