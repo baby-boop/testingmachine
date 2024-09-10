@@ -46,13 +46,13 @@ public class representativeEmployee {
             name.sendKeys("Бат-оргил");
             name.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(2000);
 
             WebElement repEmployee = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("swipeEmployeeKeyId_nameField")));
             repEmployee.sendKeys("testgul");
             repEmployee.sendKeys(Keys.ENTER);
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             WebElement startDate = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-path='HCM_LABOUR_BOOK_DTL.startDate']")));
             startDate.sendKeys("2024-06-07"); 

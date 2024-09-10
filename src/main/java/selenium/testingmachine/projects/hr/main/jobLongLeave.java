@@ -62,6 +62,8 @@ public class jobLongLeave {
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save ')]")));
             saveBtn.click();
 
+            Thread.sleep(1000);
+
             if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());
                 Thread.sleep(3000);

@@ -28,10 +28,10 @@ public class unitList {
 
             Thread.sleep(2000);
 
-//            WebElement menuTileElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-modulename='Core HR']")));
-//            menuTileElement.click();
-//
-//            Thread.sleep(3500);
+           WebElement menuTileElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-modulename='Core HR']")));
+           menuTileElement.click();
+
+           Thread.sleep(3500);
 
             WebElement menu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Мастер дата')]")));
             menu.click();
@@ -92,6 +92,10 @@ public class unitList {
 
             Thread.sleep(2000);
 
+            WebElement generalElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//a[contains(text(),'Тохиргоо')])[2]")));
+            generalElement.click();
+
+            Thread.sleep(2000);
 
             WebElement city = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[data-s-path='CITY_ID']")));
             city.click();

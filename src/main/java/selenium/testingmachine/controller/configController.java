@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 
+import static org.reflections.Reflections.log;
+
 @Slf4j
 public class configController {
 
@@ -49,7 +51,7 @@ public class configController {
     public static void setMenuStepId(WebDriver driver, String stepid) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
-            WebElement menu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li[data-stepid='" + stepid + ""))); //Тусламж, дэмжлэг
+            WebElement menu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li[data-stepid='" + stepid + "']"))); //Тусламж, дэмжлэг
             menu.click();
 
         } catch (Exception e) {

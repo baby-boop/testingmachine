@@ -29,7 +29,7 @@ public class contactInformation {
             Thread.sleep(2000);
             
             // WebElement menuTileElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-modulename='Санхүүгийн стандарт хувилбар']")));
-            // menuTileElement.click(); //
+            // menuTileElement.click(); 
 
             // Thread.sleep(3500);
 

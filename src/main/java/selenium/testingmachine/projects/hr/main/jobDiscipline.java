@@ -44,7 +44,7 @@ public class jobDiscipline {
             name.sendKeys("Бат-оргил");
             name.sendKeys(Keys.ENTER);
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             // WebElement employeeStatus = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[data-s-path='HCM_LABOUR_BOOK_DTL.punishmentTypeId']")));
             // employeeStatus.click();
@@ -56,7 +56,7 @@ public class jobDiscipline {
 
             WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm btn-circle btn-success bpMainSaveButton bp-btn-save')]")));
             saveBtn.click();
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting..." + this.getClass().getName());

@@ -33,8 +33,6 @@ public class unitStructure {
 
             configController.selectOption(driver, "PARENT_ID", "Боловсруулах цех");
 
-            Thread.sleep(500);
-
             configController.selectOption(driver, "CLASSIFICATION_ID", "Борлуулалт");
 
             Thread.sleep(500);

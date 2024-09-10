@@ -51,7 +51,7 @@ public class unitType {
             
             Thread.sleep(2000);
 
-            configController.inputTextName(driver, "mvParam[NAME]", "112211");
+            configController.inputTextName(driver, "mvParam[NAME]", "test");
 
             configController.inputTextFromDisable(driver, "mvParam[CODE]", "test1");
 

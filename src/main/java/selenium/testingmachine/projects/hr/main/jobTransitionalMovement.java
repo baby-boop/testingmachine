@@ -47,7 +47,7 @@ public class jobTransitionalMovement {
             name.sendKeys("Бат-оргил");
             name.sendKeys(Keys.ENTER);
 
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement department = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departmentId_nameField")));
             department.sendKeys("Тооцооны төв");
