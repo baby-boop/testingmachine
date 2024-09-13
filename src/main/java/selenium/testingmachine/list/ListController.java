@@ -20,6 +20,4 @@ public class ListController {
         int processCount = Lists.getCheckCount();
         return new ListDTO(processCount);
     }
-
-
 }

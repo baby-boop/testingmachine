@@ -3,9 +3,6 @@ package selenium.testingmachine.list;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import selenium.testingmachine.testJson.JsonProcessor;
-import selenium.testingmachine.testJson.lastRowEditAndDelete;
-import selenium.testingmachine.testJson.testLogin;
 
 public class mainList {
 

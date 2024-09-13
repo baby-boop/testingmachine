@@ -15,8 +15,9 @@ public class IsErrorList {
     @ListMessageField
     private static List<String> ListMessageField = new ArrayList<>();
 
-    public static boolean isErrorMessagePresent(WebDriver driver, WebDriverWait wait, String id, String fileName) {
+    public static boolean isErrorMessagePresent(WebDriver driver, String id, String fileName) {
         try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
             WebElement messageContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".brighttheme.ui-pnotify-container")));
             WebElement messageTitle = messageContainer.findElement(By.cssSelector(".ui-pnotify-title"));
             String messageTitleText = messageTitle.getText().toLowerCase();
@@ -25,17 +26,17 @@ public class IsErrorList {
                     messageTitleText.contains("error") || messageTitleText.contains("Error") ||
                     messageTitleText.contains("info") || messageTitleText.contains("Info"))
             {
-                return extractErrorMessage(driver, wait,  id, fileName);
+                return extractErrorMessage(driver,  id, fileName);
             }
 
             return false;
         } catch (Exception e) {
-            System.out.println("Error while checking for message title: " + e.getMessage());
+//            System.out.println("Error while checking for message title: " + e.getMessage());
             return false;
         }
     }
 
-    private static boolean extractErrorMessage(WebDriver driver, WebDriverWait wait, String id, String fileName) {
+    private static boolean extractErrorMessage(WebDriver driver, String id, String fileName) {
         try {
             WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));
             WebElement messageContent = shortWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
@@ -53,7 +54,7 @@ public class IsErrorList {
 
 
             String fullMessage =    fileName + " : " +
-                                    "<br>&#8226;Meta ID= " + processId +
+                                    "&#8226;Meta ID= " + processId +
                                     "<br>&#8226;Meta CODE= " + processCode +
                                     "<br>&#8226;Алдаа: " + messageText;
 

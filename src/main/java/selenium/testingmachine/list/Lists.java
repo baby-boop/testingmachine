@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class Lists {
 
             Thread.sleep(2000);
 
-            String directoryPath = "C:\\Users\\batde\\Downloads\\allDatas";
+            String directoryPath = "C:\\Users\\batde\\Downloads\\Hishig arvin uat lookupIds";
 
             File folder = new File(directoryPath);
             File[] listOfFiles = folder.listFiles((dir, name) -> name.endsWith(".txt"));
@@ -54,11 +55,12 @@ public class Lists {
                     for (String id : ids) {
                         String url = ListConfig.BaseUrl + id;
                         driver.get(url);
-
-                        wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
                         driver.navigate().refresh();
 
-                        if (IsErrorList.isErrorMessagePresent(driver, wait, id, file.getName())) {
+                        wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
+                        waitForLoadToDisappear();
+                        waitForLoadingToDisappear();
+                        if (IsErrorList.isErrorMessagePresent(driver, id, file.getName())) {
                             System.out.println("Error found for ID: " + id);
                         }
                         processCount++;
@@ -85,6 +87,32 @@ public class Lists {
             }
         }
         return ids;
+    }
+
+    private void waitForLoadingToDisappear() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
+        try {
+            WebElement loadingMessage = driver.findElement(By.xpath("//div[contains(@class, 'datagrid-mask-msg') and text()='Түр хүлээнэ үү']"));
+            if (loadingMessage.isDisplayed()) {
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class, 'datagrid-mask-msg') and text()='Түр хүлээнэ үү']")));
+//                System.out.println("Түр хүлээнэ үү.");
+            }
+        } catch (NoSuchElementException e) {
+//            System.out.println("Loading message was not present, proceeding without waiting.");
+        }
+    }
+
+    private void waitForLoadToDisappear() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
+        try {
+            WebElement loadingMessages =  driver.findElement(By.cssSelector("div.loading-message.loading-message-boxed"));
+            if (loadingMessages.isDisplayed()) {
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading-message.loading-message-boxed")));
+//                System.out.println("Loading message waiting for ...");
+            }
+        } catch (NoSuchElementException e) {
+//            System.out.println("Loading message not disapper int time.");
+        }
     }
 
     public static int getCheckCount() {
