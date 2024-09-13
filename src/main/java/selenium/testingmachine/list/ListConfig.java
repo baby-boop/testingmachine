@@ -14,7 +14,9 @@ public class ListConfig {
     public static final String PASSWORD = "shinee@2023";
      */
 
-    public static final String URL = "http://202.131.244.213/login";
+    public static final String MainUrl = "http://202.131.244.213";
+    public static final String URL = MainUrl + "/login";
+    public static final String BaseUrl = MainUrl + "/mdobject/dataview/";
     public static final String USERNAME = "admin";
     public static final String PASSWORD = "2762412..khai";
 

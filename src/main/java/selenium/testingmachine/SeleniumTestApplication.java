@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import selenium.testingmachine.Selenium.SeleniumTestMain;
-import selenium.testingmachine.action.RecordingService;
 import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 import selenium.testingmachine.config.clearMessage;
