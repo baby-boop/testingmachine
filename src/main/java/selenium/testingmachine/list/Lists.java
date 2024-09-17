@@ -16,6 +16,10 @@ public class Lists {
     private final WebDriver driver;
     private static int processCount = 0;
 
+    @ErrorTimeoutField
+    private static List<ErrorTimeoutDTO> errorTimeoutMessages = new ArrayList<>();
+
+
     public Lists(WebDriver driver) {
         this.driver = driver;
     }
@@ -25,6 +29,15 @@ public class Lists {
             WebDriverWait wait = ListConfig.getWebDriverWait(driver);
             driver.get(ListConfig.URL);
             driver.manage().window().setSize(new Dimension(1500, 800));
+
+            WebElement dbSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("dbName")));
+            dbSelect.click();
+            Thread.sleep(500);
+
+            WebElement optionToSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@name='dbName']/option[@value='dXgxZERkUjNzSkFhZVc1aUU2dTBNQT09']")));
+            optionToSelect.click();
+
+            Thread.sleep(500);
 
             // Login Process
             WebElement userNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_name")));
@@ -36,7 +49,7 @@ public class Lists {
 
             Thread.sleep(3000);
 
-            WebElement clickThat = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@href, 'login/connectClient')]//h6[text()='Хишиг Арвин Индустриал']")));
+            WebElement clickThat = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@href, 'login/connectClient')]//h6[text()='Хишиг-Арвин Групп']")));
             clickThat.click();
 
             Thread.sleep(2000);
@@ -58,8 +71,8 @@ public class Lists {
                         driver.navigate().refresh();
 
                         wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
-                        waitForLoadToDisappear();
-                        waitForLoadingToDisappear();
+                        waitForLoadToDisappear(file.getName(), id);
+                        waitForLoadingToDisappear(file.getName(), id) ;
                         if (IsErrorList.isErrorMessagePresent(driver, id, file.getName())) {
                             System.out.println("Error found for ID: " + id);
                         }
@@ -89,30 +102,41 @@ public class Lists {
         return ids;
     }
 
-    private void waitForLoadingToDisappear() {
+    private void waitForLoadingToDisappear(String fileName, String id) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
         try {
             WebElement loadingMessage = driver.findElement(By.xpath("//div[contains(@class, 'datagrid-mask-msg') and text()='Түр хүлээнэ үү']"));
             if (loadingMessage.isDisplayed()) {
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class, 'datagrid-mask-msg') and text()='Түр хүлээнэ үү']")));
-//                System.out.println("Түр хүлээнэ үү.");
             }
+        } catch (TimeoutException e) {
+            printErrorMessage(fileName, id);
         } catch (NoSuchElementException e) {
-//            System.out.println("Loading message was not present, proceeding without waiting.");
+            // Proceed if the loading message is not present
         }
     }
 
-    private void waitForLoadToDisappear() {
+    private void waitForLoadToDisappear(String fileName, String id) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
         try {
-            WebElement loadingMessages =  driver.findElement(By.cssSelector("div.loading-message.loading-message-boxed"));
+            WebElement loadingMessages = driver.findElement(By.cssSelector("div.loading-message.loading-message-boxed"));
             if (loadingMessages.isDisplayed()) {
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading-message.loading-message-boxed")));
-//                System.out.println("Loading message waiting for ...");
             }
+        } catch (TimeoutException e) {
+            printErrorMessage(fileName, id);
         } catch (NoSuchElementException e) {
-//            System.out.println("Loading message not disapper int time.");
+            // Proceed if the loading message is not present
         }
+    }
+    private void printErrorMessage(String fileName, String id) {
+        System.err.println("metaId: " + id + ", fileName: " + fileName);
+        ErrorTimeoutDTO errorTimeoutMessage = new ErrorTimeoutDTO(fileName, id);
+        errorTimeoutMessages.add(errorTimeoutMessage);
+    }
+
+    public static List<ErrorTimeoutDTO> errorTimeoutMessages() {
+        return errorTimeoutMessages;
     }
 
     public static int getCheckCount() {

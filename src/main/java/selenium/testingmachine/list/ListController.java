@@ -11,7 +11,7 @@ import java.util.List;
 public class ListController {
 
     @GetMapping("/list")
-    public List<String> getAlerts() {
+    public List<ErrorMessageDTO> getAlerts() {
         return IsErrorList.getListMessages();
     }
 
@@ -19,5 +19,10 @@ public class ListController {
     public ListDTO displayList() {
         int processCount = Lists.getCheckCount();
         return new ListDTO(processCount);
+    }
+
+    @GetMapping("/timeout")
+    public List<ErrorTimeoutDTO> getTimeoutErrors() {
+        return Lists.errorTimeoutMessages();
     }
 }

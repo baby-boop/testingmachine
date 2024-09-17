@@ -13,7 +13,7 @@ import java.util.List;
 public class IsErrorList {
 
     @ListMessageField
-    private static List<String> ListMessageField = new ArrayList<>();
+    private static List<ErrorMessageDTO> ListMessageField = new ArrayList<>();
 
     public static boolean isErrorMessagePresent(WebDriver driver, String id, String fileName) {
         try {
@@ -42,24 +42,19 @@ public class IsErrorList {
             WebElement messageContent = shortWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
             String messageText = messageContent.getText();
 
-            String processId = "";
-            String processCode  = "";
+            String metaId = "";
+            String metaCode  = "";
             try {
                 WebElement targetDiv = driver.findElement(By.cssSelector("div.main-dataview-container"));
-                processId = targetDiv.getAttribute("data-process-id");
-                processCode = targetDiv.getAttribute("data-meta-code");
+                metaId = targetDiv.getAttribute("data-process-id");
+                metaCode = targetDiv.getAttribute("data-meta-code");
             } catch (Exception e) {
                 System.out.println("Data process ID element not found: " + e.getMessage());
             }
 
+            ErrorMessageDTO errorMessageDTO = new ErrorMessageDTO(fileName, metaId, metaCode, messageText);
 
-            String fullMessage =    fileName + " : " +
-                                    "&#8226;Meta ID= " + processId +
-                                    "<br>&#8226;Meta CODE= " + processCode +
-                                    "<br>&#8226;Алдаа: " + messageText;
-
-
-            ListMessageField.add(fullMessage);
+            ListMessageField.add(errorMessageDTO);
 
             return messageContent.isDisplayed();
         } catch (Exception e) {
@@ -68,8 +63,7 @@ public class IsErrorList {
         }
     }
 
-    public static List<String> getListMessages() {
+    public static List<ErrorMessageDTO> getListMessages() {
         return new ArrayList<>(ListMessageField);
     }
-
 }
