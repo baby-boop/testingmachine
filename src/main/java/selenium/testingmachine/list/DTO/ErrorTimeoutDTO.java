@@ -1,4 +1,4 @@
-package selenium.testingmachine.list;
+package selenium.testingmachine.list.DTO;
 
 public class ErrorTimeoutDTO {
     private String fileName;

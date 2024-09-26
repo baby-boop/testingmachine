@@ -1,10 +1,12 @@
-package selenium.testingmachine.list;
+package selenium.testingmachine.list.Utils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import selenium.testingmachine.list.DTO.ErrorMessageDTO;
+import selenium.testingmachine.list.Fields.ListMessageField;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import java.util.List;
 
 public class IsErrorList {
 
-    @ListMessageField
+    @selenium.testingmachine.list.Fields.ListMessageField
     private static List<ErrorMessageDTO> ListMessageField = new ArrayList<>();
 
     public static boolean isErrorMessagePresent(WebDriver driver, String id, String fileName) {
@@ -22,11 +24,21 @@ public class IsErrorList {
             WebElement messageTitle = messageContainer.findElement(By.cssSelector(".ui-pnotify-title"));
             String messageTitleText = messageTitle.getText().toLowerCase();
 
+
             if (messageTitleText.contains("warning") || messageTitleText.contains("Warning") ||
                     messageTitleText.contains("error") || messageTitleText.contains("Error") ||
                     messageTitleText.contains("info") || messageTitleText.contains("Info"))
             {
-                return extractErrorMessage(driver,  id, fileName);
+                WebElement connectionERROR = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ui-pnotify-text")));
+                String connectionError = connectionERROR.getText();
+                if(connectionError.contains("Error Fetching http headers")){
+                    System.out.println("Холболтоо шалгана уу!" );
+                    System.out.println("Сүүлд ажилласан: " + fileName + " - " + id);
+                    driver.quit();
+                }
+                else{
+                   return extractErrorMessage(driver,  id, fileName);
+                }
             }
 
             return false;

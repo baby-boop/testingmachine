@@ -1,4 +1,4 @@
-package selenium.testingmachine.list;
+package selenium.testingmachine.list.Controller;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -7,7 +7,7 @@ import java.time.Duration;
 
 public class ListConfig {
 
-    /**
+    /*
      * DEV USER CONNECTION
 
     public static final String URL = "https://dev.veritech.mn/login";
@@ -15,16 +15,24 @@ public class ListConfig {
     public static final String PASSWORD = "shinee@2023";
      */
 
-    /**
+    /*
      * Хишиг арвин USER CONNECTION
      */
     public static final String MainUrl = "http://202.131.244.213";
     public static final String URL = MainUrl + "/login";
     public static final String BaseUrl = MainUrl + "/mdobject/dataview/";
-//    public static final String USERNAME = "admin";
-//    public static final String PASSWORD = "2762412..khai";
     public static final String USERNAME = "admin1";
     public static final String PASSWORD = "Khishigarvin*89";
+
+    /*
+    * Summit USER CONNECTION
+
+    public static final String MainUrl = "http://192.168.60.43";
+    public static final String URL = MainUrl + "/login";
+    public static final String BaseUrl = MainUrl + "/mdobject/dataview/";
+    public static final String USERNAME = "admin";
+    public static final String PASSWORD = "VrSummit@123";
+*/
 
     public static final int TIMEOUT = 10;
 

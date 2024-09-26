@@ -1,7 +1,4 @@
-package selenium.testingmachine.list;
-
-import java.util.Map;
-import java.util.List;
+package selenium.testingmachine.list.DTO;
 
 public class ListDTO {
     private int processCount;

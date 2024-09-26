@@ -58,7 +58,7 @@ public class SeleniumTestApplication implements CommandLineRunner {
                 System.out.println("Starting module...");
                 resetEnvironment();
                 mainList mainList = new mainList();
-                mainList.main();
+                mainList.mainSystem();
                 result = "Тест хийж дууссан";
                 break;
             case "test":

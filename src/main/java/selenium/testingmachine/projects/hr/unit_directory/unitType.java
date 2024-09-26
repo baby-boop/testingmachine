@@ -61,6 +61,7 @@ public class unitType {
 
             configController.saveProcess(driver);
 
+
             if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting...");
                 Thread.sleep(3500);
@@ -102,14 +103,18 @@ public class unitType {
 
             Thread.sleep(2000);
 
-            ClassCounter.registerWorkingClass(this.getClass());
 
         }catch(Exception e){
+
             e.printStackTrace();
             System.out.println("Error class: " + this.getClass().getSimpleName() + "<br>" + e.getMessage());
             driver.quit();
+
         }finally{
+
             System.out.println("finished: "+ this.getClass().getSimpleName());
+            ClassCounter.registerWorkingClass(this.getClass());
+
         }
     }
     

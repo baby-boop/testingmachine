@@ -3,28 +3,34 @@ package selenium.testingmachine.list;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import selenium.testingmachine.list.Controller.ListConfig;
+import selenium.testingmachine.list.DTO.ErrorTimeoutDTO;
+import selenium.testingmachine.list.Fields.ErrorTimeoutField;
+import selenium.testingmachine.list.Utils.ErrorLogger;
+import selenium.testingmachine.list.Utils.IsErrorList;
 
-import java.io.BufferedReader;
+
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static selenium.testingmachine.list.Utils.FileUtils.readIdsFromFile;
+
 public class Lists {
     private final WebDriver driver;
     private static int processCount = 0;
+    private static int totaMetaCount = 0;
 
     @ErrorTimeoutField
-    private static List<ErrorTimeoutDTO> errorTimeoutMessages = new ArrayList<>();
+    private final static List<ErrorTimeoutDTO> errorTimeoutMessages = new ArrayList<>();
 
 
     public Lists(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void main() {
+    public void mainList() {
         try {
             WebDriverWait wait = ListConfig.getWebDriverWait(driver);
             driver.get(ListConfig.URL);
@@ -34,6 +40,11 @@ public class Lists {
             dbSelect.click();
             Thread.sleep(500);
 
+            //Summit login base
+//            WebElement optionToSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@name='dbName']/option[@value='Z2dSTHRyUWw2STBOcis4T0Z4bzAwQT09']")));
+//            optionToSelect.click();
+
+            //Hishig arvin login base
             WebElement optionToSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@name='dbName']/option[@value='dXgxZERkUjNzSkFhZVc1aUU2dTBNQT09']")));
             optionToSelect.click();
 
@@ -54,16 +65,30 @@ public class Lists {
 
             Thread.sleep(2000);
 
-            String directoryPath = "C:\\Users\\batde\\Downloads\\Hishig arvin uat lookupIds";
+            String directoryPath = "https://drive.google.com/drive/folders/1KzUSlCgFBLztTmE5FeMVjJE0K7uAdAso?usp=sharing";
 
             File folder = new File(directoryPath);
             File[] listOfFiles = folder.listFiles((dir, name) -> name.endsWith(".txt"));
 
             if (listOfFiles != null) {
+
+                List<String> allIds = new ArrayList<>();
+
+                for (File file : listOfFiles) {
+                    List<String> idsFromFile = readIdsFromFile(file.getAbsolutePath());
+                    allIds.addAll(idsFromFile);
+                }
+
+                int totalIds = allIds.size();
+                totaMetaCount = totalIds;
+                System.out.println("Total IDs to meta: " + totalIds);
+
                 for (File file : listOfFiles) {
                     System.out.println("Processing file: " + file.getName());
 
                     List<String> ids = readIdsFromFile(file.getAbsolutePath());
+
+
 
                     for (String id : ids) {
                         String url = ListConfig.BaseUrl + id;
@@ -71,13 +96,13 @@ public class Lists {
                         driver.navigate().refresh();
 
                         wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
-                        waitForLoadToDisappear(file.getName(), id);
-                        waitForLoadingToDisappear(file.getName(), id) ;
+                        retryWaitForLoadToDisappear(driver, file.getName(), id);
+                        retryWaitForLoadingToDisappear(driver, file.getName(), id);
                         if (IsErrorList.isErrorMessagePresent(driver, id, file.getName())) {
-                            System.out.println("Error found for ID: " + id);
+                            System.out.println("Error found in ID: " + id);
                         }
                         processCount++;
-                        System.out.println("Processed Count: " + processCount + ", ID: " + id);
+                        System.out.println("Count: " + processCount + ", ID: " + id);
                     }
                 }
             } else {
@@ -85,61 +110,84 @@ public class Lists {
             }
 
         } catch (Exception e) {
-            System.err.println("Error during process: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
-    private List<String> readIdsFromFile(String fileName) throws IOException {
-        List<String> ids = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    ids.add(line.trim());
-                }
+
+    public static List<ErrorTimeoutDTO> errorTimeoutMessages() {
+        return ErrorLogger.getErrorTimeoutMessages();
+    }
+
+    public static int getCheckCount() {
+        return processCount;
+    }
+
+    public static int getTotalCount() {
+        return totaMetaCount;
+    }
+
+
+    private WebElement retryFindElement(WebDriverWait wait, By by, int attempts) {
+        int retryCount = 0;
+        while (retryCount < attempts) {
+            try {
+                return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            } catch (StaleElementReferenceException | NoSuchElementException e) {
+                retryCount++;
+                System.out.println("Retrying element lookup: " + by.toString() + " (attempt " + retryCount + ")");
             }
         }
-        return ids;
+        throw new NoSuchElementException("Failed to find element after " + attempts + " attempts: " + by.toString());
     }
 
-    private void waitForLoadingToDisappear(String fileName, String id) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
+    private void retryWaitForLoadingToDisappear(WebDriver driver, String fileName, String id) {
+        retryAction(() -> waitForLoadingToDisappear(driver, fileName, id), 3);
+    }
+
+    private void retryWaitForLoadToDisappear(WebDriver driver, String fileName, String id) {
+        retryAction(() -> waitForLoadToDisappear(driver, fileName, id), 3);
+    }
+
+    private static void waitForLoadingToDisappear(WebDriver driver, String fileName, String id) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
         try {
             WebElement loadingMessage = driver.findElement(By.xpath("//div[contains(@class, 'datagrid-mask-msg') and text()='Түр хүлээнэ үү']"));
             if (loadingMessage.isDisplayed()) {
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class, 'datagrid-mask-msg') and text()='Түр хүлээнэ үү']")));
             }
-        } catch (TimeoutException e) {
-            printErrorMessage(fileName, id);
         } catch (NoSuchElementException e) {
-            // Proceed if the loading message is not present
+            // Loading message not found, proceed
+        } catch (TimeoutException e) {
+            ErrorLogger.logError(fileName, id);
         }
     }
 
-    private void waitForLoadToDisappear(String fileName, String id) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
+    private static void waitForLoadToDisappear(WebDriver driver, String fileName, String id) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
         try {
             WebElement loadingMessages = driver.findElement(By.cssSelector("div.loading-message.loading-message-boxed"));
             if (loadingMessages.isDisplayed()) {
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading-message.loading-message-boxed")));
             }
-        } catch (TimeoutException e) {
-            printErrorMessage(fileName, id);
         } catch (NoSuchElementException e) {
-            // Proceed if the loading message is not present
+            // Loading message not found, proceed
+        } catch (TimeoutException e) {
+            ErrorLogger.logError(fileName, id);
         }
     }
-    private void printErrorMessage(String fileName, String id) {
-        System.err.println("metaId: " + id + ", fileName: " + fileName);
-        ErrorTimeoutDTO errorTimeoutMessage = new ErrorTimeoutDTO(fileName, id);
-        errorTimeoutMessages.add(errorTimeoutMessage);
-    }
 
-    public static List<ErrorTimeoutDTO> errorTimeoutMessages() {
-        return errorTimeoutMessages;
-    }
-
-    public static int getCheckCount() {
-        return processCount;
+    // Retry mechanism for an action
+    private void retryAction(Runnable action, int maxAttempts) {
+        int attempt = 0;
+        while (attempt < maxAttempts) {
+            try {
+                action.run();
+                return;
+            } catch (StaleElementReferenceException e) {
+                attempt++;
+                System.out.println("Retrying action (attempt " + attempt + ")");
+            }
+        }
     }
 }

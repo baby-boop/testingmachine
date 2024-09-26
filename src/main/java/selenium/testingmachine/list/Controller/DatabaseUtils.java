@@ -1,4 +1,4 @@
-package selenium.testingmachine.list;
+package selenium.testingmachine.list.Controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
