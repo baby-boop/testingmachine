@@ -1,13 +1,6 @@
 package selenium.testingmachine.projects.hr.unit_directory;
 
-import java.time.Duration;
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import selenium.testingmachine.config.ClassCounter;
@@ -17,7 +10,7 @@ import selenium.testingmachine.controller.configController;
 public class unitType {
  
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public unitType(WebDriver driver) {
         this.driver = driver;
@@ -27,29 +20,25 @@ public class unitType {
 
             WebDriverWait wait = configController.getWebDriverWait(driver);
 
-            Thread.sleep(2000);
+            configController.setModule(driver, "Core HR");
 
-            WebElement menuTileElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@data-modulename='Core HR']")));
-            menuTileElement.click();
+            configController.waitForBody(driver);
 
-            Thread.sleep(3500);
+            configController.setMenu(driver,"Мастер дата");
 
-            WebElement menu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Мастер дата')]")));
-            menu.click();
-
-            Thread.sleep(2000);
+            configController.waitForBody(driver);
 
             configController.setMenu(driver, "Бүтэц, нэгжийн лавлах");
 
-            Thread.sleep(2000);
+            configController.waitForBody(driver);
 
             configController.setMenuStepId(driver, "16878321532639"); //Нэгжийн төрөл
 
-            Thread.sleep(2000);
+            configController.waitForBody(driver);
 
             configController.clickAddButton(driver);
-            
-            Thread.sleep(2000);
+
+            configController.waitForBody(driver);
 
             configController.inputTextName(driver, "mvParam[NAME]", "test");
 
@@ -61,7 +50,6 @@ public class unitType {
 
             configController.saveProcess(driver);
 
-
             if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
                 System.out.println("Error message found after saving. Exiting...");
                 Thread.sleep(3500);
@@ -70,36 +58,6 @@ public class unitType {
 
                 return;
             }
-            
-            
-            // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[contains(@id,'datagrid-row')]")));
-            // List<WebElement> rows = driver.findElements(By.xpath("//tr[contains(@id,'datagrid-row')]"));
-
-            // if (!rows.isEmpty()) {
-            //     WebElement lastRow = rows.get(rows.size() - 1);
-            //     lastRow.click();
-
-            //     WebElement edit = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Засах")));
-            //     edit.click();
-
-            // } else {
-            //     System.out.println("No rows found.");
-            // }
-
-            // Thread.sleep(1000);
-
-            // WebElement editSave = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'btn btn-sm green-meadow bp-btn-save ')]")));
-            // editSave.click();
-
-            // if (ErrorUtils.isErrorMessagePresent(driver, wait, this.getClass())) {
-
-            //     System.out.println("Error message found after saving. Exiting...");
-            //     Thread.sleep(3500);
-                
-            //     WebElement cnclBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'ui-dialog-titlebar-close')]")));
-            //     cnclBtn.click();
-            //     return;
-            // }
 
             Thread.sleep(2000);
 

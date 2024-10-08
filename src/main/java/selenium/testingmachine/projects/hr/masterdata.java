@@ -84,61 +84,61 @@ public class masterdata {
             positionReasonLevel reasonLevel = new positionReasonLevel(driver);
 
              // Ажилтны лавлах
-             ClassCounter.registerClass(unit.getClass());
-             ClassCounter.registerClass(position.getClass());
-             ClassCounter.registerClass(workplace.getClass());
-             ClassCounter.registerClass(filetype.getClass());
-             ClassCounter.registerClass(prize.getClass());
-             ClassCounter.registerClass(property.getClass());
-             ClassCounter.registerClass(family.getClass());
-             ClassCounter.registerClass(exam.getClass());
-             ClassCounter.registerClass(address.getClass());
-             ClassCounter.registerClass(dismissal.getClass());
-             ClassCounter.registerClass(assistance.getClass());
-             ClassCounter.registerClass(discipline1.getClass());
-             ClassCounter.registerClass(prize1.getClass());
-             ClassCounter.registerClass(leave.getClass());
-             ClassCounter.registerClass(support.getClass());
-//            ClassCounter.registerClass(unitType.getClass());
-//            ClassCounter.registerClass(codeType.getClass());
-//            ClassCounter.registerClass(segment.getClass());
-//            ClassCounter.registerClass(structure.getClass());
-//            ClassCounter.registerClass(duties.getClass());
-//            ClassCounter.registerClass(salaryType.getClass());
-//            ClassCounter.registerClass(reasonType.getClass());
-//            ClassCounter.registerClass(reasonLevel.getClass());
+//             ClassCounter.registerClass(unit.getClass());
+//             ClassCounter.registerClass(position.getClass());
+//             ClassCounter.registerClass(workplace.getClass());
+//             ClassCounter.registerClass(filetype.getClass());
+//             ClassCounter.registerClass(prize.getClass());
+//             ClassCounter.registerClass(property.getClass());
+//             ClassCounter.registerClass(family.getClass());
+//             ClassCounter.registerClass(exam.getClass());
+//             ClassCounter.registerClass(address.getClass());
+//             ClassCounter.registerClass(dismissal.getClass());
+//             ClassCounter.registerClass(assistance.getClass());
+//             ClassCounter.registerClass(discipline1.getClass());
+//             ClassCounter.registerClass(prize1.getClass());
+//             ClassCounter.registerClass(leave.getClass());
+//             ClassCounter.registerClass(support.getClass());
+
+             //test heseg
+            ClassCounter.registerClass(unitType.getClass());
+            ClassCounter.registerClass(codeType.getClass());
+            ClassCounter.registerClass(segment.getClass());
+            ClassCounter.registerClass(structure.getClass());
+            ClassCounter.registerClass(duties.getClass());
+            ClassCounter.registerClass(salaryType.getClass());
+            ClassCounter.registerClass(reasonType.getClass());
+            ClassCounter.registerClass(reasonLevel.getClass());
 
 			login.loginHr();
-             // Ажилтны лавлах
-             unit.unit();
-             position.position();
-             workplace.workplace();
-             filetype.types();
-             prize.prize();
-             property.property();
-             family.types();
-             exam.types();
-             address.types();
-//            Тушаалын лавлах
-             dismissal.reason();
-             assistance.reason();
-             discipline1.reason();
-             prize1.reason();
-             leave.reason();
-             support.reason();
-            // Бүтэц, нэгжийн лавлах
-//            unitType.unit();
-//            codeType.unit();
-//            structure.unit(); //check
-//            segment.unit();
-//            //Албан тушаалын лавлах
-//            duties.position();
-//            salaryType.position();
-//            reasonType.position();
-//            reasonLevel.position();
-
-            // testClass.test();
-            // testClassTwo.test();
+//             // Ажилтны лавлах
+//             unit.unit();
+//             position.position();
+//             workplace.workplace();
+//             filetype.types();
+//             prize.prize();
+//             property.property();
+//             family.types();
+//             exam.types();
+//             address.types();
+////            Тушаалын лавлах
+//             dismissal.reason();
+//             assistance.reason();
+//             discipline1.reason();
+//             prize1.reason();
+//             leave.reason();
+//             support.reason();
+//            // Бүтэц, нэгжийн лавлах
+            unitType.unit();
+            codeType.unit();
+            structure.unit(); //check
+            segment.unit();
+            //Албан тушаалын лавлах
+            duties.position();
+            salaryType.position();
+            reasonType.position();
+            reasonLevel.position();
+            
 
 
         } finally {

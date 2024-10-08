@@ -1,0 +1,25 @@
+package selenium.testingmachine.meta.MetaList;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class MetaMain {
+
+    public void mainSystem(){
+        ChromeOptions options = new ChromeOptions();
+/*         options.addArguments("--headless");*/
+        WebDriver driver = new ChromeDriver(options);
+        try{
+
+            MetaLists main = new MetaLists(driver);
+
+            main.mainList();
+
+        }finally {
+            driver.quit();
+            System.out.println("completed");
+
+        }
+    }
+}

@@ -1,5 +1,6 @@
 package selenium.testingmachine.projects.hr_time;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -13,6 +14,7 @@ import selenium.testingmachine.projects.hr_time.masterData.employeeAttendanceLog
 import selenium.testingmachine.projects.hr_time.masterData.publicHolidays;
 import selenium.testingmachine.projects.hr_time.masterData.timePlanList;
 
+@Slf4j
 public class timeMain {
     public void mainSystem(){
         FirefoxOptions options = new FirefoxOptions();

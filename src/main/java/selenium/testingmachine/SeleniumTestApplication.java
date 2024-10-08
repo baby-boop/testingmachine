@@ -1,5 +1,6 @@
 package selenium.testingmachine;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +11,8 @@ import selenium.testingmachine.Selenium.SeleniumTestMain;
 import selenium.testingmachine.config.ClassCounter;
 import selenium.testingmachine.config.ErrorUtils;
 import selenium.testingmachine.config.clearMessage;
-import selenium.testingmachine.list.mainList;
+import selenium.testingmachine.meta.MetaList.MetaMain;
+import selenium.testingmachine.metaverse.Main.MVMain;
 import selenium.testingmachine.projects.finance.financeRequest.requestMain;
 import selenium.testingmachine.projects.finance.financeStandard.standardMain;
 import selenium.testingmachine.projects.hr.mainHr;
@@ -23,15 +25,23 @@ import selenium.testingmachine.projects.store.storeMain;
 import selenium.testingmachine.projects.strategic.businessProfileMain;
 import selenium.testingmachine.projects.supply.mainSupply;
 import selenium.testingmachine.projects.warehouse.warehouseMain;
+import selenium.testingmachine.test.WebScraperService;
+import selenium.testingmachine.test.cucumber.CucumberExample;
+import selenium.testingmachine.test.playwright.PlaywrightExample;
 import selenium.testingmachine.testJson.mainTest;
+
+import java.io.IOException;
 
 @EnableScheduling
 @SpringBootApplication
 public class SeleniumTestApplication implements CommandLineRunner {
 
+
+
     public static void main(String[] args) {
         SpringApplication.run(SeleniumTestApplication.class, args);
     }
+
 
     @Override
     public void run(String... args) {
@@ -52,18 +62,35 @@ public class SeleniumTestApplication implements CommandLineRunner {
         String result;
 
         switch (module) {
-
-
-            case "list":
+            case "cucumber":
                 System.out.println("Starting module...");
-                resetEnvironment();
-                mainList mainList = new mainList();
-                mainList.mainSystem();
+                CucumberExample cucumberExample = new CucumberExample();
+                cucumberExample.i_am_on_the_google_search_page();
+                cucumberExample.i_search_for();
+                cucumberExample.i_should_see_search_results();
+                result = "Тест хийж дууссан";
+                break;
+            case "playwright":
+                System.out.println("Starting module...");
+                PlaywrightExample playwrightExample = new PlaywrightExample();
+                playwrightExample.main();
+                result = "Тест хийж дууссан";
+                break;
+            case "meta":
+                System.out.println("Starting module...");
+                MetaMain MetaMain = new MetaMain();
+                MetaMain.mainSystem();
+                result = "Тест хийж дууссан";
+                break;
+            case "metaverse":
+                System.out.println("Starting module...");
+                MVMain MetaverseMain = new MVMain();
+                MetaverseMain.mainSystem();
                 result = "Тест хийж дууссан";
                 break;
             case "test":
                 System.out.println("Starting module...");
-                resetEnvironment();
+//                resetEnvironment();
                 mainTest test = new mainTest();
                 test.main_test_system();
                 result = "Тест хийж дууссан";
