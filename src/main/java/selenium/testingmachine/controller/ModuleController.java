@@ -28,7 +28,7 @@ public class ModuleController {
         String successMessage = "";
 
         try {
-            String moduleMessage = application.executeModule(module);
+//            String moduleMessage = application.executeModule(module);
 
             int classCount = ClassCounter.getAllClassCount();
             int workingCount = ClassCounter.getWorkingAllClassCount();
@@ -38,7 +38,7 @@ public class ModuleController {
             int processCount = workingCount + errorCount + warningCount + infoCount;
 
             if (classCount == processCount) {
-                successMessage = moduleMessage;
+//                successMessage = moduleMessage;
                 return successMessage;
             }
             

@@ -1,6 +1,5 @@
 package selenium.testingmachine.meta.MetaList;
 
-import org.hibernate.annotations.Check;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -8,7 +7,6 @@ import selenium.testingmachine.meta.Controller.ListConfig;
 import selenium.testingmachine.meta.DTO.ErrorTimeoutDTO;
 import selenium.testingmachine.meta.Fields.ErrorTimeoutField;
 import selenium.testingmachine.meta.Utils.CheckWorkflow;
-import selenium.testingmachine.meta.Utils.CheckWorkflow1;
 import selenium.testingmachine.meta.Utils.ErrorLogger;
 import selenium.testingmachine.meta.Utils.IsErrorList;
 
@@ -22,9 +20,8 @@ import static selenium.testingmachine.meta.Utils.FileUtils.readIdsFromFile;
 
 public class MetaLists {
     private final WebDriver driver;
-    private static int processCount = 0;
+    private static int metaCount = 0;
     private static int totaMetaCount = 0;
-    private static int workflowCount = 0;
 
     @ErrorTimeoutField
     private final static List<ErrorTimeoutDTO> errorTimeoutMessages = new ArrayList<>();
@@ -50,14 +47,15 @@ public class MetaLists {
             passwordField.sendKeys(ListConfig.PASSWORD);
             passwordField.sendKeys(Keys.ENTER);
 
-//            Thread.sleep(3000);
-//
+            Thread.sleep(3000);
+
 //            WebElement clickThat = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@href, 'login/connectClient')]//h6[text()='Хишиг-Арвин Групп']")));
-//            clickThat.click();
+            WebElement clickThat = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@href, 'login/connectClient')]//h6[text()='Хишиг Арвин Индустриал']")));
+            clickThat.click();
 
             Thread.sleep(2000);
 
-            String directoryPath = "C:\\Users\\batde\\Downloads";
+            String directoryPath = "C:\\Users\\batde\\Downloads\\HishigArvin prod ids";
 
             File folder = new File(directoryPath);
             File[] listOfFiles = folder.listFiles((dir, name) -> name.endsWith(".txt"));
@@ -81,7 +79,7 @@ public class MetaLists {
                     List<String> ids = readIdsFromFile(file.getAbsolutePath());
 
                     for (String id : ids) {
-                        String url = ListConfig.MainUrl + id;
+                        String url = ListConfig.BaseUrl + id;
                         driver.get(url);
                         driver.navigate().refresh();
 
@@ -91,13 +89,14 @@ public class MetaLists {
                         if (IsErrorList.isErrorMessagePresent(driver, id, file.getName())) {
                             System.out.println("Error found in ID: " + id);
                         }
-                        if(CheckWorkflow1.isErrorMessagePresent(driver, id, file.getName())) {
+                        if(CheckWorkflow.isErrorMessagePresent(driver, id, file.getName())) {
                             System.out.println("Workflow in ID: " + id);
-                            workflowCount++;
                         }
-
-                        processCount++;
-                        System.out.println("Count: " + processCount + ", ID: " + id);
+                        wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
+                        retryWaitForLoadToDisappear(driver, file.getName(), id);
+                        retryWaitForLoadingToDisappear(driver, file.getName(), id);
+                        metaCount++;
+                        System.out.println("Count: " + metaCount + ", ID: " + id);
                     }
                 }
             } else {
@@ -115,13 +114,12 @@ public class MetaLists {
     }
 
     public static int getCheckCount() {
-        return processCount;
+        return metaCount;
     }
 
     public static int getTotalCount() {
         return totaMetaCount;
     }
-
 
     private WebElement retryFindElement(WebDriverWait wait, By by, int attempts) {
         int retryCount = 0;

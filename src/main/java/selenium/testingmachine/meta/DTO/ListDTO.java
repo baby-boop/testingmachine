@@ -1,15 +1,18 @@
 package selenium.testingmachine.meta.DTO;
 
 public class ListDTO {
-    private int processCount;
-
-    public ListDTO(int processCount) {
-        this.processCount = processCount;
+    private int metaCount;
+    private int workflowCount;
+    public ListDTO(int metaCount, int workflowCount) {
+        this.metaCount = metaCount;
+        this.workflowCount = workflowCount;
     }
 
-    public int getProcessCount() {
-        return processCount;
+    public int getMetaCount() {
+        return metaCount;
     }
-
+    public int getWorkflowCount() {
+        return workflowCount;
+    }
 
 }

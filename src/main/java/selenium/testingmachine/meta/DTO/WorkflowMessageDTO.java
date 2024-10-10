@@ -14,7 +14,6 @@ public class WorkflowMessageDTO {
         this.messageText = messageText;
     }
 
-    // Getters and setters
     public String getFileName() {
         return fileName;
     }

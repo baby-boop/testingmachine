@@ -50,9 +50,8 @@ public class SocketService extends TextWebSocketHandler {
             try {
                 session.sendMessage(new TextMessage(message));
             } catch (IOException e) {
-                log.error(e.getMessage());
+                log.error("Error sending message: {}", e.getMessage());
             }
         }
     }
-
 }

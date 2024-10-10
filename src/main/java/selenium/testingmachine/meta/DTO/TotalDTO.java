@@ -1,14 +1,14 @@
 package selenium.testingmachine.meta.DTO;
 
 public class TotalDTO {
-    private int indicatorCount;
+    private int metaCount;
 
-    public TotalDTO(int indicatorCount) {
-        this.indicatorCount = indicatorCount;
+    public TotalDTO(int metaCount) {
+        this.metaCount = metaCount;
     }
 
-    public int getindicatorCount() {
-        return indicatorCount;
+    public int getMetaCount() {
+        return metaCount;
     }
 }
 
